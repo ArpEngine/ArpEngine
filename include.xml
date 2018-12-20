@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	<haxedef name="arp_backend_openfl" value="1" />
+	<haxedef name="arp_display_backend_flash" value="1" />
+	<haxedef name="arp_input_backend_flash" value="1" />
+	<haxedef name="arp_audio_backend_flash" value="1" />
+	<haxedef name="arp_socket_backend_flash" value="1" />
+	<haxedef name="arp_storage_backend_flash" value="1" />
+</project>
