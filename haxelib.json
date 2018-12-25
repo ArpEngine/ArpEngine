@@ -1,6 +1,6 @@
 {
   "name": "arp_engine",
-  "url" : "https://github.com/kaikoga/ArpEngine/",
+  "url" : "https://github.com/kaikoga/ArpEngine",
   "license": "MIT",
   "tags": ["game"],
   "description": "ArpEngine: an abstract 2D game engine.",
