@@ -9,6 +9,7 @@
   "releasenote": "Initial release.",
   "contributors": ["kaikoga"],
   "dependencies": {
-    "arp_domain": "dev"
+    "arp_domain": "dev",
+    "arp_hittest": "dev"
   }
 }
