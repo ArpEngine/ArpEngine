@@ -1,1 +1,1 @@
---cmd zip -r arp_engine.zip src haxelib.json include.xml extraParams.hxml
+--cmd zip -r arp_engine.zip src haxelib.json extraParams.hxml include.xml
