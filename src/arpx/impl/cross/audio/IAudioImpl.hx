@@ -3,5 +3,5 @@ package arpx.impl.cross.audio;
 import arp.impl.IArpObjectImpl;
 
 interface IAudioImpl extends IArpObjectImpl {
-	function play(context:AudioContext):Void;
+	function play(context:AudioContext):AudioChannel;
 }

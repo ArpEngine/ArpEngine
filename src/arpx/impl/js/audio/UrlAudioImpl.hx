@@ -65,12 +65,11 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):Void {
+	public function play(context:AudioContext):AudioChannel {
 		var nativeContext:js.html.audio.AudioContext = context.impl.raw;
 		var source:AudioBufferSourceNode = nativeContext.createBufferSource();
 		source.buffer = this.buffer;
-		source.connect(nativeContext.destination);
-		source.start();
+		return new AudioChannel(context, source);
 	}
 }
 
