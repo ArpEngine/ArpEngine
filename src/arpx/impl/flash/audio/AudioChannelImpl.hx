@@ -4,7 +4,7 @@ package arpx.impl.flash.audio;
 
 import flash.media.SoundChannel;
 
-abstract AudioChannel(SoundChannel) {
+abstract AudioChannelImpl(SoundChannel) from SoundChannel {
 
 	inline public function new(channel:SoundChannel) this = channel;
 

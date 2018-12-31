@@ -2,6 +2,7 @@ package arpx.impl.flash.audio;
 
 #if (arp_audio_backend_flash || arp_backend_display)
 
+import arpx.impl.cross.audio.AudioChannel;
 import flash.utils.ByteArray;
 import flash.media.Sound;
 import haxe.io.Bytes;

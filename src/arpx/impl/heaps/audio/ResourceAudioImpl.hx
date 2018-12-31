@@ -37,7 +37,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):AudioChannel {
+	public function play(context:AudioContext):AudioChannelImpl {
 		return this.value.play();
 	}
 }

@@ -5,7 +5,7 @@ package arpx.impl.js.audio;
 import arpx.impl.cross.audio.AudioContext;
 import js.html.audio.AudioScheduledSourceNode;
 
-class AudioChannel {
+class AudioChannelImpl {
 
 	private var source:AudioScheduledSourceNode;
 
@@ -13,7 +13,7 @@ class AudioChannel {
 		var nativeContext:js.html.audio.AudioContext = context.impl.raw;
 		source.connect(nativeContext.destination);
 		source.start();
-		return new AudioChannel();
+		return new AudioChannelImpl();
 
 		this.source = channel;
 	}
