@@ -4,6 +4,7 @@ package arpx.impl.heaps.audio;
 
 import hxd.snd.Channel;
 
+@:forward(volume)
 abstract AudioChannelImpl(Channel) from Channel {
 
 	inline public function new(channel:Channel) this = channel;

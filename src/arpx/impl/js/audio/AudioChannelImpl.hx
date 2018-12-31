@@ -13,6 +13,10 @@ class AudioChannelImpl {
 	private var source:AudioBufferSourceNode;
 	private var gain:GainNode;
 
+	public var volume(get, set):Float;
+	inline private function get_volume():Float return this.gain.gain.value;
+	inline private function set_volume(value:Float):Float return this.gain.gain.value = value;
+
 	public function new(context:AudioContext, buffer:AudioBuffer) {
 		var nativeContext:js.html.audio.AudioContext = context.impl.raw;
 		this.buffer = buffer;

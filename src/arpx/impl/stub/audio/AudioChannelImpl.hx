@@ -4,6 +4,8 @@ package arpx.impl.stub.audio;
 
 class AudioChannelImpl {
 
+	public var volume:Float = 1.0;
+
 	public function new() return;
 
 	public function stop():Void return;
