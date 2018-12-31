@@ -2,15 +2,16 @@ package arpx.impl.heaps.audio;
 
 #if (arp_audio_backend_heaps || arp_backend_display)
 
-import haxe.Resource;
+import arpx.audio.ResourceAudio;
+import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.audio.AudioChannel;
+import arpx.impl.cross.audio.AudioContext;
+import arpx.impl.cross.audio.IAudioImpl;
 import haxe.io.Bytes;
+import haxe.Resource;
 import hxd.fs.BytesFileSystem.BytesFileEntry;
 import hxd.fs.FileEntry;
 import hxd.res.Sound;
-import arpx.audio.ResourceAudio;
-import arpx.impl.cross.audio.AudioContext;
-import arpx.impl.cross.audio.IAudioImpl;
-import arpx.impl.ArpObjectImplBase;
 
 class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 
@@ -37,7 +38,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):AudioChannelImpl {
+	public function play(context:AudioContext):AudioChannel {
 		return this.value.play();
 	}
 }

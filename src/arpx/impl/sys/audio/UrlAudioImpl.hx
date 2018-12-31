@@ -3,6 +3,7 @@ package arpx.impl.sys.audio;
 #if (arp_audio_backend_sys || arp_backend_display)
 
 import arpx.audio.UrlAudio;
+import arpx.impl.cross.audio.AudioChannel;
 import arpx.impl.cross.audio.AudioContext;
 import arpx.impl.cross.audio.IAudioImpl;
 
@@ -15,7 +16,7 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio = audio;
 	}
 
-	public function play(context:AudioContext):AudioChannelImpl return new AudioChannelImpl();
+	public function play(context:AudioContext):AudioChannel return new AudioChannelImpl();
 }
 
 #end

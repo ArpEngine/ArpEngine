@@ -4,6 +4,7 @@ package arpx.impl.heaps.audio;
 
 import arpx.audio.UrlAudio;
 import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.audio.AudioChannel;
 import arpx.impl.cross.audio.AudioContext;
 import arpx.impl.cross.audio.IAudioImpl;
 
@@ -26,7 +27,7 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):AudioChannelImpl {
+	public function play(context:AudioContext):AudioChannel {
 		// TODO
 		return null;
 	}
