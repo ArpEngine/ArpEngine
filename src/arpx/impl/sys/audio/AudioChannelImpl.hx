@@ -6,7 +6,9 @@ class AudioChannelImpl {
 
 	public var volume:Float = 1.0;
 
-	public function new() return;
+	public function new(volume:Float) {
+		this.volume = volume;
+	}
 
 	public function stop():Void return;
 }

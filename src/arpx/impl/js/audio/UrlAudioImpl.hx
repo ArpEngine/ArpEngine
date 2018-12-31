@@ -65,8 +65,8 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):AudioChannel {
-		return new AudioChannelImpl(context, this.buffer);
+	public function play(context:AudioContext, volume:Float):AudioChannel {
+		return new AudioChannelImpl(context, this.buffer, volume);
 	}
 }
 

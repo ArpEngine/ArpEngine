@@ -9,6 +9,7 @@ import arpx.impl.cross.audio.IAudioImpl;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.media.Sound;
+import flash.media.SoundTransform;
 import flash.net.URLRequest;
 
 class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
@@ -52,8 +53,8 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):AudioChannel {
-		return this.value.play(0, 1);
+	public function play(context:AudioContext, volume:Float):AudioChannel {
+		return this.value.play(0, 1, new SoundTransform(volume));
 	}
 }
 

@@ -7,6 +7,7 @@ import arpx.impl.cross.audio.AudioChannel;
 import arpx.impl.cross.audio.AudioContext;
 import arpx.impl.cross.audio.IAudioImpl;
 import flash.media.Sound;
+import flash.media.SoundTransform;
 import flash.utils.ByteArray;
 import haxe.io.Bytes;
 import haxe.Resource;
@@ -37,8 +38,8 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):AudioChannel {
-		return this.value.play(0, 1);
+	public function play(context:AudioContext, volume:Float):AudioChannel {
+		return this.value.play(0, 1, new SoundTransform(volume));
 	}
 }
 

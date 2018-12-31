@@ -17,12 +17,13 @@ class AudioChannelImpl {
 	inline private function get_volume():Float return this.gain.gain.value;
 	inline private function set_volume(value:Float):Float return this.gain.gain.value = value;
 
-	public function new(context:AudioContext, buffer:AudioBuffer) {
+	public function new(context:AudioContext, buffer:AudioBuffer, volume:Float) {
 		var nativeContext:js.html.audio.AudioContext = context.impl.raw;
 		this.buffer = buffer;
 		this.source = nativeContext.createBufferSource();
 		this.source.buffer = this.buffer;
 		this.gain = nativeContext.createGain();
+		this.gain.gain.value = volume;
 		this.source.connect(this.gain);
 		this.gain.connect(nativeContext.destination);
 		source.start();
