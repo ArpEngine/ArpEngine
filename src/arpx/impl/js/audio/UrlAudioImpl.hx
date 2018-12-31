@@ -4,10 +4,10 @@ package arpx.impl.js.audio;
 
 import arpx.audio.UrlAudio;
 import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.audio.AudioChannel;
 import arpx.impl.cross.audio.AudioContext;
 import arpx.impl.cross.audio.IAudioImpl;
 import js.html.audio.AudioBuffer;
-import js.html.audio.AudioBufferSourceNode;
 import js.html.XMLHttpRequest;
 
 class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
@@ -65,11 +65,8 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):AudioChannelImpl {
-		var nativeContext:js.html.audio.AudioContext = context.impl.raw;
-		var source:AudioBufferSourceNode = nativeContext.createBufferSource();
-		source.buffer = this.buffer;
-		return new AudioChannelImpl(context, source);
+	public function play(context:AudioContext):AudioChannel {
+		return new AudioChannelImpl(context, this.buffer);
 	}
 }
 

@@ -2,20 +2,26 @@ package arpx.impl.js.audio;
 
 #if (arp_audio_backend_js || arp_backend_display)
 
+import js.html.audio.GainNode;
+import js.html.audio.AudioBufferSourceNode;
+import js.html.audio.AudioBuffer;
 import arpx.impl.cross.audio.AudioContext;
-import js.html.audio.AudioScheduledSourceNode;
 
 class AudioChannelImpl {
 
-	private var source:AudioScheduledSourceNode;
+	private var buffer:AudioBuffer;
+	private var source:AudioBufferSourceNode;
+	private var gain:GainNode;
 
-	public function new(context:AudioContext, channel:AudioScheduledSourceNode) {
+	public function new(context:AudioContext, buffer:AudioBuffer) {
 		var nativeContext:js.html.audio.AudioContext = context.impl.raw;
-		source.connect(nativeContext.destination);
+		this.buffer = buffer;
+		this.source = nativeContext.createBufferSource();
+		this.source.buffer = this.buffer;
+		this.gain = nativeContext.createGain();
+		this.source.connect(this.gain);
+		this.gain.connect(nativeContext.destination);
 		source.start();
-		return new AudioChannelImpl();
-
-		this.source = channel;
 	}
 
 	public function stop():Void {
