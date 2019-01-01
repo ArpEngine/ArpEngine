@@ -2,14 +2,15 @@ package arpx.impl.flash.audio;
 
 #if (arp_audio_backend_flash || arp_backend_display)
 
+import arpx.audio.UrlAudio;
+import arpx.impl.cross.audio.AudioChannel;
 import arpx.impl.cross.audio.AudioContext;
+import arpx.impl.cross.audio.IAudioImpl;
 import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.media.Sound;
+import flash.media.SoundTransform;
 import flash.net.URLRequest;
-
-import arpx.audio.UrlAudio;
-import arpx.impl.cross.audio.IAudioImpl;
 
 class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 
@@ -52,8 +53,8 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):Void {
-		this.value.play(0, 1);
+	public function play(context:AudioContext, loop:Bool, volume:Float):AudioChannel {
+		return this.value.play(0, loop ? 0x7fffffff : 0, new SoundTransform(volume));
 	}
 }
 

@@ -2,13 +2,15 @@ package arpx.impl.flash.audio;
 
 #if (arp_audio_backend_flash || arp_backend_display)
 
-import flash.utils.ByteArray;
+import arpx.audio.ResourceAudio;
+import arpx.impl.cross.audio.AudioChannel;
+import arpx.impl.cross.audio.AudioContext;
+import arpx.impl.cross.audio.IAudioImpl;
 import flash.media.Sound;
+import flash.media.SoundTransform;
+import flash.utils.ByteArray;
 import haxe.io.Bytes;
 import haxe.Resource;
-import arpx.audio.ResourceAudio;
-import arpx.impl.cross.audio.IAudioImpl;
-import arpx.impl.cross.audio.AudioContext;
 
 class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 
@@ -36,8 +38,8 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	public function play(context:AudioContext):Void {
-		this.value.play(0, 1);
+	public function play(context:AudioContext, loop:Bool, volume:Float):AudioChannel {
+		return this.value.play(0, loop ? 0x7fffffff : 0, new SoundTransform(volume));
 	}
 }
 
