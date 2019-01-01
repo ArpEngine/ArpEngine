@@ -12,6 +12,8 @@ import arpx.file.File;
 class FileExternal extends External {
 
 	@:arpField @:arpBarrier public var file:File;
+	@:arpField public var format:String;
+	@:arpField public var defaultType:String;
 
 	private var data:DataGroup;
 	private var env:ArpSeedEnv;
@@ -44,7 +46,12 @@ class FileExternal extends External {
 		var bytes:Bytes = this.file.bytes();
 		if (bytes != null) {
 			this.data = this.arpDomain.allocObject(DataGroup);
-			this.data.add(this.arpDomain.loadSeed(ArpSeed.fromXmlBytes(bytes, env)));
+			var seed:ArpSeed = switch (this.format) {
+				case "csv": ArpSeed.fromCsvBytes(bytes, defaultType, env);
+				case "tsv": ArpSeed.fromTsvBytes(bytes, defaultType, env);
+				case _: ArpSeed.fromXmlBytes(bytes, env);
+			}
+			this.data.add(this.arpDomain.loadSeed(seed));
 		}
 	}
 
