@@ -8,7 +8,7 @@ import hxd.snd.Channel;
 abstract AudioChannelImpl(Channel) from Channel {
 
 	public var isPlaying(get, never):Bool;
-	inline private function get_isPlaying():Float return @:privateAccess this.manager != null;
+	inline private function get_isPlaying():Bool return @:privateAccess this.manager != null;
 
 	public var position(get, never):Float;
 	inline private function get_position():Float return this.position;
