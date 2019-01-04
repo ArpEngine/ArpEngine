@@ -43,6 +43,7 @@ class AudioChannelImpl {
 	}
 
 	public function stop():Void {
+		this.source.onended = null;
 		this.source.stop();
 	}
 }
