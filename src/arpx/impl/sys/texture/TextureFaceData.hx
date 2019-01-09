@@ -10,6 +10,8 @@ class TextureFaceData {
 	inline private function get_width():Int return 0;
 	public var height(get, null):Int;
 	inline private function get_height():Int return 0;
+	public var layoutSize(get, null):RectImpl;
+	inline private function get_layoutSize():RectImpl return new RectImpl();
 
 	public function new() return;
 	public function dispose():Void return;
