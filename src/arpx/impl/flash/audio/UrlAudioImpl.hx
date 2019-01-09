@@ -54,7 +54,7 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 	}
 
 	public function play(context:AudioContext, loop:Bool, volume:Float):AudioChannel {
-		return this.value.play(0, loop ? 0x7fffffff : 0, new SoundTransform(volume));
+		return new AudioChannelImpl(this.value.play(0, loop ? 0x7fffffff : 0, new SoundTransform(volume)));
 	}
 }
 
