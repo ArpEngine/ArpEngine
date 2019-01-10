@@ -10,7 +10,7 @@ import flash.events.IOErrorEvent;
 import haxe.io.Bytes;
 import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.cross.texture.TextureImplBase;
-import arpx.impl.flash.texture.TextureFaceData;
+import arpx.impl.flash.texture.TextureFaceDataImpl;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.FileTexture;
 
@@ -57,8 +57,8 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 		return true;
 	}
 
-	public function getFaceData(params:IArpParamsRead = null):TextureFaceData {
-		return new TextureFaceData(this.value);
+	public function getFaceData(params:IArpParamsRead = null):TextureFaceDataImpl {
+		return new TextureFaceDataImpl(this.value);
 	}
 }
 

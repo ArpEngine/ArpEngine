@@ -6,8 +6,9 @@ import flash.geom.Rectangle;
 import flash.display.BitmapData;
 import flash.geom.Point;
 import arpx.impl.cross.geom.RectImpl;
+import arpx.impl.cross.texture.TextureFaceData;
 
-class TextureFaceData {
+class TextureFaceDataImpl {
 
 	public var width(get, null):Int;
 	inline private function get_width():Int return Std.int(bound.width);
@@ -43,7 +44,7 @@ class TextureFaceData {
 
 	inline public function trim(x:Float, y:Float, w:Float, h:Float, layoutSize:RectImpl = null):TextureFaceData {
 		var bound:Rectangle = new Rectangle(x, y, w, h);
-		return new TextureFaceData(this.source, bound, layoutSize);
+		return new TextureFaceDataImpl(this.source, bound, layoutSize);
 	}
 
 	public function dispose():Void if (this._trimmed != null) this._trimmed.dispose();

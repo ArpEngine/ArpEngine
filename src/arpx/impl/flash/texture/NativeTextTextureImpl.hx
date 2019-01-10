@@ -32,7 +32,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		this._bitmapData = new BitmapData(2048, 2048, true, 0xffff00ff); // FIXME
 
 		var cursor:BitmapFontDrawCursor = new BitmapFontDrawCursor(bitmapFont, this._bitmapData.width, this._bitmapData.height);
-		var faceInfo:TextureFaceData = new TextureFaceData(this._bitmapData);
+		var faceInfo:TextureFaceData = new TextureFaceDataImpl(this._bitmapData);
 		for (char in this.texture.faceList) {
 			this.nextFaceName(char);
 			var charCode:Int = char.charCodeAt(0);

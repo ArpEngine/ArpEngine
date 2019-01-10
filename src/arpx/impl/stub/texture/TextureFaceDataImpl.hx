@@ -3,8 +3,9 @@ package arpx.impl.stub.texture;
 #if (arp_display_backend_stub || arp_backend_display)
 
 import arpx.impl.cross.geom.RectImpl;
+import arpx.impl.cross.texture.TextureFaceData;
 
-class TextureFaceData {
+class TextureFaceDataImpl {
 
 	public var width(get, null):Int;
 	inline private function get_width():Int return 0;
@@ -15,7 +16,7 @@ class TextureFaceData {
 
 	public function new() return;
 	public function dispose():Void return;
-	public function trim(x:Float, y:Float, w:Float, h:Float, layoutSize:RectImpl = null):TextureFaceData return new TextureFaceData();
+	public function trim(x:Float, y:Float, w:Float, h:Float, layoutSize:RectImpl = null):TextureFaceData return new TextureFaceDataImpl();
 
 }
 

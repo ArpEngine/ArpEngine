@@ -48,7 +48,7 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 	}
 
 	public function getFaceData(params:IArpParamsRead = null):TextureFaceData {
-		return new TextureFaceData(this.value).trim(0, 0, this.texture.width, this.texture.height);
+		return new TextureFaceDataImpl(this.value).trim(0, 0, this.texture.width, this.texture.height);
 	}
 }
 
