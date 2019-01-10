@@ -1,11 +1,9 @@
 package arpx.impl.cross.texture;
 
-#if arp_display_backend_flash
-typedef TextureFaceData = arpx.impl.flash.texture.TextureFaceData;
-#elseif arp_display_backend_heaps
-typedef TextureFaceData = arpx.impl.heaps.texture.TextureFaceData;
-#elseif arp_display_backend_sys
-typedef TextureFaceData = arpx.impl.sys.texture.TextureFaceData;
-#elseif (arp_display_backend_stub || arp_backend_display)
-typedef TextureFaceData = arpx.impl.stub.texture.TextureFaceData;
-#end
+@:forward(width, height, layoutSize, source, bound, trimmed, trim, dispose)
+abstract TextureFaceData(TextureFaceDataImpl) from TextureFaceDataImpl {
+	public var impl(get, never):TextureFaceDataImpl;
+	inline private function get_impl():TextureFaceDataImpl return this;
+
+	inline public function new(impl:TextureFaceDataImpl) this = impl;
+}

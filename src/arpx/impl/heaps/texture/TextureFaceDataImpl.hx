@@ -2,11 +2,12 @@ package arpx.impl.heaps.texture;
 
 #if (arp_display_backend_heaps || arp_backend_display)
 
+import arpx.impl.cross.texture.TextureFaceData;
 import h2d.Tile;
 
 import arpx.impl.cross.geom.RectImpl;
 
-class TextureFaceData {
+class TextureFaceDataImpl {
 
 	public var tile(default, null):Tile;
 
@@ -27,7 +28,7 @@ class TextureFaceData {
 	}
 
 	inline public function trim(x:Float, y:Float, w:Float, h:Float, layoutSize:RectImpl = null):TextureFaceData {
-		return new TextureFaceData(this.tile.sub(Std.int(x), Std.int(y), Std.int(w), Std.int(h)), layoutSize);
+		return new TextureFaceDataImpl(this.tile.sub(Std.int(x), Std.int(y), Std.int(w), Std.int(h)), layoutSize);
 	}
 
 	inline public function dispose():Void this.tile.dispose();

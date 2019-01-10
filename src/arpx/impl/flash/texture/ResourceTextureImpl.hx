@@ -11,7 +11,7 @@ import haxe.io.Bytes;
 import haxe.Resource;
 import arpx.impl.cross.texture.ITextureImpl;
 import arpx.impl.cross.texture.TextureImplBase;
-import arpx.impl.flash.texture.TextureFaceData;
+import arpx.impl.flash.texture.TextureFaceDataImpl;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.ResourceTexture;
 
@@ -58,8 +58,8 @@ class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {
 		return true;
 	}
 
-	public function getFaceData(params:IArpParamsRead = null):TextureFaceData {
-		return new TextureFaceData(this.value);
+	public function getFaceData(params:IArpParamsRead = null):TextureFaceDataImpl {
+		return new TextureFaceDataImpl(this.value);
 	}
 }
 

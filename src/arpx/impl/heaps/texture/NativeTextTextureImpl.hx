@@ -46,7 +46,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 			var charCode:Int = char.charCodeAt(0);
 			var fontChar:FontChar = font.getChar(charCode);
 			var t:Tile = fontChar.t;
-			this.pushFaceInfo(new TextureFaceData(t, RectImpl.alloc(t.x, t.y, fontChar.width, t.height)));
+			this.pushFaceInfo(new TextureFaceDataImpl(t, RectImpl.alloc(t.x, t.y, fontChar.width, t.height)));
 		}
 
 		this.tile = this.font.tile;
