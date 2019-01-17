@@ -91,7 +91,7 @@ class ArpRangeCase {
 
 	public function testRandom():Void {
 		var range:ArpRange = new ArpRange(0, 4);
-		for (i in 0...1000) {
+		for (i in 0...100) {
 			var random:Float = range.random();
 			assertTrue(random >= 0 && random < 4);
 			var randomInt:Int = range.randomInt();

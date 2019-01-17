@@ -23,7 +23,7 @@ class FileExternal extends External {
 	}
 
 	// NOTE hack to acquire ArpSeedEnv
-	override public function arpInit(slot:ArpUntypedSlot, seed:ArpSeed):IArpObject {
+	override public function __arp_init(slot:ArpUntypedSlot, seed:ArpSeed):IArpObject {
 		this.env = seed.env();
 	}
 
