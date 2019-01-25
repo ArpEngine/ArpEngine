@@ -11,7 +11,6 @@ class GridTexture extends MultiTexture {
 
 	@:arpBarrier(true) @:arpField public var faceList:FaceList;
 	@:arpField public var dirs:Int = 1;
-	@:arpField public var offset:Int = 0;
 
 	@:arpImpl private var arpImpl:GridTextureImpl;
 
