@@ -49,6 +49,7 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 			}
 		}
 
+		index += texture.offset;
 		var dIndex:Null<Int> = params.getInt("index");
 		if (dIndex != null) index += dIndex;
 
