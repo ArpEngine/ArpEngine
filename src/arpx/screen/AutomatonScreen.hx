@@ -38,10 +38,12 @@ class AutomatonScreen extends Screen {
 	}
 
 	override public function tick(timeslice:Float):Bool {
-		pushStack();
-		this.screen.tick(timeslice);
-		var v:TransitionData = popStack();
-		if (v != null) return this.automaton.transition(v.key, v.payload);
+		if (this.ticks) {
+			pushStack();
+			this.screen.tick(timeslice);
+			var v:TransitionData = popStack();
+			if (v != null) return this.automaton.transition(v.key, v.payload);
+		}
 		return true;
 	}
 
