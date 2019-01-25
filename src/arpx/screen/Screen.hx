@@ -8,7 +8,7 @@ import arpx.input.Input;
 
 @:arpType("screen", "null")
 class Screen implements IArpObject implements ITickable implements IFocusNode<Input> implements IScreenImpl {
-	@:arpField public var ticks:Bool = false;
+	@:arpField public var ticks:Bool = true;
 	@:arpField public var visible:Bool = true;
 
 	@:arpImpl private var arpImpl:IScreenImpl;
