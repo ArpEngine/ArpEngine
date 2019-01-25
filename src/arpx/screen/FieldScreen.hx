@@ -20,7 +20,9 @@ class FieldScreen extends Screen {
 	public function new() super();
 
 	override public function tick(timeslice:Float):Bool {
-		if (ticks) field.tick(timeslice);
+		if (this.ticks) {
+			return field.tick(timeslice);
+		}
 		return true;
 	}
 
