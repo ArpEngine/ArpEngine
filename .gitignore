@@ -1,1 +1,6 @@
+# for Arp-ci
+/.haxelib
+/bin
+
+# for Arp-publish
 /*.zip
