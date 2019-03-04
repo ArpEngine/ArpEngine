@@ -1,5 +1,6 @@
 # for Arp-ci
 /.haxelib
+/.haxelib_cache
 /bin
 
 # for Arp-publish
