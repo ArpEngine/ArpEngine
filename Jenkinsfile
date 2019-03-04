@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    environment {
+        HAXELIB_CACHE = '../../.haxelib_cache/ArpEngine/.haxelib'
+    }
+
     stages {
         stage('prepare') {
             steps {
@@ -11,15 +15,18 @@ pipeline {
                 // githubNotify(context: 'js_heaps', description: '', status: 'PENDING');
                 sh "haxelib newrepo"
                 sh "haxelib git arp_ci https://github.com/ArpEngine/Arp-ci master --always"
-                sh "HAXELIB_PATH=`pwd`/.haxelib haxelib run arp_ci sync"
+                sh "haxelib run arp_ci sync"
             }
         }
 
         stage('swf') {
             steps {
-                sh "HAXELIB_PATH=`pwd`/.haxelib ARPCI_PROJECT=ArpEngine ARPCI_TARGET=swf ARPCI_BACKEND=flash haxelib run arp_ci test"
+                catchError {
+                    sh "ARPCI_PROJECT=ArpEngine ARPCI_TARGET=swf ARPCI_BACKEND=flash haxelib run arp_ci test"
+                }
             }
             post {
+                always { junit(testResults: "bin/junit/swf_flash.xml", keepLongStdio: true); }
                 success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
                 unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
             }
@@ -27,9 +34,12 @@ pipeline {
 
         stage('swf_heaps') {
             steps {
-                sh "HAXELIB_PATH=`pwd`/.haxelib ARPCI_PROJECT=ArpEngine ARPCI_TARGET=swf ARPCI_BACKEND=heaps haxelib run arp_ci test"
+                catchError {
+                    sh "ARPCI_PROJECT=ArpEngine ARPCI_TARGET=swf ARPCI_BACKEND=heaps haxelib run arp_ci test"
+                }
             }
             post {
+                always { junit(testResults: "bin/junit/swf_heaps.xml", keepLongStdio: true); }
                 success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
                 unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
             }
@@ -38,9 +48,12 @@ pipeline {
         /*
         stage('js') {
             steps {
-                sh "HAXELIB_PATH=`pwd`/.haxelib ARPCI_PROJECT=ArpEngine ARPCI_TARGET=js ARPCI_BACKEND=js haxelib run arp_ci test"
+                catchError {
+                    sh "ARPCI_PROJECT=ArpEngine ARPCI_TARGET=js ARPCI_BACKEND=js haxelib run arp_ci test"
+                }
             }
             post {
+                always { junit(testResults: "bin/junit/js_js.xml", keepLongStdio: true); }
                 success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
                 unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
             }
@@ -48,17 +61,16 @@ pipeline {
 
         stage('js_heaps') {
             steps {
-                sh "HAXELIB_PATH=`pwd`/.haxelib ARPCI_PROJECT=ArpEngine ARPCI_TARGET=js ARPCI_BACKEND=heaps haxelib run arp_ci test"
+                catchError {
+                    sh "ARPCI_PROJECT=ArpEngine ARPCI_TARGET=js ARPCI_BACKEND=heaps haxelib run arp_ci test"
+                }
             }
             post {
+                always { junit(testResults: "bin/junit/js_heaps.xml", keepLongStdio: true); }
                 success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
                 unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
             }
         }
         */
-    }
-
-    post {
-        always { junit(testResults: 'bin/report/*.xml', keepLongStdio: true); }
     }
 }
