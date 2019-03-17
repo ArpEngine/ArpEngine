@@ -24,7 +24,7 @@ abstract ArpParamsKey(Int) {
 
 	@:from
 	inline public static function fromString(value:String):ArpParamsKey {
-		return new ArpParamsKey(if (keyMap.exists(value)) keyMap.get(value) else defineKey(value));
+		return new ArpParamsKey(if (value == null) 0 else if (keyMap.exists(value)) keyMap.get(value) else defineKey(value));
 	}
 
 	@:to
