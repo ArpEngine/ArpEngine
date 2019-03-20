@@ -19,8 +19,8 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 	private var texture:FileTexture;
 	private var value:Tile;
 
-	override private function get_width():Int return this.value.width;
-	override private function get_height():Int return this.value.height;
+	override private function get_width():Float return this.value.width;
+	override private function get_height():Float return this.value.height;
 
 	public function new(texture:FileTexture) {
 		super();

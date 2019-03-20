@@ -17,8 +17,8 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 	private var tile:Tile;
 	private var font:Font;
 
-	override private function get_width():Int return this.texture.fontSize;
-	override private function get_height():Int return this.texture.fontSize;
+	override private function get_width():Float return this.texture.fontSize;
+	override private function get_height():Float return this.texture.fontSize;
 
 	public function new(texture:NativeTextTexture) {
 		super(texture);
