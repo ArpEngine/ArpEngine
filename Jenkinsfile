@@ -70,5 +70,31 @@ pipeline {
                 unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
             }
         }
+
+        stage('js_sys') {
+            steps {
+                catchError {
+                    sh "ARPCI_PROJECT=ArpEngine ARPCI_TARGET=js ARPCI_BACKEND=sys haxelib run arp_ci test"
+                }
+            }
+            post {
+                always { junit(testResults: "bin/junit/js_sys.xml", keepLongStdio: true); }
+                success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
+                unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
+            }
+        }
+
+        stage('neko_sys') {
+            steps {
+                catchError {
+                    sh "ARPCI_PROJECT=ArpEngine ARPCI_TARGET=neko ARPCI_BACKEND=sys haxelib run arp_ci test"
+                }
+            }
+            post {
+                always { junit(testResults: "bin/junit/neko_sys.xml", keepLongStdio: true); }
+                success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
+                unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
+            }
+        }
     }
 }
