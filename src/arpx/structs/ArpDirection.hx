@@ -6,7 +6,7 @@ import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
 import arp.utils.ArpStringUtil;
 
-typedef ArpDirectionValue = #if (flash || neko) UInt #else Int #end ;
+typedef ArpDirectionValue = #if true UInt #else Int #end ;
 
 /**
 	handled as mutable
