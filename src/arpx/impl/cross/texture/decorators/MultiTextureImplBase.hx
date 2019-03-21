@@ -59,8 +59,8 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 		return index;
 	}
 
-	override public function widthOf(params:IArpParamsRead = null):Int return this.getFaceData(params).width;
-	override public function heightOf(params:IArpParamsRead = null):Int return this.getFaceData(params).height;
+	override public function widthOf(params:IArpParamsRead = null):Float return this.getFaceData(params).width;
+	override public function heightOf(params:IArpParamsRead = null):Float return this.getFaceData(params).height;
 
 	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
 		rect.copyFrom(this.getFaceData(params).layoutSize);

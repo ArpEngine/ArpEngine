@@ -11,10 +11,10 @@ class TextureFaceDataImpl {
 
 	public var tile(default, null):Tile;
 
-	public var width(get, never):Int;
-	private function get_width():Int return this.tile.width;
-	public var height(get, never):Int;
-	private function get_height():Int return this.tile.height;
+	public var width(get, never):Float;
+	private function get_width():Float return this.tile.width;
+	public var height(get, never):Float;
+	private function get_height():Float return this.tile.height;
 
 	public var layoutSize(default, null):RectImpl;
 
@@ -28,7 +28,7 @@ class TextureFaceDataImpl {
 	}
 
 	inline public function trim(x:Float, y:Float, w:Float, h:Float, layoutSize:RectImpl = null):TextureFaceData {
-		return new TextureFaceDataImpl(this.tile.sub(Std.int(x), Std.int(y), Std.int(w), Std.int(h)), layoutSize);
+		return new TextureFaceDataImpl(this.tile.sub(x, y, w, h), layoutSize);
 	}
 
 	inline public function dispose():Void this.tile.dispose();
