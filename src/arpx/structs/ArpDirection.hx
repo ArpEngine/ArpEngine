@@ -1,12 +1,11 @@
 ﻿package arpx.structs;
 
+import haxe.Int32;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
 import arp.utils.ArpStringUtil;
-
-typedef ArpDirectionValue = UInt;
 
 /**
 	handled as mutable
@@ -49,7 +48,7 @@ class ArpDirection implements IArpStruct {
 	inline private static function get_NORTH():ArpDirection {return new ArpDirection(0xC0000000);}
 	inline private static function get_NORTH_EAST():ArpDirection {return new ArpDirection(0xE0000000);}
 
-	private static var VALS_BY_NAMES:Map<String, ArpDirectionValue> = [
+	private static var VALS_BY_NAMES:Map<String, Int32> = [
 		"right" => 0x00000000,
 		"rightdown" => 0x20000000,
 		"down" => 0x40000000,
@@ -79,16 +78,18 @@ class ArpDirection implements IArpStruct {
 	inline private static var REV_TO_VAL:Float = INT_MAX * 2;
 	inline private static var VAL_TO_REV:Float = 0.5 / INT_MAX;
 
-	@:isVar
-	public var value(default, set):ArpDirectionValue;
-	inline private function set_value(value:ArpDirectionValue):ArpDirectionValue return this.value = @:privateAccess haxe.Int32.clamp(value);
+	private var _value:Int32;
+
+	public var value(get, set):UInt;
+	inline private function get_value():UInt return (this._value:Int);
+	inline private function set_value(value:UInt):UInt { this._value = (value:Int); return value; }
 
 	public var valueRadian(get, set):Float;
 	private function get_valueRadian():Float {
 		return this.value * VAL_TO_RAD;
 	}
 	private function set_valueRadian(value:Float):Float {
-		this.value = Std.int(value * RAD_TO_VAL);
+		this._value = Std.int(value * RAD_TO_VAL);
 		return value;
 	}
 
@@ -97,7 +98,7 @@ class ArpDirection implements IArpStruct {
 		return this.value * VAL_TO_DEG;
 	}
 	private function set_valueDegree(value:Float):Float {
-		this.value = Std.int(value * DEG_TO_VAL);
+		this._value = Std.int(value * DEG_TO_VAL);
 		return value;
 	}
 
@@ -106,7 +107,7 @@ class ArpDirection implements IArpStruct {
 		return this.value * VAL_TO_REV;
 	}
 	private function set_valueRevolution(value:Float):Float {
-		this.value = Std.int(value * REV_TO_VAL);
+		this._value = Std.int(value * REV_TO_VAL);
 		return value;
 	}
 
@@ -114,16 +115,16 @@ class ArpDirection implements IArpStruct {
 		return Math.round(this.value * VAL_TO_REV * dirs) % dirs;
 	}
 
-	public function new(value:ArpDirectionValue = 0) {
-		this.value = value;
+	public function new(value:Int = 0) {
+		this._value = value;
 	}
 
 	public function clone():ArpDirection {
-		return new ArpDirection(this.value);
+		return new ArpDirection(this._value);
 	}
 
 	public function copyFrom(source:ArpDirection = null):ArpDirection {
-		this.value = source.value;
+		this._value = source._value;
 		return this;
 	}
 
@@ -141,7 +142,7 @@ class ArpDirection implements IArpStruct {
 		if (ArpStringUtil.isNumeric(definition)) {
 			this.valueDegree = ArpStringUtil.parseIntDefault(definition);
 		} else if (VALS_BY_NAMES.exists(definition)){
-			this.value = VALS_BY_NAMES.get(definition);
+			this._value = VALS_BY_NAMES.get(definition);
 		}
 		return this;
 	}
