@@ -37,11 +37,7 @@ class ArpParamsCase {
 		params["c"] = 10;
 		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10"), Std.string(params).split(","));
 		params["d"] = ArpDirection.LEFT;
-		#if flash
 		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:2147483648:idir"), Std.string(params).split(","));
-		#else
-		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:-2147483648:idir"), Std.string(params).split(","));
-		#end
 	}
 
 	public function initWithSeedTest():Void {
