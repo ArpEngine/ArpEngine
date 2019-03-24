@@ -6,7 +6,7 @@ import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
 import arp.utils.ArpStringUtil;
 
-typedef ArpDirectionValue = #if true UInt #else Int #end ;
+typedef ArpDirectionValue = UInt;
 
 /**
 	handled as mutable
@@ -79,7 +79,9 @@ class ArpDirection implements IArpStruct {
 	inline private static var REV_TO_VAL:Float = INT_MAX * 2;
 	inline private static var VAL_TO_REV:Float = 0.5 / INT_MAX;
 
-	public var value:ArpDirectionValue;
+	@:isVar
+	public var value(default, set):ArpDirectionValue;
+	inline private function set_value(value:ArpDirectionValue):ArpDirectionValue return this.value = @:privateAccess haxe.Int32.clamp(value);
 
 	public var valueRadian(get, set):Float;
 	private function get_valueRadian():Float {
