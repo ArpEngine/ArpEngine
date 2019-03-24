@@ -1,5 +1,7 @@
 package arpx.structs;
 
+import arpx.structs.params.ArpParamsValue;
+
 interface IArpParamsRead {
 	function getInt(key:ArpParamsKey, defaultValue:Int = null):Null<Int>;
 	function getFloat(key:ArpParamsKey, defaultValue:Float = null):Null<Float>;
@@ -9,7 +11,7 @@ interface IArpParamsRead {
 
 	function getAsString(key:ArpParamsKey, defaultValue:String = null):String;
 
-	function get(key:ArpParamsKey):Dynamic;
+	function get(key:ArpParamsKey):ArpParamsValue;
 	function keys():Iterator<ArpParamsKey>;
 
 	function toString():String;

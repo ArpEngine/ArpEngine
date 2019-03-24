@@ -6,7 +6,7 @@ class EmptyArpParams implements IArpParamsRead {
 
 	public function new() return;
 
-	inline public function get(key:ArpParamsKey):Dynamic return null;
+	inline public function get(key:ArpParamsKey):ArpParamsValue return null;
 	inline public function keys():Iterator<ArpParamsKey> return ArpParamsKey.keys();
 
 	public function getInt(key:ArpParamsKey, defaultValue = null):Null<Int> return defaultValue;

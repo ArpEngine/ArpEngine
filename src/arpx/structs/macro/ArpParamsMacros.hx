@@ -12,7 +12,7 @@ class ArpParamsMacros {
 			expr: ExprDef.ECast(macro d, TypeTools.toComplexType(Context.getExpectedType()))
 		};
 		return macro @:mergeBlock {
-			var d:Dynamic = this.get($e{ key });
+			var d:arpx.structs.params.ArpParamsValue = this.get($e{ key });
 			var v = if (d == null) $e{ defaultValue } else if (!Std.is(d, $e{classExpr})) throw "Wrong type in ArpParams" else $e{ safeCast };
 			return v;
 		}
@@ -27,7 +27,7 @@ class ArpParamsMacros {
 			}
 		} else {
 			macro @:mergeBlock {
-				var d:Dynamic = this.get($e{ key });
+				var d:arpx.structs.params.ArpParamsValue = this.get($e{ key });
 				var v = if (d == null) $e{ defaultValue } else Std.string(d);
 				return v;
 			}
