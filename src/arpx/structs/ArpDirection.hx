@@ -82,14 +82,14 @@ class ArpDirection implements IArpStruct {
 
 	public var value(get, set):UInt;
 	inline private function get_value():UInt return (this._value:Int);
-	inline private function set_value(value:UInt):UInt { this._value = (value:Int); return value; }
+	inline private function set_value(value:UInt):UInt { this._value = clampInt(value); return value; }
 
 	public var valueRadian(get, set):Float;
 	private function get_valueRadian():Float {
 		return this.value * VAL_TO_RAD;
 	}
 	private function set_valueRadian(value:Float):Float {
-		this._value = Std.int(value * RAD_TO_VAL);
+		this._value = clampInt(value * RAD_TO_VAL);
 		return value;
 	}
 
@@ -98,7 +98,7 @@ class ArpDirection implements IArpStruct {
 		return this.value * VAL_TO_DEG;
 	}
 	private function set_valueDegree(value:Float):Float {
-		this._value = Std.int(value * DEG_TO_VAL);
+		this._value = clampInt(value * DEG_TO_VAL);
 		return value;
 	}
 
@@ -107,7 +107,7 @@ class ArpDirection implements IArpStruct {
 		return this.value * VAL_TO_REV;
 	}
 	private function set_valueRevolution(value:Float):Float {
-		this._value = Std.int(value * REV_TO_VAL);
+		this._value = clampInt(value * REV_TO_VAL);
 		return value;
 	}
 
@@ -116,7 +116,7 @@ class ArpDirection implements IArpStruct {
 	}
 
 	public function new(value:Int = 0) {
-		this._value = value;
+		this._value = clampInt(value);
 	}
 
 	public function clone():ArpDirection {
@@ -148,15 +148,15 @@ class ArpDirection implements IArpStruct {
 	}
 
 	public static function fromDegree(value:Float):ArpDirection {
-		return new ArpDirection(Std.int(value * DEG_TO_VAL));
+		return new ArpDirection(clampInt(value * DEG_TO_VAL));
 	}
 
 	public static function fromRadian(value:Float):ArpDirection {
-		return new ArpDirection(Std.int(value * RAD_TO_VAL));
+		return new ArpDirection(clampInt(value * RAD_TO_VAL));
 	}
 
 	public static function fromRevolution(value:Float):ArpDirection {
-		return new ArpDirection(Std.int(value * REV_TO_VAL));
+		return new ArpDirection(clampInt(value * REV_TO_VAL));
 	}
 
 	public function toString():String {
@@ -164,10 +164,12 @@ class ArpDirection implements IArpStruct {
 	}
 
 	public function readSelf(input:IPersistInput):Void {
-		this.value = Std.int(input.readUInt32("dir"));
+		this._value = clampInt(input.readUInt32("dir"));
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
 		output.writeUInt32("dir", this.value);
 	}
+
+	inline private static function clampInt(value:Float):Int32 return @:privateAccess haxe.Int32.clamp(Std.int(value));
 }
