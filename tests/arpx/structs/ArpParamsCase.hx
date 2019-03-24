@@ -25,7 +25,7 @@ class ArpParamsCase {
 		params.set("e", "f");
 		assertEquals("b", params["a"]);
 		assertEquals(10, params["c"]);
-		assertEquals(ArpDirection.LEFT.value, params["d"].value);
+		assertEquals(ArpDirection.LEFT.value, params.getArpDirection("d").value);
 		assertEquals("f", params["e"]);
 	}
 
@@ -45,7 +45,7 @@ class ArpParamsCase {
 		params.initWithSeed(ArpSeed.fromXmlString("<params>a:b,c:10,d:-2147483648:idir,faceValue</params>"));
 		assertEquals("b", params["a"]);
 		assertEquals(10, params["c"]);
-		assertEquals(ArpDirection.LEFT.value, params["d"].value);
+		assertEquals(ArpDirection.LEFT.value, params.getArpDirection("d").value);
 		assertEquals("faceValue", params["face"]);
 	}
 
@@ -57,7 +57,7 @@ class ArpParamsCase {
 		var params2:ArpParamsProxy = params.clone();
 		assertEquals(params["a"], params2["a"]);
 		assertEquals(params["c"], params2["c"]);
-		assertEquals(params["d"].value, params2["d"].value);
+		assertEquals(params.getArpDirection("d").value, params2.getArpDirection("d").value);
 	}
 
 	public function testCopyFrom():Void {
@@ -68,7 +68,7 @@ class ArpParamsCase {
 		var params2:ArpParamsProxy = new ArpParams().copyFrom(params);
 		assertEquals(params["a"], params2["a"]);
 		assertEquals(params["c"], params2["c"]);
-		assertEquals(params["d"].value, params2["d"].value);
+		assertEquals(params.getArpDirection("d").value, params2.getArpDirection("d").value);
 	}
 
 	public function testPersist():Void {
@@ -81,7 +81,7 @@ class ArpParamsCase {
 		params2.readSelf(provider.input);
 		assertEquals(params["a"], params2["a"]);
 		assertEquals(params["c"], params2["c"]);
-		assertEquals(params["d"].value, params2["d"].value);
+		assertEquals(params.getArpDirection("d").value, params2.getArpDirection("d").value);
 	}
 
 	public function testGetSafe():Void {
