@@ -161,7 +161,7 @@ class ArpDirection implements IArpStruct {
 	}
 
 	public function readSelf(input:IPersistInput):Void {
-		this.value = input.readUInt32("dir");
+		this.value = Std.int(input.readUInt32("dir"));
 	}
 
 	public function writeSelf(output:IPersistOutput):Void {
