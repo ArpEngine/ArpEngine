@@ -1,5 +1,6 @@
 package arpx.structs;
 
+import arpx.structs.params.ArpParamsValue;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
@@ -17,7 +18,7 @@ class ArpParams extends ReadOnlyArpParams implements IArpStruct implements IArpP
 
 	public function new() super();
 
-	inline public function set(key:ArpParamsKey, value:Dynamic):Void this.impl[key.index] = value;
+	inline public function set(key:ArpParamsKey, value:ArpParamsValue):Void this.impl[key.index] = value;
 	inline public function clear():Void this.impl = [];
 
 	public function initWithSeed(seed:ArpSeed):ArpParams {

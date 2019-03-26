@@ -90,25 +90,25 @@ class ArpParamsCase {
 		params["str"] = "aaaa";
 		params["int"] = 10;
 
-		assertEquals(params.getString("null"), null);
-		assertEquals(params.getString("str"), "aaaa");
+		assertEquals(null, params.getString("null"));
+		assertEquals("aaaa", params.getString("str"));
 		assertThrows(function() params.getString("int"), e -> assertEquals("Wrong type in ArpParams", e));
 
-		assertEquals(params.getString("null", "default"), "default");
-		assertEquals(params.getString("str", "default"), "aaaa");
+		assertEquals("default", params.getString("null", "default"));
+		assertEquals("aaaa", params.getString("str", "default"));
 		assertThrows(function() params.getString("int"), e -> assertEquals("Wrong type in ArpParams", e));
 
-		assertEquals(params.getInt("null"), null);
-		assertEquals(params.getInt("int"), 10);
+		assertEquals(null, params.getInt("null"));
+		assertEquals(10, params.getInt("int"));
 		assertThrows(function() params.getInt("str"), e -> assertEquals("Wrong type in ArpParams", e));
 
-		assertEquals(params.getInt("null", 30), 30);
-		assertEquals(params.getInt("int", 30), 10);
+		assertEquals(30, params.getInt("null", 30));
+		assertEquals(10, params.getInt("int", 30));
 		assertThrows(function() params.getInt("str"), e -> assertEquals("Wrong type in ArpParams", e));
 
-		assertEquals(params.getAsString("null"), null);
-		assertEquals(params.getAsString("str"), "aaaa");
-		assertEquals(params.getAsString("int"), "10");
+		assertEquals(null, params.getAsString("null"));
+		assertEquals("aaaa", params.getAsString("str"));
+		assertEquals("10", params.getAsString("int"));
 	}
 }
 

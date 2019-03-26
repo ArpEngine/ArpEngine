@@ -12,7 +12,7 @@ class ArpParamsMacros {
 			expr: ExprDef.ECast(macro d, TypeTools.toComplexType(Context.getExpectedType()))
 		};
 		return macro @:mergeBlock {
-			var d:Dynamic = this.get($e{ key });
+			var d:arpx.structs.params.ArpParamsValue = this.get($e{ key });
 			var v = if (d == null) $e{ defaultValue } else if (!Std.is(d, $e{classExpr})) throw "Wrong type in ArpParams" else $e{ safeCast };
 			return v;
 		}
@@ -20,18 +20,19 @@ class ArpParamsMacros {
 
 	macro public static function getAsString(key:Expr, defaultValue:Expr):Expr {
 		return if (Context.defined("flash")) {
+			// avoid Std.string() because flash.Boot.string_rec() calls flash.utils.getQualifiedClassName(), which is very heavy
 			macro @:mergeBlock {
 				var d:String = this.get($e{ key });
 				var v = if (d == null) $e{ defaultValue } else d;
 				return v;
 			}
 		} else {
+			// Make sure Std.string(d) is not optimized away
 			macro @:mergeBlock {
-				var d:Dynamic = this.get($e{ key });
-				var v = if (d == null) $e{ defaultValue } else Std.string(d);
+				var d:arpx.structs.params.ArpParamsValue = this.get($e{ key });
+				var v = if (d == null) $e{ defaultValue } else Std.string(cast d);
 				return v;
 			}
-
 		}
 	}
 }

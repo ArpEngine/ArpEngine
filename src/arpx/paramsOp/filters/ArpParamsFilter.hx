@@ -4,6 +4,7 @@ import arpx.structs.ArpDirection;
 import arpx.structs.ArpParamsKey;
 import arpx.structs.IArpParamsRead;
 import arpx.structs.macro.ArpParamsMacros;
+import arpx.structs.params.ArpParamsValue;
 
 class ArpParamsFilter implements IArpParamsRead {
 	private var params:IArpParamsRead;
@@ -17,7 +18,7 @@ class ArpParamsFilter implements IArpParamsRead {
 
 	public function getAsString(key:ArpParamsKey, defaultValue:String = null):String return ArpParamsMacros.getAsString(key, defaultValue);
 
-	public function get(key:ArpParamsKey):Dynamic return this.params.get(key);
+	public function get(key:ArpParamsKey):ArpParamsValue return this.params.get(key);
 	public function keys():Iterator<ArpParamsKey> return this.params.keys();
 
 	public function toString():String return this.params.toString();
