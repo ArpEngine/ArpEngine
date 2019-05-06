@@ -35,6 +35,19 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 				@:privateAccess this.input.keyStates.set(e.keyCode, true);
 			case EKeyUp:
 				@:privateAccess this.input.keyStates.set(e.keyCode, false);
+			case EMove:
+				@:privateAccess this.input.mouseX = e.relX;
+				@:privateAccess this.input.mouseY = e.relY;
+			case EPush:
+				@:privateAccess this.input.mouseX = e.relX;
+				@:privateAccess this.input.mouseY = e.relY;
+				@:privateAccess this.input.mouseLeft = true;
+			case ERelease:
+				@:privateAccess this.input.mouseX = e.relX;
+				@:privateAccess this.input.mouseY = e.relY;
+				@:privateAccess this.input.mouseLeft = false;
+			case EReleaseOutside:
+				@:privateAccess this.input.mouseLeft = false;
 			case _:
 		}
 	}
