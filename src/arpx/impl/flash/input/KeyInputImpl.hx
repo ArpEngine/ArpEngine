@@ -20,8 +20,8 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 		this.input = input;
 	}
 
-	public function listen(context:InputContext):Void {
-		this.target = context.impl.target;
+	public function listen():Void {
+		this.target = InputContext.instance.impl.target;
 		this.target.addEventListener(Event.DEACTIVATE, this.onDeactivate);
 		this.target.addEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
 		this.target.addEventListener(KeyboardEvent.KEY_UP, this.onKeyUp);

@@ -2,7 +2,6 @@ package arpx.impl.heaps.input;
 
 #if (arp_input_backend_heaps || arp_backend_display)
 
-import arpx.impl.cross.input.InputContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.input.KeyInput;
@@ -20,7 +19,7 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 		this.input = input;
 	}
 
-	public function listen(context:InputContext):Void {
+	public function listen():Void {
 		this.target = Window.getInstance();
 		this.target.addEventTarget(onEvent);
 	}
