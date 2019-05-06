@@ -1,6 +1,6 @@
 package arpx.impl.js.input;
 
-#if arp_input_backend_js
+#if (arp_input_backend_js || arp_backend_display)
 
 import js.html.Element;
 
