@@ -2,26 +2,32 @@ package arpx.impl.heaps.input;
 
 #if (arp_input_backend_heaps || arp_backend_display)
 
+import arpx.impl.cross.input.InputContext;
+import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.input.IInputImpl;
+import arpx.input.KeyInput;
 import hxd.Event;
 import hxd.Window;
-import arpx.impl.ArpObjectImplBase;
-import arpx.input.KeyInput;
 
 class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 
 	private var input:KeyInput;
+
+	private var target:Window;
 
 	public function new(input:KeyInput) {
 		super();
 		this.input = input;
 	}
 
-	public function listen():Void {
-		Window.getInstance().addEventTarget(onEvent);
+	public function listen(context:InputContext):Void {
+		this.target = Window.getInstance();
+		this.target.addEventTarget(onEvent);
 	}
 
 	public function purge():Void {
-		Window.getInstance().removeEventTarget(onEvent);
+		this.target.removeEventTarget(onEvent);
+		this.target = null;
 	}
 
 	private function onEvent(e:Event):Void {

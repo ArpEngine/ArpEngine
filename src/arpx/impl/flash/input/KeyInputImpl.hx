@@ -2,11 +2,13 @@ package arpx.impl.flash.input;
 
 #if (arp_input_backend_flash || arp_backend_display)
 
+import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.input.IInputImpl;
+import arpx.impl.cross.input.InputContext;
+import arpx.input.KeyInput;
 import flash.events.Event;
 import flash.events.IEventDispatcher;
 import flash.events.KeyboardEvent;
-import arpx.impl.ArpObjectImplBase;
-import arpx.input.KeyInput;
 
 class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 
@@ -18,8 +20,8 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 		this.input = input;
 	}
 
-	public function listen(target:IEventDispatcher):Void {
-		this.target = target;
+	public function listen(context:InputContext):Void {
+		this.target = context.impl.target;
 		this.target.addEventListener(Event.DEACTIVATE, this.onDeactivate);
 		this.target.addEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
 		this.target.addEventListener(KeyboardEvent.KEY_UP, this.onKeyUp);

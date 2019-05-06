@@ -1,5 +1,6 @@
 package arpx;
 
+import arpx.impl.cross.input.InputContext;
 import arpx.impl.cross.audio.AudioContext;
 import arp.domain.ArpDomain;
 import arpx.impl.cross.display.DisplayContext;
@@ -14,6 +15,9 @@ class ArpEngine {
 
 	public var displayContext(get, never):DisplayContext;
 	inline private function get_displayContext():DisplayContext return shell.displayContext;
+
+	public var inputContext(get, never):InputContext;
+	inline private function get_inputContext():InputContext return InputContext.instance;
 
 	public var audioContext(get, never):AudioContext;
 	inline private function get_audioContext():AudioContext return AudioContext.instance;
