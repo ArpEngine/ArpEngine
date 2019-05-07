@@ -3,6 +3,7 @@ package arpx.impl.heaps.input;
 #if (arp_input_backend_heaps || arp_backend_display)
 
 import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.impl.cross.input.InputContext;
 import arpx.input.localInput.LocalInputSource;
@@ -14,6 +15,7 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 
 	private var input:LocalInput;
 
+	private var context:InputContext;
 	private var target:Window;
 
 	public function new(input:LocalInput) {
@@ -22,6 +24,7 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	public function listen(context:InputContext):Void {
+		this.context = context;
 		this.target = Window.getInstance();
 		this.target.addEventTarget(onEvent);
 	}
@@ -29,6 +32,13 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	public function purge():Void {
 		this.target.removeEventTarget(onEvent);
 		this.target = null;
+		this.context = null;
+	}
+
+	private function readMousePosition(e:Event):Void {
+		var pt:PointImpl = context.rawToWorld(e.relX, e.relY);
+		this.input.setState(LocalInputSource.MouseX, pt.x);
+		this.input.setState(LocalInputSource.MouseY, pt.y);
 	}
 
 	private function onEvent(e:Event):Void {
@@ -38,15 +48,12 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 			case EKeyUp:
 				this.input.unsetState(LocalInputSource.Key(e.keyCode));
 			case EMove:
-				this.input.setState(LocalInputSource.MouseX, e.relX);
-				this.input.setState(LocalInputSource.MouseY, e.relY);
+				readMousePosition(e);
 			case EPush:
-				this.input.setState(LocalInputSource.MouseX, e.relX);
-				this.input.setState(LocalInputSource.MouseY, e.relY);
+				readMousePosition(e);
 				this.input.setState(LocalInputSource.MouseLeft);
 			case ERelease:
-				this.input.setState(LocalInputSource.MouseX, e.relX);
-				this.input.setState(LocalInputSource.MouseY, e.relY);
+				readMousePosition(e);
 				this.input.unsetState(LocalInputSource.MouseLeft);
 			case EReleaseOutside:
 				this.input.unsetState(LocalInputSource.MouseLeft);

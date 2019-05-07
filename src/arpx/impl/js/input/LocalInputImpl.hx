@@ -3,6 +3,7 @@ package arpx.impl.js.input;
 #if (arp_input_backend_js || arp_backend_display)
 
 import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.impl.cross.input.InputContext;
 import arpx.input.localInput.LocalInputSource;
@@ -22,6 +23,8 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	inline private static var MOUSEUP:String = "mouseup";
 
 	private var input:LocalInput;
+
+	private var context:InputContext;
 	private var target:Element;
 
 	public function new(input:LocalInput) {
@@ -30,6 +33,7 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	public function listen(context:InputContext):Void {
+		this.context = context;
 		this.target = context.impl.target;
 		this.target.addEventListener(DEACTIVATE, this.onDeactivate);
 		this.target.addEventListener(KEYDOWN, this.onKeyDown);
@@ -47,6 +51,7 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 		this.target.removeEventListener(MOUSEDOWN, this.onMouseDown);
 		this.target.ownerDocument.removeEventListener(MOUSEUP, this.onMouseUp);
 		this.target = null;
+		this.context = null;
 	}
 
 	private function onDeactivate(event:Event):Void {
@@ -64,8 +69,9 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	private function onMouseMove(event:MouseEvent):Void {
-		this.input.setState(LocalInputSource.MouseX, event.x);
-		this.input.setState(LocalInputSource.MouseY, event.y);
+		var pt:PointImpl = context.rawToWorld(event.x, event.y);
+		this.input.setState(LocalInputSource.MouseX, pt.x);
+		this.input.setState(LocalInputSource.MouseY, pt.y);
 	}
 
 	private function onMouseDown(event:MouseEvent):Void {

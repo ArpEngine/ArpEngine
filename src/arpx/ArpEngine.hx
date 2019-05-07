@@ -17,7 +17,7 @@ class ArpEngine {
 	inline private function get_displayContext():DisplayContext return shell.displayContext;
 
 	public var inputContext(get, never):InputContext;
-	inline private function get_inputContext():InputContext return InputContext.instance;
+	inline private function get_inputContext():InputContext return shell.inputContext;
 
 	public var audioContext(get, never):AudioContext;
 	inline private function get_audioContext():AudioContext return AudioContext.instance;
