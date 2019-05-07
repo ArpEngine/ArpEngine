@@ -2,9 +2,10 @@ package arpx.impl.heaps.input;
 
 #if (arp_input_backend_heaps || arp_backend_display)
 
-import arpx.input.localInput.LocalInputSource;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
+import arpx.impl.cross.input.InputContext;
+import arpx.input.localInput.LocalInputSource;
 import arpx.input.LocalInput;
 import hxd.Event;
 import hxd.Window;
@@ -20,7 +21,7 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 		this.input = input;
 	}
 
-	public function listen():Void {
+	public function listen(context:InputContext):Void {
 		this.target = Window.getInstance();
 		this.target.addEventTarget(onEvent);
 	}

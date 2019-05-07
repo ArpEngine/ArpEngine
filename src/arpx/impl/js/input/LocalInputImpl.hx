@@ -29,8 +29,8 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 		this.input = input;
 	}
 
-	public function listen():Void {
-		this.target = InputContext.instance.impl.target;
+	public function listen(context:InputContext):Void {
+		this.target = context.impl.target;
 		this.target.addEventListener(DEACTIVATE, this.onDeactivate);
 		this.target.addEventListener(KEYDOWN, this.onKeyDown);
 		this.target.addEventListener(KEYUP, this.onKeyUp);
