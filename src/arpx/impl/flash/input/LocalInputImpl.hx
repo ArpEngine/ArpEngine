@@ -2,14 +2,15 @@ package arpx.impl.flash.input;
 
 #if (arp_input_backend_flash || arp_backend_display)
 
-import flash.events.MouseEvent;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.impl.cross.input.InputContext;
+import arpx.input.localInput.LocalInputSource;
 import arpx.input.LocalInput;
 import flash.events.Event;
 import flash.events.IEventDispatcher;
 import flash.events.KeyboardEvent;
+import flash.events.MouseEvent;
 
 class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 
@@ -46,24 +47,24 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	private function onKeyDown(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, true);
+		this.input.setState(LocalInputSource.Key(event.keyCode));
 	}
 
 	private function onKeyUp(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, false);
+		this.input.unsetState(LocalInputSource.Key(event.keyCode));
 	}
 
 	private function onMouseMove(event:MouseEvent):Void {
-		@:privateAccess this.input.mouseX = event.stageX;
-		@:privateAccess this.input.mouseY = event.stageY;
+		this.input.setState(LocalInputSource.MouseX, event.stageX);
+		this.input.setState(LocalInputSource.MouseY, event.stageY);
 	}
 
 	private function onMouseDown(event:MouseEvent):Void {
-		@:privateAccess this.input.mouseLeft = true;
+		this.input.setState(LocalInputSource.MouseLeft);
 	}
 
 	private function onMouseUp(event:MouseEvent):Void {
-		@:privateAccess this.input.mouseLeft = false;
+		this.input.unsetState(LocalInputSource.MouseLeft);
 	}
 }
 

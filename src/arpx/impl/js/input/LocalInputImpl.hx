@@ -5,6 +5,7 @@ package arpx.impl.js.input;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.impl.cross.input.InputContext;
+import arpx.input.localInput.LocalInputSource;
 import arpx.input.LocalInput;
 import js.html.Element;
 import js.html.Event;
@@ -53,26 +54,26 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	private function onKeyDown(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, true);
+		this.input.setState(LocalInputSource.Key(event.keyCode));
 		event.preventDefault();
 	}
 
 	private function onKeyUp(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, false);
+		this.input.unsetState(LocalInputSource.Key(event.keyCode));
 		event.preventDefault();
 	}
 
 	private function onMouseMove(event:MouseEvent):Void {
-		@:privateAccess this.input.mouseX = event.x;
-		@:privateAccess this.input.mouseY = event.y;
+		this.input.setState(LocalInputSource.MouseX, event.x);
+		this.input.setState(LocalInputSource.MouseY, event.y);
 	}
 
 	private function onMouseDown(event:MouseEvent):Void {
-		@:privateAccess this.input.mouseLeft = true;
+		this.input.setState(LocalInputSource.MouseLeft);
 	}
 
 	private function onMouseUp(event:MouseEvent):Void {
-		@:privateAccess this.input.mouseLeft = false;
+		this.input.unsetState(LocalInputSource.MouseLeft);
 	}
 }
 

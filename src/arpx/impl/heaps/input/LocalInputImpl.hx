@@ -2,6 +2,7 @@ package arpx.impl.heaps.input;
 
 #if (arp_input_backend_heaps || arp_backend_display)
 
+import arpx.input.localInput.LocalInputSource;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.input.LocalInput;
@@ -32,22 +33,22 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 	private function onEvent(e:Event):Void {
 		switch( e.kind ) {
 			case EKeyDown:
-				@:privateAccess this.input.keyStates.set(e.keyCode, true);
+				this.input.setState(LocalInputSource.Key(e.keyCode));
 			case EKeyUp:
-				@:privateAccess this.input.keyStates.set(e.keyCode, false);
+				this.input.unsetState(LocalInputSource.Key(e.keyCode));
 			case EMove:
-				@:privateAccess this.input.mouseX = e.relX;
-				@:privateAccess this.input.mouseY = e.relY;
+				this.input.setState(LocalInputSource.MouseX, e.relX);
+				this.input.setState(LocalInputSource.MouseY, e.relY);
 			case EPush:
-				@:privateAccess this.input.mouseX = e.relX;
-				@:privateAccess this.input.mouseY = e.relY;
-				@:privateAccess this.input.mouseLeft = true;
+				this.input.setState(LocalInputSource.MouseX, e.relX);
+				this.input.setState(LocalInputSource.MouseY, e.relY);
+				this.input.setState(LocalInputSource.MouseLeft);
 			case ERelease:
-				@:privateAccess this.input.mouseX = e.relX;
-				@:privateAccess this.input.mouseY = e.relY;
-				@:privateAccess this.input.mouseLeft = false;
+				this.input.setState(LocalInputSource.MouseX, e.relX);
+				this.input.setState(LocalInputSource.MouseY, e.relY);
+				this.input.unsetState(LocalInputSource.MouseLeft);
 			case EReleaseOutside:
-				@:privateAccess this.input.mouseLeft = false;
+				this.input.unsetState(LocalInputSource.MouseLeft);
 			case _:
 		}
 	}
