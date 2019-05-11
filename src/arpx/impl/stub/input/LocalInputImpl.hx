@@ -5,13 +5,13 @@ package arpx.impl.stub.input;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.impl.cross.input.InputContext;
-import arpx.input.KeyInput;
+import arpx.input.LocalInput;
 
-class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
+class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 
-	private var input:KeyInput;
+	private var input:LocalInput;
 
-	public function new(input:KeyInput) {
+	public function new(input:LocalInput) {
 		super();
 		this.input = input;
 	}

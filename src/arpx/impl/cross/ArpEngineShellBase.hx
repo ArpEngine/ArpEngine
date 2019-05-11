@@ -1,5 +1,6 @@
 package arpx.impl.cross;
 
+import arpx.impl.cross.input.InputContext;
 import arpx.ArpEngineShellBufferMode;
 import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.cross.display.RenderContext;
@@ -15,6 +16,8 @@ class ArpEngineShellBase {
 		if (this._displayContext != null) return this._displayContext;
 		return this._displayContext = createDisplayContext();
 	}
+
+	public var inputContext(default, null):InputContext;
 
 	private var width:Int;
 	private var height:Int;
@@ -48,6 +51,8 @@ class ArpEngineShellBase {
 			this.onTick = config.eventParams.onTick;
 			this.onRender = config.eventParams.onRender;
 		}
+
+		this.inputContext = InputContext.create(config);
 	}
 
 	private function createDisplayContext():DisplayContext return null;

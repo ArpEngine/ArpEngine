@@ -2,12 +2,13 @@ package arpx.impl.js.input;
 
 #if (arp_input_backend_js || arp_backend_display)
 
-import js.html.KeyboardEvent;
-import js.html.Event;
-import js.html.Element;
-
+import arpx.impl.cross.input.InputContext;
 import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.input.IInputImpl;
 import arpx.input.KeyInput;
+import js.html.Element;
+import js.html.Event;
+import js.html.KeyboardEvent;
 
 class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 
@@ -23,8 +24,8 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 		this.input = input;
 	}
 
-	public function listen(target:Element):Void {
-		this.target = target;
+	public function listen(context:InputContext):Void {
+		this.target = context.impl.target;
 		this.target.addEventListener(DEACTIVATE, this.onDeactivate);
 		this.target.addEventListener(KEYDOWN, this.onKeyDown);
 		this.target.addEventListener(KEYUP, this.onKeyUp);

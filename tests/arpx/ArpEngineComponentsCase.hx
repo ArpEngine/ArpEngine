@@ -1,5 +1,7 @@
 ﻿package arpx;
 
+import arpx.input.LocalInput;
+import arpx.input.KeyInput;
 import arpx.texture.decorators.GridTexture;
 import arpx.chip.TextureChip;
 import arpx.anchor.Anchor;
@@ -70,6 +72,9 @@ class ArpEngineComponentsCase {
 
 		assertNotNull(new File());
 		assertNotNull(new ResourceFile());
+
+		assertNotNull(new KeyInput());
+		assertNotNull(new LocalInput());
 
 		assertNotNull(new Logger());
 		assertNotNull(new SocketClientLogger());
