@@ -13,6 +13,6 @@ class PassiveInput extends Input {
 	public function new() super();
 
 	override public function axis(button:String):InputAxis {
-		return this.enabled ? this.input.axis(button) : new InputAxis();
+		return this.enabled ? this.input.axis(button) : this.axis(button);
 	}
 }

@@ -4,7 +4,7 @@ import arp.ds.impl.ArrayList;
 import arpx.impl.cross.input.KeyInputImpl;
 
 @:arpType("input", "key")
-class KeyInput extends PhysicalInput {
+class KeyInput extends Input {
 
 	private var keyBindings:ArrayList<KeyInputBinding>;
 	private var keyStates:Map<Int, Bool>;

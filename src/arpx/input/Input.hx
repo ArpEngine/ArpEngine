@@ -1,5 +1,7 @@
 package arpx.input;
 
+import arp.ds.IMap;
+import arp.ds.impl.StdMap;
 import arp.task.ITickable;
 import arp.domain.IArpObject;
 import arpx.impl.cross.input.IInputImpl;
@@ -10,9 +12,22 @@ class Input implements IArpObject implements IFocusNode<Input> implements ITicka
 
 	@:arpImpl private var arpImpl:IInputImpl;
 
-	public function new() return;
+	public var inputAxes:IMap<String, InputAxis>;
 
-	public function axis(button:String):InputAxis return new InputAxis();
+	public function new() {
+		this.inputAxes = new StdMap<String, InputAxis>();
+	}
+
+	public function axis(button:String):InputAxis {
+		if (this.inputAxes.hasKey(button)) {
+			return this.inputAxes.get(button);
+		}
+		var axis:InputAxis = new InputAxis();
+		this.inputAxes.set(button, axis);
+		return axis;
+	}
+
+	public function clear():Void this.inputAxes.clear();
 
 	public function tick(timeslice:Float):Bool return true;
 
