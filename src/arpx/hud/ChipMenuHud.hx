@@ -3,7 +3,7 @@ package arpx.hud;
 import arpx.chip.Chip;
 import arpx.impl.cross.hud.ChipMenuHudImpl;
 import arpx.input.Input;
-import arpx.input.InputAxis;
+import arpx.inputAxis.InputAxis;
 import arpx.menu.Menu;
 import arpx.proc.Proc;
 import arpx.structs.ArpPosition;

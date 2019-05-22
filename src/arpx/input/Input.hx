@@ -6,6 +6,7 @@ import arp.task.ITickable;
 import arp.domain.IArpObject;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.input.focus.IFocusNode;
+import arpx.inputAxis.InputAxis;
 
 @:arpType("input", "null")
 class Input implements IArpObject implements IFocusNode<Input> implements ITickable implements IInputImpl {
@@ -22,7 +23,7 @@ class Input implements IArpObject implements IFocusNode<Input> implements ITicka
 		if (this.inputAxes.hasKey(button)) {
 			return this.inputAxes.get(button);
 		}
-		var axis:InputAxis = new InputAxis();
+		var axis:InputAxis = this.arpDomain.allocObject(InputAxis);
 		this.inputAxes.set(button, axis);
 		return axis;
 	}

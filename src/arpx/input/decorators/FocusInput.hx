@@ -1,6 +1,7 @@
 package arpx.input.decorators;
 
 import arpx.impl.cross.input.decorators.FocusInputImpl;
+import arpx.inputAxis.InputAxis;
 
 @:arpType("input", "focus")
 class FocusInput extends Input {
@@ -14,7 +15,7 @@ class FocusInput extends Input {
 	public function new() super();
 
 	override public function axis(button:String):InputAxis {
-		return this.focused ? this.input.axis(button) : this.axis(button);
+		return this.focused ? this.input.axis(button) : super.axis(button);
 	}
 
 	override public function findFocus(other:Null<Input>):Null<Input> {
