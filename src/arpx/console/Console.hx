@@ -4,32 +4,27 @@ import arp.domain.IArpObject;
 import arp.ds.IOmap;
 import arp.task.ITickable;
 import arpx.impl.cross.display.RenderContext;
-import arpx.input.focus.IFocusNode;
 import arpx.input.Input;
 import arpx.screen.Screen;
 
 @:arpType("console", "console")
-class Console implements IArpObject implements ITickable implements IFocusNode<Input> {
+class Console implements IArpObject implements ITickable {
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
+	@:arpField public var input:Input;
 	@:arpField(true) public var screens:IOmap<String, Screen>;
 
 	public function new() return;
 
 	public function tick(timeslice:Float):Bool {
+		this.input.tick(timeslice);
 		for (screen in this.screens) screen.tick(timeslice);
-		this.updateFocus(this.findFocus(null));
+
+		var focus:Screen = null;
+		for (screen in this.screens) focus = screen.findFocus(focus);
+		if (focus != null) focus.interact(this.input);
 		return true;
-	}
-
-	public function findFocus(other:Null<Input>):Null<Input> {
-		for (screen in this.screens) other = screen.findFocus(other);
-		return other;
-	}
-
-	public function updateFocus(target:Null<Input>):Void {
-		for (screen in this.screens) screen.updateFocus(target);
 	}
 
 	public function render(context:RenderContext):Void {

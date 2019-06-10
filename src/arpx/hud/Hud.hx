@@ -15,6 +15,7 @@ class Hud implements IArpObject implements ITickable implements IFocusNode<Hud> 
 	@:arpBarrier @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
 	@:arpField public var visible:Bool = true;
+	@:arpField public var focused:Bool = false;
 	@:arpField public var params:ArpParams;
 
 	@:arpImpl private var arpImpl:IHudImpl;
@@ -27,10 +28,6 @@ class Hud implements IArpObject implements ITickable implements IFocusNode<Hud> 
 
 	public function findFocus(other:Null<Hud>):Null<Hud> {
 		return null;
-	}
-
-	public function updateFocus(target:Null<Hud>):Void {
-		return;
 	}
 
 	public function interact(input:Input):Bool {

@@ -2,7 +2,6 @@ package arpx.screen;
 
 import arp.ds.IOmap;
 import arpx.impl.cross.screen.CompositeScreenImpl;
-import arpx.input.Input;
 
 @:arpType("screen", "composite")
 class CompositeScreen extends Screen {
@@ -17,12 +16,8 @@ class CompositeScreen extends Screen {
 		return true;
 	}
 
-	override public function findFocus(other:Null<Input>):Null<Input> {
+	override public function findFocus(other:Null<Screen>):Null<Screen> {
 		for (screen in this.screens) other = screen.findFocus(other);
 		return other;
-	}
-
-	override public function updateFocus(target:Null<Input>):Void {
-		for (screen in this.screens) screen.updateFocus(target);
 	}
 }

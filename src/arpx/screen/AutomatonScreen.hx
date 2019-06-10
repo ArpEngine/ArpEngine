@@ -47,12 +47,12 @@ class AutomatonScreen extends Screen {
 		return true;
 	}
 
-	override public function findFocus(other:Null<Input>):Null<Input> {
-		return this.screen.findFocus(other);
+	override public function interact(input:Input):Bool {
+		return this.screen.interact(input);
 	}
 
-	override public function updateFocus(target:Null<Input>):Void {
-		this.screen.updateFocus(target);
+	override public function findFocus(other:Null<Screen>):Null<Screen> {
+		return this.screen.findFocus(other);
 	}
 
 	private static var _transitionStack:TransitionStack;

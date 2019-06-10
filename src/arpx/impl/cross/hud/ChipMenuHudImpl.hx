@@ -20,6 +20,7 @@ class ChipMenuHudImpl extends ArpObjectImplBase implements IHudImpl {
 
 	public function render(context:RenderContext):Void {
 		if (hud.visible && hud.chip != null) {
+			hud.focused = hud == context.focus;
 			var menu:Menu = hud.menu;
 			var pos:ArpPosition = hud.position;
 			var dPos:ArpPosition = hud.dPosition;

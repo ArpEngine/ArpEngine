@@ -1,5 +1,7 @@
 package arpx.field;
 
+import arpx.input.focus.IInteractable;
+import arpx.input.Input;
 import arp.domain.IArpObject;
 import arp.ds.decorators.OmapDecorator;
 import arp.ds.IOmap;
@@ -16,7 +18,7 @@ import arpx.mortal.Mortal;
 import arpx.reactFrame.ReactFrame;
 
 @:arpType("field")
-class Field implements IArpObject implements ITickable implements IFieldImpl {
+class Field implements IArpObject implements ITickable implements IInteractable implements IFieldImpl {
 
 	@:arpBarrier @:arpField(true) public var initMortals:IOmap<String, Mortal>;
 	@:arpBarrier @:arpField(false) private var _mortals:IOmap<String, Mortal>;
@@ -92,6 +94,8 @@ class Field implements IArpObject implements ITickable implements IFieldImpl {
 		});
 		return true;
 	}
+
+	public function interact(input:Input):Bool return false;
 
 	public function bulkHitRaw(srcHitType:String, hitType:String, callback:(a:HitMortal, b:HitMortal)->Bool):Void {
 		// TODO seriously use layer
