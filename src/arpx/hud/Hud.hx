@@ -4,14 +4,15 @@ import arp.domain.IArpObject;
 import arp.task.ITickable;
 import arpx.driver.Driver;
 import arpx.impl.cross.hud.IHudImpl;
-import arpx.input.focus.IFocusNode;
+import arpx.input.focus.IFocusTarget;
+import arpx.input.focus.IInteractable;
 import arpx.input.Input;
 import arpx.structs.ArpParams;
 import arpx.structs.ArpPosition;
 
 
 @:arpType("hud", "null")
-class Hud implements IArpObject implements ITickable implements IFocusNode<Hud> implements IHudImpl {
+class Hud implements IArpObject implements ITickable implements IFocusTarget implements IInteractable implements IHudImpl {
 	@:arpBarrier @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
 	@:arpField public var visible:Bool = true;
@@ -24,10 +25,6 @@ class Hud implements IArpObject implements ITickable implements IFocusNode<Hud> 
 
 	public function tick(timeslice:Float):Bool {
 		return true;
-	}
-
-	public function findFocus(other:Null<Hud>):Null<Hud> {
-		return null;
 	}
 
 	public function interact(input:Input):Bool {

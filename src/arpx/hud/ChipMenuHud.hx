@@ -23,10 +23,6 @@ class ChipMenuHud extends Hud {
 		super();
 	}
 
-	override public function findFocus(other:Null<Hud>):Null<Hud> {
-		return this.visible ? this : other;
-	}
-
 	override public function interact(input:Input):Bool {
 		var axis:InputAxis = input.axis(this.axis);
 		if (axis.isTrigger) {

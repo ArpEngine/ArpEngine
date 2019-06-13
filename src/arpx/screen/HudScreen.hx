@@ -18,17 +18,8 @@ class HudScreen extends Screen {
 
 	override public function interact(input:Input):Bool {
 		if (this.visible) {
-			var other:Null<Hud> = this.focus;
-			if (other == null) {
-				for (hud in this.huds) other = hud.findFocus(other);
-				this.focus = other;
-			}
-			if (other != null) return other.interact(input);
+			if (this.focus != null) return this.focus.interact(input);
 		}
 		return false;
-	}
-
-	override public function findFocus(other:Null<Screen>):Null<Screen> {
-		return if (this.visible) this else other;
 	}
 }

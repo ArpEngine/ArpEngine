@@ -4,7 +4,6 @@ import arp.ds.IMap;
 import arp.task.ITickable;
 import arp.domain.IArpObject;
 import arpx.impl.cross.input.IInputImpl;
-import arpx.input.focus.IFocusNode;
 import arpx.inputAxis.InputAxis;
 
 @:arpType("input", "null")

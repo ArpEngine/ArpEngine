@@ -6,6 +6,7 @@ import arp.task.ITickable;
 import arpx.impl.cross.display.RenderContext;
 import arpx.input.Input;
 import arpx.screen.Screen;
+import haxe.ds.ArraySort;
 
 @:arpType("console", "console")
 class Console implements IArpObject implements ITickable {
@@ -21,9 +22,12 @@ class Console implements IArpObject implements ITickable {
 		this.input.tick(timeslice);
 		for (screen in this.screens) screen.tick(timeslice);
 
-		var focus:Screen = null;
-		for (screen in this.screens) focus = screen.findFocus(focus);
-		if (focus != null) focus.interact(this.input);
+		var layers:Array<Screen> = [];
+		for (screen in this.screens) screen.collectInputLayers(layers);
+		ArraySort.sort(layers, (a, b) -> b.priority - a.priority);
+		for (layer in layers) {
+			if (layer.interact(this.input)) break;
+		}
 		return true;
 	}
 

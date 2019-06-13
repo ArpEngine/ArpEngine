@@ -1,17 +1,17 @@
 package arpx.screen;
 
-import arpx.input.focus.IInteractable;
 import arp.domain.IArpObject;
 import arp.task.ITickable;
 import arpx.impl.cross.screen.IScreenImpl;
-import arpx.input.focus.IFocusNode;
+import arpx.input.focus.IInputLayer;
+import arpx.input.focus.IInteractable;
 import arpx.input.Input;
 
 @:arpType("screen", "null")
-class Screen implements IArpObject implements ITickable implements IInteractable implements IFocusNode<Screen> implements IScreenImpl {
+class Screen implements IArpObject implements ITickable implements IInteractable implements IInputLayer<Screen> implements IScreenImpl {
 	@:arpField public var ticks:Bool = true;
 	@:arpField public var visible:Bool = true;
-	@:arpField public var focused:Bool = false;
+	@:arpField public var priority:Int = 0;
 
 	@:arpImpl private var arpImpl:IScreenImpl;
 
@@ -25,7 +25,7 @@ class Screen implements IArpObject implements ITickable implements IInteractable
 		return false;
 	}
 
-	public function findFocus(other:Null<Screen>):Null<Screen> {
-		return null;
+	public function collectInputLayers(layers:Array<Screen>):Void {
+		if (this.visible) layers.push(this);
 	}
 }

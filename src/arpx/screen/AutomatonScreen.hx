@@ -51,8 +51,13 @@ class AutomatonScreen extends Screen {
 		return this.screen.interact(input);
 	}
 
-	override public function findFocus(other:Null<Screen>):Null<Screen> {
-		return this.screen.findFocus(other);
+	override public function collectInputLayers(layers:Array<Screen>):Void {
+		if (!this.visible) return;
+		if (this.priority != 0) {
+			layers.push(this);
+		} else {
+			this.screen.collectInputLayers(layers);
+		}
 	}
 
 	private static var _transitionStack:TransitionStack;

@@ -25,8 +25,4 @@ class FieldScreen extends Screen {
 	}
 
 	override public function interact(input:Input):Bool return this.field.interact(input);
-
-	override public function findFocus(other:Null<Screen>):Null<Screen> {
-		return if (this.visible) this else other;
-	}
 }
