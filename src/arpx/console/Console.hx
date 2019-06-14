@@ -24,9 +24,19 @@ class Console implements IArpObject implements ITickable {
 
 		var layers:Array<Screen> = [];
 		for (screen in this.screens) screen.collectInputLayers(layers);
-		ArraySort.sort(layers, (a, b) -> b.priority - a.priority);
-		for (layer in layers) {
-			if (layer.interact(this.input)) break;
+		var lastPriority:Int = 0x7fffffff;
+		while (lastPriority != 0x80000000) {
+			var priority:Int = 0x80000000;
+			for (layer in layers) {
+				var layerPriority:Int = layer.priority;
+				if (priority < layerPriority && layerPriority < lastPriority) priority = layerPriority;
+			}
+			for (layer in layers) {
+				if (layer.priority == priority) {
+					if (layer.interact(this.input)) return true;
+				}
+			}
+			lastPriority = priority;
 		}
 		return true;
 	}
