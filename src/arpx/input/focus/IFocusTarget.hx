@@ -1,9 +1,8 @@
 package arpx.input.focus;
 
 /**
- * This is just a marker interface for valid focus target in RenderContext
+ * This is mostly just a marker interface for valid focus target in RenderContext
  **/
-@:noDoc @:noCompletion
-interface IFocusTarget {
+interface IFocusTarget extends IInteractable {
 	var focused(get, set):Bool;
 }

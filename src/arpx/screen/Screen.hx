@@ -4,11 +4,10 @@ import arp.domain.IArpObject;
 import arp.task.ITickable;
 import arpx.impl.cross.screen.IScreenImpl;
 import arpx.input.focus.IInputLayer;
-import arpx.input.focus.IInteractable;
 import arpx.input.Input;
 
 @:arpType("screen", "null")
-class Screen implements IArpObject implements ITickable implements IInteractable implements IInputLayer<Screen> implements IScreenImpl {
+class Screen implements IArpObject implements ITickable implements IInputLayer<Screen> implements IScreenImpl {
 	@:arpField public var ticks:Bool = true;
 	@:arpField public var visible:Bool = true;
 	@:arpField public var priority:Int = 0;

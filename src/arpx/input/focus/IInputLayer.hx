@@ -3,8 +3,7 @@ package arpx.input.focus;
 /**
  * Prioritized Input receiver candidates
  **/
-@:noDoc @:noCompletion
-interface IInputLayer<T> {
+interface IInputLayer<T> extends IInteractable {
 	var priority(get, set):Int;
 	function collectInputLayers(layers:Array<T>):Void;
 }
