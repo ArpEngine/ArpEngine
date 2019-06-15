@@ -12,15 +12,6 @@ class CompositeHud extends Hud {
 	@:arpImpl private var arpImpl:CompositeHudImpl;
 
 	public function new() super();
-
-	override public function findFocus(other:Null<Hud>):Null<Hud> {
-		if (this.visible) for (hud in this.huds) other = hud.findFocus(other);
-		return other;
-	}
-
-	override public function updateFocus(target:Null<Hud>):Void {
-		for (hud in this.huds) hud.updateFocus(target);
-	}
 }
 
 

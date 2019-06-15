@@ -1,19 +1,17 @@
 package arpx.screen;
 
+import arpx.input.Input;
 import arp.ds.IList;
 import arpx.camera.Camera;
 import arpx.field.Field;
 import arpx.fieldGizmo.FieldGizmo;
 import arpx.impl.cross.screen.FieldScreenImpl;
-import arpx.input.Input;
-
 
 @:arpType("screen", "screen")
 class FieldScreen extends Screen {
 	@:arpField public var field:Field;
 	@:arpBarrier @:arpField(true) public var fieldGizmos:IList<FieldGizmo>;
 	@:arpField public var camera:Camera;
-	@:arpField public var input:Input;
 
 	@:arpImpl private var arpImpl:FieldScreenImpl;
 
@@ -26,11 +24,5 @@ class FieldScreen extends Screen {
 		return true;
 	}
 
-	override public function findFocus(other:Null<Input>):Null<Input> {
-		return if (this.visible && this.input != null) this.input.findFocus(other) else other;
-	}
-
-	override public function updateFocus(target:Null<Input>):Void {
-		if (this.visible && this.input != null) this.input.updateFocus(target);
-	}
+	override public function interact(input:Input):Bool return this.field.interact(input);
 }

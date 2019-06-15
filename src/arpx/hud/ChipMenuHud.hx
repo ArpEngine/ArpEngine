@@ -3,7 +3,7 @@ package arpx.hud;
 import arpx.chip.Chip;
 import arpx.impl.cross.hud.ChipMenuHudImpl;
 import arpx.input.Input;
-import arpx.input.InputAxis;
+import arpx.inputAxis.InputAxis;
 import arpx.menu.Menu;
 import arpx.proc.Proc;
 import arpx.structs.ArpPosition;
@@ -21,10 +21,6 @@ class ChipMenuHud extends Hud {
 
 	public function new() {
 		super();
-	}
-
-	override public function findFocus(other:Null<Hud>):Null<Hud> {
-		return this.visible ? this : other;
 	}
 
 	override public function interact(input:Input):Bool {

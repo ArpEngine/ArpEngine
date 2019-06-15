@@ -4,7 +4,11 @@ package arpx.impl.sys.display;
 
 @:forward(
 	width, height, clearColor,
-	start, display, transform, dupTransform, popTransform, fillRect
+	display,
+	transform, dupTransform, popTransform,
+	focus, pushFocus, popFocus,
+	fillRect
+
 )
 abstract RenderContext(DisplayContextImpl) {
 	inline public function new(impl:DisplayContextImpl) {

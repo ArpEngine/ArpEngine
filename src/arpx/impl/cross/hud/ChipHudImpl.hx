@@ -16,6 +16,7 @@ class ChipHudImpl extends ArpObjectImplBase implements IHudImpl {
 
 	public function render(context:RenderContext):Void {
 		if (hud.visible && hud.chip != null) {
+			hud.focused = hud == context.focus;
 			var pos:ArpPosition = hud.position;
 			context.dupTransform().prependXY(pos.x, pos.y);
 			// TODO hud.params.dir = pos.dir;

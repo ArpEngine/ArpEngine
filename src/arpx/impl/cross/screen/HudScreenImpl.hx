@@ -1,7 +1,6 @@
 package arpx.impl.cross.screen;
 
 import arpx.impl.cross.display.RenderContext;
-import arpx.impl.cross.structs.ArpTransform;
 import arpx.impl.ArpObjectImplBase;
 import arpx.screen.HudScreen;
 import arpx.structs.ArpPosition;
@@ -24,7 +23,9 @@ class HudScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 			context.dupTransform().prependTransform(this.screen.camera.composedCameraTransform);
 		}
 
+		context.pushFocus(screen.focus);
 		for (hud in this.screen.huds) hud.render(context);
+		context.popFocus();
 		context.popTransform();
 	}
 }

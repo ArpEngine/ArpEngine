@@ -1,8 +1,10 @@
-package arpx.input;
+package arpx.inputAxis;
 
+import arp.domain.IArpObject;
 import arp.task.ITickable;
 
-class InputAxis implements ITickable {
+@:arpType("inputAxis")
+class InputAxis implements ITickable implements IArpObject {
 
 	public var value(default, null):Float = 0;
 
@@ -29,8 +31,7 @@ class InputAxis implements ITickable {
 	public var isTriggerDown(get, null):Bool;
 	inline private function get_isTriggerDown():Bool return this.state && this.stateDuration == 0;
 
-	public function new() {
-	}
+	public function new() return;
 
 	public function tick(timeslice:Float):Bool {
 		var newState:Bool = this.nextValue >= threshold || this.nextValue <= -threshold;

@@ -4,32 +4,41 @@ import arp.domain.IArpObject;
 import arp.ds.IOmap;
 import arp.task.ITickable;
 import arpx.impl.cross.display.RenderContext;
-import arpx.input.focus.IFocusNode;
 import arpx.input.Input;
 import arpx.screen.Screen;
+import haxe.ds.ArraySort;
 
 @:arpType("console", "console")
-class Console implements IArpObject implements ITickable implements IFocusNode<Input> {
+class Console implements IArpObject implements ITickable {
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
+	@:arpField public var input:Input;
 	@:arpField(true) public var screens:IOmap<String, Screen>;
 
 	public function new() return;
 
 	public function tick(timeslice:Float):Bool {
+		this.input.tick(timeslice);
 		for (screen in this.screens) screen.tick(timeslice);
-		this.updateFocus(this.findFocus(null));
+
+		var layers:Array<Screen> = [];
+		for (screen in this.screens) screen.collectInputLayers(layers);
+		var lastPriority:Int = 0x7fffffff;
+		while (lastPriority != 0x80000000) {
+			var priority:Int = 0x80000000;
+			for (layer in layers) {
+				var layerPriority:Int = layer.priority;
+				if (priority < layerPriority && layerPriority < lastPriority) priority = layerPriority;
+			}
+			for (layer in layers) {
+				if (layer.priority == priority) {
+					if (layer.interact(this.input)) return true;
+				}
+			}
+			lastPriority = priority;
+		}
 		return true;
-	}
-
-	public function findFocus(other:Null<Input>):Null<Input> {
-		for (screen in this.screens) other = screen.findFocus(other);
-		return other;
-	}
-
-	public function updateFocus(target:Null<Input>):Void {
-		for (screen in this.screens) screen.updateFocus(target);
 	}
 
 	public function render(context:RenderContext):Void {

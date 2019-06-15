@@ -5,7 +5,7 @@ import arpx.impl.cross.input.LocalInputImpl;
 import arpx.input.localInput.LocalInputSource;
 
 @:arpType("input", "local")
-class LocalInput extends PhysicalInput {
+class LocalInput extends Input {
 
 	private var bindings:ArrayList<LocalInputBinding>;
 	private var states:Map<LocalInputSource, Float>;

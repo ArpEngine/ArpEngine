@@ -16,6 +16,7 @@ class CompositeHudImpl extends ArpObjectImplBase implements IHudImpl {
 
 	public function render(context:RenderContext):Void {
 		if (hud.visible) {
+			hud.focused = hud == context.focus;
 			var pos:ArpPosition = hud.position;
 			context.dupTransform().prependXY(pos.x, pos.y);
 			for (h in hud.huds) h.render(context);
