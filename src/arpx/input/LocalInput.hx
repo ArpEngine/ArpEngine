@@ -55,7 +55,7 @@ class LocalInput extends Input {
 			var value:Float = this.states.get(binding.source);
 			@:privateAccess this.axis(binding.axis).nextValue += value * binding.factor;
 		}
-		for (axis in this.inputAxes) axis.tick(timeslice);
+		for (axis in this.inputAxes) axis.tickChild(timeslice, this);
 		return true;
 	}
 }

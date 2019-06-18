@@ -34,7 +34,7 @@ class KeyInput extends Input {
 			if (!this.keyStates.get(binding.keyCode)) continue;
 			@:privateAccess this.axis(binding.axis).nextValue += binding.factor;
 		}
-		for (axis in this.inputAxes) axis.tick(timeslice);
+		for (axis in this.inputAxes) axis.tickChild(timeslice, this);
 		return true;
 	}
 }

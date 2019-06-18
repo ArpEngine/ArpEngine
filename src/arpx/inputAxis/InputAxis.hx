@@ -1,10 +1,11 @@
 package arpx.inputAxis;
 
 import arp.domain.IArpObject;
-import arp.task.ITickable;
+import arp.task.ITickableChild;
+import arpx.input.Input;
 
 @:arpType("inputAxis")
-class InputAxis implements ITickable implements IArpObject {
+class InputAxis implements ITickableChild<Input> implements IArpObject {
 
 	public var value(default, null):Float = 0;
 
@@ -33,7 +34,7 @@ class InputAxis implements ITickable implements IArpObject {
 
 	public function new() return;
 
-	public function tick(timeslice:Float):Bool {
+	public function tickChild(timeslice:Float, parent:Input):Bool {
 		var newState:Bool = this.nextValue >= threshold || this.nextValue <= -threshold;
 		if (this.state != newState) {
 			this.stateDuration = 0;
