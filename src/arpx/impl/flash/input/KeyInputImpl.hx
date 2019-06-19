@@ -5,6 +5,7 @@ package arpx.impl.flash.input;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.impl.cross.input.InputContext;
+import arpx.input.InputSource;
 import arpx.input.KeyInput;
 import flash.events.Event;
 import flash.events.IEventDispatcher;
@@ -39,11 +40,11 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	private function onKeyDown(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, true);
+		this.input.setState(InputSource.Key(event.keyCode));
 	}
 
 	private function onKeyUp(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, false);
+		this.input.unsetState(InputSource.Key(event.keyCode));
 	}
 }
 
