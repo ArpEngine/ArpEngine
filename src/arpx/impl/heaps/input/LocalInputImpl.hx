@@ -6,7 +6,7 @@ import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.impl.cross.input.InputContext;
-import arpx.input.localInput.LocalInputSource;
+import arpx.input.InputSource;
 import arpx.input.LocalInput;
 import hxd.Event;
 import hxd.Window;
@@ -37,26 +37,26 @@ class LocalInputImpl extends ArpObjectImplBase implements IInputImpl {
 
 	private function readMousePosition(e:Event):Void {
 		var pt:PointImpl = context.rawToWorld(e.relX, e.relY);
-		this.input.setState(LocalInputSource.MouseX, pt.x);
-		this.input.setState(LocalInputSource.MouseY, pt.y);
+		this.input.setState(InputSource.MouseX, pt.x);
+		this.input.setState(InputSource.MouseY, pt.y);
 	}
 
 	private function onEvent(e:Event):Void {
 		switch( e.kind ) {
 			case EKeyDown:
-				this.input.setState(LocalInputSource.Key(e.keyCode));
+				this.input.setState(InputSource.Key(e.keyCode));
 			case EKeyUp:
-				this.input.unsetState(LocalInputSource.Key(e.keyCode));
+				this.input.unsetState(InputSource.Key(e.keyCode));
 			case EMove:
 				readMousePosition(e);
 			case EPush:
 				readMousePosition(e);
-				this.input.setState(LocalInputSource.MouseLeft);
+				this.input.setState(InputSource.MouseLeft);
 			case ERelease:
 				readMousePosition(e);
-				this.input.unsetState(LocalInputSource.MouseLeft);
+				this.input.unsetState(InputSource.MouseLeft);
 			case EReleaseOutside:
-				this.input.unsetState(LocalInputSource.MouseLeft);
+				this.input.unsetState(InputSource.MouseLeft);
 			case _:
 		}
 	}

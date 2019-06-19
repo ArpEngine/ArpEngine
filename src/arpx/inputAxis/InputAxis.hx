@@ -1,19 +1,21 @@
 package arpx.inputAxis;
 
 import arp.domain.IArpObject;
-import arp.task.ITickable;
+import arp.ds.impl.ArrayList;
+import arp.task.ITickableChild;
+import arpx.input.Input;
+import arpx.input.InputSource;
 
 @:arpType("inputAxis")
-class InputAxis implements ITickable implements IArpObject {
+class InputAxis implements ITickableChild<Input> implements IArpObject {
 
 	public var value(default, null):Float = 0;
 
-	private var nextValue(default, default):Float = 0;
+	private var bindings:ArrayList<InputAxisBinding>;
+	private var nextValue:Float = 0;
 
 	private var state(default, null):Bool = false;
-	private var level(default, null):Float = 0;
 	private var stateDuration(default, null):Float = 0;
-	private var levelDuration(default, null):Float = 0;
 	private var threshold(default, default):Float = 0.6;
 
 	public var isUp(get, null):Bool;
@@ -23,17 +25,28 @@ class InputAxis implements ITickable implements IArpObject {
 	inline private function get_isDown():Bool return this.state;
 
 	public var isTrigger(get, null):Bool;
-	inline private function get_isTrigger():Bool return this.levelDuration == 0;
+	inline private function get_isTrigger():Bool return this.stateDuration == 0;
 
 	public var isTriggerUp(get, null):Bool;
-	inline private function get_isTriggerUp():Bool return !this.state && this.stateDuration == 0;
+	inline private function get_isTriggerUp():Bool return this.isTrigger && !this.state;
 
 	public var isTriggerDown(get, null):Bool;
-	inline private function get_isTriggerDown():Bool return this.state && this.stateDuration == 0;
+	inline private function get_isTriggerDown():Bool return this.isTrigger && this.state;
 
-	public function new() return;
+	public function new() {
+		bindings = new ArrayList<InputAxisBinding>();
+	}
 
-	public function tick(timeslice:Float):Bool {
+	public function bind(source:InputSource, factor:Float = 1.0):Void this.bindings.push(new InputAxisBinding(source, factor));
+
+	public function unbind():Void this.bindings.clear();
+
+	public function tickChild(timeslice:Float, parent:Input):Bool {
+		for (binding in this.bindings) {
+			var value:Float = parent.getState(binding.source);
+			this.nextValue += value * binding.factor;
+		}
+
 		var newState:Bool = this.nextValue >= threshold || this.nextValue <= -threshold;
 		if (this.state != newState) {
 			this.stateDuration = 0;
@@ -42,18 +55,19 @@ class InputAxis implements ITickable implements IArpObject {
 			this.stateDuration += timeslice;
 		}
 
-		var newLevel:Int = Math.floor(this.nextValue / this.threshold);
-		var newLevel:Int = Math.floor(this.nextValue / this.threshold);
-		if (newLevel < 0) newLevel++;
-		if (this.level != newLevel) {
-			this.levelDuration = 0;
-			this.level = newLevel;
-		} else {
-			this.levelDuration += timeslice;
-		}
-
 		this.value = this.nextValue;
 		this.nextValue = 0;
 		return true;
+	}
+}
+
+private class InputAxisBinding {
+
+	public var source:InputSource;
+	public var factor:Float;
+
+	public function new(source:InputSource, factor:Float) {
+		this.source = source;
+		this.factor = factor;
 	}
 }

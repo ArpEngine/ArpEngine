@@ -2,9 +2,10 @@ package arpx.impl.js.input;
 
 #if (arp_input_backend_js || arp_backend_display)
 
-import arpx.impl.cross.input.InputContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.input.IInputImpl;
+import arpx.impl.cross.input.InputContext;
+import arpx.input.InputSource;
 import arpx.input.KeyInput;
 import js.html.Element;
 import js.html.Event;
@@ -43,12 +44,12 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	private function onKeyDown(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, true);
+		this.input.setState(InputSource.Key(event.keyCode));
 		event.preventDefault();
 	}
 
 	private function onKeyUp(event:KeyboardEvent):Void {
-		@:privateAccess this.input.keyStates.set(event.keyCode, false);
+		this.input.unsetState(InputSource.Key(event.keyCode));
 		event.preventDefault();
 	}
 }
