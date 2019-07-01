@@ -1,28 +1,28 @@
 package arpx;
 
+import arp.testParams.PersistIoProviders.*;
+import arpx.automaton.AutomatonCase;
+import arpx.driver.LinearDriverCase;
+import arpx.file.LocalFileCase;
 import arpx.impl.cross.structs.ArpTransformCase;
+import arpx.input.KeyInputCase;
+import arpx.macro.ArpStructsMacroArpObjectCase;
+import arpx.paramsOp.RewireParamsOpCase;
+import arpx.structs.ArpColorCase;
+import arpx.structs.ArpColorFlashCase;
+import arpx.structs.ArpDirectionCase;
+import arpx.structs.ArpParamsCase;
+import arpx.structs.ArpPositionCase;
+import arpx.structs.ArpRangeCase;
+import arpx.text.ParametrizedTextDataCase;
+import arpx.text.TextDataCase;
+import picotest.PicoTestRunner;
+
 #if arp_display_backend_flash
 import arpx.impl.cross.structs.ArpTransformFlashCase;
 #elseif arp_display_backend_heaps
 import arpx.impl.cross.structs.ArpTransformHeapsCase;
 #end
-
-import arpx.macro.ArpStructsMacroArpObjectCase;
-import arpx.structs.ArpColorFlashCase;
-import arpx.structs.ArpRangeCase;
-import arpx.structs.ArpPositionCase;
-import arpx.structs.ArpParamsCase;
-import arpx.structs.ArpDirectionCase;
-import arpx.structs.ArpColorCase;
-import arpx.automaton.AutomatonCase;
-import arpx.driver.LinearDriverCase;
-import arpx.input.KeyInputCase;
-import arpx.paramsOp.RewireParamsOpCase;
-import arpx.text.ParametrizedTextDataCase;
-import arpx.text.TextDataCase;
-import picotest.PicoTestRunner;
-
-import arp.testParams.PersistIoProviders.*;
 
 class ArpEngineTestSuite {
 	public static function addTo(r:PicoTestRunner) {
@@ -53,6 +53,8 @@ class ArpEngineTestSuite {
 		r.load(AutomatonCase);
 
 		r.load(LinearDriverCase);
+
+		r.load(LocalFileCase);
 
 		r.load(KeyInputCase);
 
