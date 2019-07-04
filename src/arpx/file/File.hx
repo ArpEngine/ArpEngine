@@ -6,7 +6,7 @@ import arpx.impl.cross.file.IFileImpl;
 @:arpType("file", "null")
 class File implements IFileImpl implements IArpObject {
 
-	@:arpImpl private var flashImpl:IFileImpl;
+	@:arpImpl private var arpImpl:IFileImpl;
 
 	public function new () {
 	}

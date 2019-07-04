@@ -7,7 +7,7 @@ class ResourceFile extends File {
 
 	@:arpField public var src:String;
 
-	@:arpImpl private var flashImpl:ResourceFileImpl;
+	@:arpImpl private var arpImpl:ResourceFileImpl;
 
 	public function new () {
 		super();

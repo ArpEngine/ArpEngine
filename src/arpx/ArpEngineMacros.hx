@@ -18,11 +18,12 @@ class ArpEngineMacros {
 	private function new() {
 		Sys.println('Initializing ArpEngine');
 		var components:Array<ArpEngineBackend> = [];
-		components.push(ArpEngineBackend.flat("arp_display_backend", ["heaps", "flash", "openfl", "sys", "stub"]));
-		components.push(ArpEngineBackend.flat("arp_input_backend", ["heaps", "flash", "openfl", "js", "sys", "stub"]));
-		components.push(ArpEngineBackend.flat("arp_audio_backend", ["heaps", "flash", "openfl", "js", "sys", "stub"]));
-		components.push(ArpEngineBackend.flat("arp_socket_backend", ["flash", "openfl", "sys", "stub"]));
-		components.push(ArpEngineBackend.flat("arp_storage_backend", ["flash", "openfl", "js", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_display_backend", ["heaps", "flash", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_input_backend", ["heaps", "flash", "js", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_file_backend", ["air", "flash", "js", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_audio_backend", ["heaps", "flash", "js", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_socket_backend", ["flash", "sys", "stub"]));
+		components.push(ArpEngineBackend.flat("arp_storage_backend", ["flash", "js", "sys", "stub"]));
 
 		var root:ArpEngineBackend = ArpEngineBackend.complex("arp_backend", [
 			{ name: "heaps" },

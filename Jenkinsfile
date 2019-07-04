@@ -13,7 +13,7 @@ pipeline {
                 githubNotify(context: 'swf_heaps', description: '', status: 'PENDING');
                 githubNotify(context: 'js', description: '', status: 'PENDING');
                 githubNotify(context: 'js_heaps', description: '', status: 'PENDING');
-                githubNotify(context: 'js_sys', description: '', status: 'PENDING');
+                // githubNotify(context: 'js_sys', description: '', status: 'PENDING');
                 githubNotify(context: 'neko_sys', description: '', status: 'PENDING');
                 sh "haxelib newrepo"
                 sh "haxelib git arp_ci https://github.com/ArpEngine/Arp-ci master --always"
@@ -73,6 +73,7 @@ pipeline {
             }
         }
 
+        /*
         stage('js_sys') {
             steps {
                 catchError {
@@ -85,6 +86,7 @@ pipeline {
                 unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
             }
         }
+        */
 
         stage('neko_sys') {
             steps {
