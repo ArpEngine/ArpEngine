@@ -11,7 +11,7 @@ import arpx.file.File;
 @:arpType("external", "file")
 class FileExternal extends External {
 
-	@:arpField @:arpBarrier public var file:File;
+	@:arpField @:arpBarrier(true, true) public var file:File;
 	@:arpField public var format:String;
 	@:arpField public var defaultType:String;
 
