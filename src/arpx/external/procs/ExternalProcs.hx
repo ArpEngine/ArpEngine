@@ -32,5 +32,6 @@ class ProcExternalReload extends Proc {
 			external.arpDomain.heatLater(external.arpSlot, false);
 		}
 		if (gc) arpDomain.gc();
+		arpDomain.heatUpkeep();
 	}
 }
