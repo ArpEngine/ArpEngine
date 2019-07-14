@@ -6,15 +6,14 @@ import arp.task.ITickable;
 import arpx.impl.cross.display.RenderContext;
 import arpx.input.Input;
 import arpx.screen.Screen;
-import haxe.ds.ArraySort;
 
 @:arpType("console", "console")
 class Console implements IArpObject implements ITickable {
 	@:arpField public var width:Int;
 	@:arpField public var height:Int;
 
-	@:arpField public var input:Input;
-	@:arpField(true) public var screens:IOmap<String, Screen>;
+	@:arpField @:arpBarrier public var input:Input;
+	@:arpField(true) @:arpBarrier public var screens:IOmap<String, Screen>;
 
 	public function new() return;
 
