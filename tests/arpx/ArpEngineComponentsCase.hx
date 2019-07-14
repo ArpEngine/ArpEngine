@@ -1,24 +1,31 @@
 ﻿package arpx;
 
-import arpx.input.LocalInput;
-import arpx.input.KeyInput;
-import arpx.texture.decorators.GridTexture;
-import arpx.chip.TextureChip;
 import arpx.anchor.Anchor;
 import arpx.automaton.Automaton;
 import arpx.camera.Camera;
 import arpx.chip.Chip;
+import arpx.chip.decorators.CompositeChip;
 import arpx.chip.decorators.DecorateChip;
+import arpx.chip.decorators.FilterChip;
+import arpx.chip.decorators.SelectChip;
+import arpx.chip.decorators.TransformChip;
 import arpx.chip.NativeTextChip;
 import arpx.chip.RectChip;
 import arpx.chip.StringChip;
+import arpx.chip.TextureChip;
 import arpx.console.Console;
 import arpx.debugger.Debugger;
 import arpx.debugger.SocketClientDebugger;
+import arpx.external.decorators.CompositeExternal;
+import arpx.external.External;
+import arpx.external.FileExternal;
 import arpx.faceList.FaceList;
 import arpx.field.Field;
 import arpx.file.File;
 import arpx.file.ResourceFile;
+import arpx.input.Input;
+import arpx.input.KeyInput;
+import arpx.input.LocalInput;
 import arpx.logger.Logger;
 import arpx.logger.SocketClientLogger;
 import arpx.logger.StoreLogger;
@@ -38,10 +45,10 @@ import arpx.state.AutomatonState;
 import arpx.text.FixedTextData;
 import arpx.text.ParametrizedTextData;
 import arpx.text.TextData;
+import arpx.texture.decorators.GridTexture;
 import arpx.texture.FileTexture;
 import arpx.texture.ResourceTexture;
 import arpx.texture.Texture;
-
 import picotest.PicoAssert.*;
 
 class ArpEngineComponentsCase {
@@ -59,12 +66,20 @@ class ArpEngineComponentsCase {
 		assertNotNull(new RectChip());
 		assertNotNull(new StringChip());
 
+		assertNotNull(new CompositeChip());
 		assertNotNull(new DecorateChip());
+		assertNotNull(new FilterChip());
+		assertNotNull(new SelectChip());
+		assertNotNull(new TransformChip());
 
 		assertNotNull(new Console());
 
 		assertNotNull(new Debugger());
 		assertNotNull(new SocketClientDebugger());
+
+		assertNotNull(new External());
+		assertNotNull(new FileExternal());
+		assertNotNull(new CompositeExternal());
 
 		assertNotNull(new FaceList());
 
@@ -73,6 +88,7 @@ class ArpEngineComponentsCase {
 		assertNotNull(new File());
 		assertNotNull(new ResourceFile());
 
+		assertNotNull(new Input());
 		assertNotNull(new KeyInput());
 		assertNotNull(new LocalInput());
 
