@@ -5,7 +5,7 @@ import arp.ds.IList;
 @:arpType("external", "composite")
 class CompositeExternal extends External {
 
-	@:arpBarrier @:arpField(true) public var externals:IList<External>;
+	@:arpBarrier(true, true) @:arpField(true) public var externals:IList<External>;
 
 	public function new() super();
 
