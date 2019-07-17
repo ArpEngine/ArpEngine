@@ -30,7 +30,7 @@ class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {
 		this.texture = texture;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.value != null) return true;
 
 		var bytes:Bytes = Resource.getBytes(texture.src);
@@ -46,7 +46,7 @@ class ResourceTextureImpl extends TextureImplBase implements ITextureImpl {
 		return true;
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.value = null;
 		return true;
 	}

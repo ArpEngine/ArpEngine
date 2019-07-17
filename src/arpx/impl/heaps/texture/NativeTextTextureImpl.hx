@@ -24,7 +24,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		super(texture);
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.tile != null) return true;
 
 		var chars:String = "";
@@ -53,7 +53,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		return true;
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.tile.dispose();
 		this.tile = null;
 		return true;

@@ -20,7 +20,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.visual == null) {
 			this.visual = this.createVisual();
 			this.ascent = this.visual.getLineMetrics(0).ascent;
@@ -28,7 +28,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 		return true;
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.visual = null;
 		return true;
 	}
@@ -52,7 +52,7 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
-		this.arpHeatUp();
+		this.arpHeatUpNow();
 		context.dupTransform().prependXY(-2, -2 - this.ascent);
 		var text:String = null;
 		if (params != null) text = params.get("face");

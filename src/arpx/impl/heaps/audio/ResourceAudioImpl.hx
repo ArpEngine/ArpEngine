@@ -23,7 +23,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio = audio;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (value != null) return true;
 		var bytes:Bytes = Resource.getBytes(audio.src);
 		var fileEntry:FileEntry = new BytesFileEntry('__arp__/audio/resource/${audio.src}', bytes);
@@ -32,7 +32,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		return true;
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.value.dispose();
 		this.value = null;
 		return true;

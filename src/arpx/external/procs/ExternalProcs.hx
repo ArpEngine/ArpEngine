@@ -13,7 +13,7 @@ class ProcExternalLoad extends Proc {
 
 	override public function execute():Void {
 		for (external in this.externals) {
-			external.arpDomain.heatLater(external.arpSlot, nonblocking);
+			external.arpHeatLater(nonblocking);
 		}
 	}
 }
@@ -28,8 +28,8 @@ class ProcExternalReload extends Proc {
 
 	override public function execute():Void {
 		for (external in this.externals) {
-			external.arpDomain.heatDown(external.arpSlot);
-			external.arpDomain.heatLater(external.arpSlot, false);
+			external.arpHeatDownNow();
+			external.arpHeatLater(false);
 		}
 		if (gc) arpDomain.gc();
 		arpDomain.heatUpkeep();

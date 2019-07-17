@@ -24,7 +24,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		super(texture);
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.faces.length > 0) return true;
 
 		var textFormat:TextFormat = new TextFormat(this.texture.font, this.texture.fontSize);
@@ -48,7 +48,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 
 	override public function getFaceIndex(params:IArpParamsRead = null):Int return try super.getFaceIndex(params) catch (e:Dynamic) 0;
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this._bitmapData.dispose();
 		this._bitmapData = null;
 		return true;

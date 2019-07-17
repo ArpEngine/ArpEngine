@@ -21,7 +21,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio = audio;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		var contextImpl:AudioContextImpl = AudioContext.instance.impl;
 		var bytes:Bytes = Resource.getBytes(this.audio.src);
 		this.buffer = contextImpl.dummyBuffer;
@@ -36,7 +36,7 @@ class ResourceAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio.arpDomain.notifyFor(this.audio);
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.buffer = null;
 		return true;
 	}

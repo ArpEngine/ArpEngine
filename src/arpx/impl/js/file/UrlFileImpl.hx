@@ -21,7 +21,7 @@ class UrlFileImpl extends ArpObjectImplBase implements IFileImpl {
 		this.file = file;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (xhr != null) return this.file != null;
 
 		this.xhr = new XMLHttpRequest();
@@ -43,7 +43,7 @@ class UrlFileImpl extends ArpObjectImplBase implements IFileImpl {
 		this.file.arpDomain.notifyFor(this.file);
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		if (this.xhr == null) return true;
 
 		this.xhr.onload = null;

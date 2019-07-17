@@ -21,13 +21,13 @@ class LocalFileImpl extends ArpObjectImplBase implements IFileImpl {
 		this.file = file;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (!this.exists) return true;
 		this.value = File.getBytes(file.src);
 		return true;
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.value = null;
 		return true;
 	}

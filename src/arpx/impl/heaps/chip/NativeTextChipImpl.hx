@@ -26,12 +26,12 @@ class NativeTextChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		this.chars = Charset.DEFAULT_CHARS;
 		return true;
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.font.dispose();
 		this.font = null;
 		return true;
