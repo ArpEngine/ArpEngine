@@ -14,11 +14,11 @@ class FilterChipImpl extends ArpObjectImplBase implements IChipImpl {
 		this.chip = chip;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		return true;
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		return true;
 	}
 

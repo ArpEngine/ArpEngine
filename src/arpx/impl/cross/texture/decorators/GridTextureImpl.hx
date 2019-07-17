@@ -12,8 +12,8 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		super(texture);
 	}
 
-	override public function arpHeatUp():Bool {
-		super.arpHeatUp();
+	override public function arpHeatUpNow():Bool {
+		super.arpHeatUpNow();
 
 		if (this.faces.length > 0) return true;
 		var faceInfo:TextureFaceData = this.texture.texture.getFaceData();

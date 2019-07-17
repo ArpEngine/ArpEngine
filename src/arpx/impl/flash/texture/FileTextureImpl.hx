@@ -28,7 +28,7 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 		this.texture = texture;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.value != null) return true;
 
 		if (this.loader == null) {
@@ -51,7 +51,7 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 		this.texture.arpDomain.notifyFor(this.texture);
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.loader = null;
 		this.value = null;
 		return true;

@@ -30,7 +30,7 @@ class TcpSocketClientImpl extends SocketClientImplBase {
 
 	private var socket:Socket;
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.socketClient.host == null) {
 			return true;
 		}
@@ -83,7 +83,7 @@ class TcpSocketClientImpl extends SocketClientImplBase {
 		this.onClose.dispatch(null);
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.input = null;
 		this.output = null;
 		if (this.socket.connected) this.socket.close();

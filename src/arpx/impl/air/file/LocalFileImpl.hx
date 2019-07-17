@@ -23,7 +23,7 @@ class LocalFileImpl extends ArpObjectImplBase implements IFileImpl {
 		this.nativeFile = File.applicationDirectory.resolvePath(this.file.src);
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (!this.exists) return;
 		var stream:FileStream = new FileStream();
 		try {
@@ -35,7 +35,7 @@ class LocalFileImpl extends ArpObjectImplBase implements IFileImpl {
 		}
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.value = null;
 		return true;
 	}

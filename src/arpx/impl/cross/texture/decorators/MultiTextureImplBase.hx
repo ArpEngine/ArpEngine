@@ -19,7 +19,7 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 		this.faces = [];
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		for (face in this.faces) face.dispose();
 		this.faces = [];
 		this.indexesByFaces = new Map();

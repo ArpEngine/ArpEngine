@@ -23,7 +23,7 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio = audio;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.loadingValue != null) return this.value != null;
 
 		this.loadingValue = new Sound();
@@ -43,7 +43,7 @@ class UrlAudioImpl extends ArpObjectImplBase implements IAudioImpl {
 		this.audio.arpDomain.notifyFor(this.audio);
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		if (this.loadingValue == null) return true;
 
 		this.value = null;

@@ -40,7 +40,7 @@ class TcpCachedSocketClientImpl extends ArpObjectImplBase implements ISocketClie
 		this.onClose = @:privateAccess socketClient._onClose;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.socketClient.host == null) {
 			return true;
 		}
@@ -107,7 +107,7 @@ class TcpCachedSocketClientImpl extends ArpObjectImplBase implements ISocketClie
 		this.output.flush();
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		this.input = null;
 		this.output = null;
 		if (this.socket.connected) this.socket.close();

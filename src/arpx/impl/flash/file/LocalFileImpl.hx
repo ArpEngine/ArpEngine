@@ -25,7 +25,7 @@ class LocalFileImpl extends ArpObjectImplBase implements IFileImpl {
 		this.file = file;
 	}
 
-	override public function arpHeatUp():Bool {
+	override public function arpHeatUpNow():Bool {
 		if (this.loader != null) return this.value != null;
 		this.loader = new URLLoader();
 		this.loader.dataFormat = URLLoaderDataFormat.BINARY;
@@ -45,7 +45,7 @@ class LocalFileImpl extends ArpObjectImplBase implements IFileImpl {
 		this.file.arpDomain.notifyFor(this.file);
 	}
 
-	override public function arpHeatDown():Bool {
+	override public function arpHeatDownNow():Bool {
 		if (this.loader == null) return true;
 
 		this.loader.removeEventListener(Event.COMPLETE, this.onLoadComplete);
