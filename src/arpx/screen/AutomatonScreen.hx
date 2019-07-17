@@ -17,12 +17,13 @@ class AutomatonScreen extends Screen {
 
 	@:arpHeatUp private function heatUp():Bool {
 		this.screen = this.automaton.state.toScreen();
+		if (this.screen != null) this.screen.arpHeatLater();
 		this.automaton.onEnterState.push(this.onEnterState);
 		this.automaton.onLeaveState.push(this.onLeaveState);
 		return true;
 	}
 
-	@:arpHeatDown private function heatUp():Bool {
+	@:arpHeatDown private function heatDown():Bool {
 		this.screen = null;
 		this.automaton.onEnterState.remove(this.onEnterState);
 		this.automaton.onLeaveState.remove(this.onLeaveState);
@@ -31,6 +32,7 @@ class AutomatonScreen extends Screen {
 
 	private function onEnterState(v:AutomatonStateEvent):Void {
 		this.screen = v.state.toScreen();
+		if (this.screen != null) this.screen.arpHeatLater();
 	}
 
 	private function onLeaveState(v:AutomatonStateEvent):Void {

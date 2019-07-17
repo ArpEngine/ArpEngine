@@ -1,8 +1,10 @@
 package arpx.impl.cross.screen;
 
-import arpx.impl.cross.display.RenderContext;
+import arp.domain.ArpHeat;
 import arpx.impl.ArpObjectImplBase;
+import arpx.impl.cross.display.RenderContext;
 import arpx.screen.AutomatonScreen;
+import arpx.screen.Screen;
 
 class AutomatonScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 
@@ -14,7 +16,9 @@ class AutomatonScreenImpl extends ArpObjectImplBase implements IScreenImpl {
 	}
 
 	public function display(context:RenderContext):Void {
-		var c:IScreenImpl = @:privateAccess screen.screen;
-		if (c != null) c.display(context);
+		var screen:Screen = @:privateAccess this.screen.screen;
+		if (screen != null && screen.arpHeat == ArpHeat.Warm) {
+			screen.display(context);
+		}
 	}
 }
