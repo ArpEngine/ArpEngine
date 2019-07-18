@@ -5,7 +5,6 @@ import arpx.impl.cross.hud.ChipMenuHudImpl;
 import arpx.input.Input;
 import arpx.inputAxis.InputAxis;
 import arpx.menu.Menu;
-import arpx.proc.Proc;
 import arpx.structs.ArpPosition;
 
 @:arpType("hud", "chipMenu")
@@ -27,19 +26,14 @@ class ChipMenuHud extends Hud {
 		var axis:InputAxis = input.axis(this.axis);
 		if (axis.isTrigger) {
 			if (axis.value > 0) {
-				if (++this.menu.value >= this.menu.length) this.menu.value--;
+				this.menu.shift(1);
 			} else if (axis.value < 0) {
-				if (--this.menu.value < 0) this.menu.value++;
+				this.menu.shift(-1);
 			}
 		}
 		var execute:InputAxis = input.axis(this.execute);
 		if (execute.isTriggerDown) {
-			if (this.menu.selection != null) {
-				var proc:Proc = this.menu.selection.proc;
-				if (proc != null) {
-					proc.execute();
-				}
-			}
+			this.menu.executeSelection();
 		}
 		return true;
 	}
