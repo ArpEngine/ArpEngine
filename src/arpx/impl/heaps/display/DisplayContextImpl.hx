@@ -2,15 +2,16 @@ package arpx.impl.heaps.display;
 
 #if (arp_display_backend_heaps || arp_backend_display)
 
-import h2d.Object;
-import h2d.Tile;
-import h3d.Engine;
-import h3d.Matrix;
-
 import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
 import arpx.impl.cross.structs.ArpTransform;
+import arpx.impl.cross.texture.TextureFaceData;
+import arpx.structs.ArpColor;
+import h2d.Object;
+import h2d.Tile;
+import h3d.Engine;
+import h3d.Matrix;
 
 class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
@@ -51,14 +52,15 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		popTransform();
 	}
 
-	public function drawTile(tile:Tile, r:Float = 1., g:Float = 1., b:Float = 1., a:Float = 1.):Void {
+	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void {
+		var tile:Tile = faceData.impl.tile;
 		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.impl.xx = tile.width;
 		_workTransform.impl.yy = tile.height;
 		_workTransform.impl.tx = 0;
 		_workTransform.impl.ty = 0;
 		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
-		this.renderer.renderTile(matrix, tile, r, g, b, a);
+		this.renderer.renderTile(matrix, tile, color.fred, color.fgreen, color.fblue, color.falpha);
 		popTransform();
 	}
 

@@ -6,6 +6,8 @@ import arpx.impl.cross.display.DisplayContextBase;
 import arpx.impl.cross.display.IDisplayContext;
 import arpx.impl.cross.display.IRenderContext;
 import arpx.impl.cross.structs.ArpTransform;
+import arpx.impl.cross.texture.TextureFaceData;
+import arpx.structs.ArpColor;
 
 class DisplayContextImpl extends DisplayContextBase implements IDisplayContext implements IRenderContext {
 
@@ -25,6 +27,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	public function start():Void return;
 	public function display():Void return;
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void return;
+	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void return;
 
 	inline public function renderContext():RenderContext return new RenderContext(this);
 }
