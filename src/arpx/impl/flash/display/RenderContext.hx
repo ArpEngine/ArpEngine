@@ -8,7 +8,7 @@ package arpx.impl.flash.display;
 	display,
 	transform, dupTransform, popTransform,
 	focus, pushFocus, popFocus,
-	fillRect
+	fillRect, fillFace
 )
 abstract RenderContext(DisplayContextImpl) {
 	inline public function new(impl:DisplayContextImpl) {
