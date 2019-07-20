@@ -36,7 +36,7 @@ class KeyInputImpl extends ArpObjectImplBase implements IInputImpl {
 	}
 
 	private function onDeactivate(event:Event):Void {
-		this.input.clear();
+		this.input.clearStates();
 	}
 
 	private function onKeyDown(event:KeyboardEvent):Void {
