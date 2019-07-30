@@ -6,7 +6,7 @@ import arp.ds.impl.ArraySet;
 import arp.ds.ISet;
 import arp.hit.fields.HitObject;
 import arp.hit.structs.HitGeneric;
-import arp.task.ITickable;
+import arp.task.ITickableChild;
 import arpx.driver.Driver;
 import arpx.field.Field;
 import arpx.hitFrame.HitFrame;
@@ -17,7 +17,7 @@ import arpx.structs.ArpParams;
 import arpx.structs.ArpPosition;
 
 @:arpType("mortal", "null")
-class Mortal implements IArpObject implements ITickable implements IMortalImpl {
+class Mortal implements IArpObject implements ITickableChild<Field> implements IMortalImpl {
 
 	@:arpBarrier @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
@@ -49,11 +49,11 @@ class Mortal implements IArpObject implements ITickable implements IMortalImpl {
 		return hitMortal;
 	}
 
-	public function tick(timeslice:Float):Bool {
+	public function tickChild(timeslice:Float, field:Field):Bool {
 		if (this.driver != null) {
-			this.driver.tick(this.field, this);
+			this.driver.tick(field, this);
 		} else {
-			refreshHitMortals(this.field);
+			refreshHitMortals(field);
 		}
 
 		var rr = this.lastReactRecord;

@@ -1,9 +1,7 @@
 package arpx.field;
 
-import arpx.input.focus.IInteractable;
-import arpx.input.Input;
 import arp.domain.IArpObject;
-import arp.ds.decorators.OmapDecorator;
+import arp.ds.impl.StdOmap;
 import arp.ds.IOmap;
 import arp.ds.lambda.OmapOp;
 import arp.hit.fields.HitField;
@@ -14,6 +12,8 @@ import arp.task.ITickable;
 import arpx.anchor.Anchor;
 import arpx.impl.cross.field.FieldImpl;
 import arpx.impl.cross.field.IFieldImpl;
+import arpx.input.focus.IInteractable;
+import arpx.input.Input;
 import arpx.mortal.Mortal;
 import arpx.reactFrame.ReactFrame;
 
@@ -37,7 +37,7 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 	public function new() return;
 
 	@:arpHeatUp private function heatUp():Bool {
-		if (this.mortals == null) this.mortals = @:privateAccess new MortalMap(this);
+		if (this.mortals == null) this.mortals = @:privateAccess new StdOmap<String, Mortal>();
 		if (this.hitField == null) this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());
 		if (this.anchorField == null) this.anchorField = new HitField<HitGeneric, Anchor>(new HitWithCuboid());
 		this.reinitMortals();
@@ -73,7 +73,7 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 	}
 
 	public function tick(timeslice:Float):Bool {
-		for (mortal in this.mortals) mortal.tick(timeslice);
+		for (mortal in this.mortals) mortal.tickChild(timeslice, this);
 		for (anchor in this.anchors) anchor.refresh(this);
 		this.hitField.tick();
 		this.anchorField.tick();
@@ -173,57 +173,5 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 			return false;
 		});
 		return result;
-	}
-}
-
-class MortalMap extends OmapDecorator<String, Mortal> {
-
-	private var field:Field;
-
-	private function new(field:Field) {
-		super(@:privateAccess field._mortals);
-		this.field = field;
-	}
-
-	//write
-	override public function addPair(k:String, v:Mortal):Void {
-		if (@:privateAccess v.field != null) @:privateAccess v.field._mortals.remove(v);
-		@:privateAccess v.field = this.field;
-		this.omap.addPair(k, v);
-	}
-	override public function insertPairAt(index:Int, k:String, v:Mortal):Void {
-		if (@:privateAccess v.field != null) @:privateAccess v.field._mortals.remove(v);
-		@:privateAccess v.field = this.field;
-		this.omap.insertPairAt(index, k, v);
-	}
-
-	// remove
-	override public function remove(v:Mortal):Bool {
-		@:privateAccess v.field = null;
-		return this.omap.remove(v);
-	}
-	override public function removeKey(k:String):Bool {
-		if (!this.omap.hasKey(k)) return false;
-		@:privateAccess this.omap.get(k).field = null;
-		return this.omap.removeKey(k);
-	}
-	override public function removeAt(index:Int):Bool {
-		if (index < 0 || index >= this.omap.length) return false;
-		@:privateAccess this.omap.getAt(index).field = null;
-		return this.omap.removeAt(index);
-	}
-	override public function pop():Null<Mortal> {
-		if (this.omap.isEmpty()) return null;
-		@:privateAccess this.omap.last().field = null;
-		return this.omap.pop();
-	}
-	override public function shift():Null<Mortal> {
-		if (this.omap.isEmpty()) return null;
-		@:privateAccess this.omap.first().field = null;
-		return this.omap.shift();
-	}
-	override public function clear():Void {
-		@:privateAccess for (v in this.omap) v.field = null;
-		this.omap.clear();
 	}
 }
