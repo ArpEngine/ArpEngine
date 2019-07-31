@@ -19,13 +19,11 @@ import arpx.structs.ArpPosition;
 @:arpType("mortal", "null")
 class Mortal implements IArpObject implements ITickableChild<Field> implements IMortalImpl {
 
-	@:arpBarrier @:arpField public var driver:Driver;
+	@:arpBarrier @:arpDeepCopy @:arpField public var driver:Driver;
 	@:arpField public var position:ArpPosition;
 	@:arpField public var visible:Bool = true;
 	@:arpField public var params:ArpParams;
 	@:arpBarrier @:arpField(true) public var hitFrames:ISet<HitFrame>;
-
-	@:arpField private var field:Field;
 
 	private var hitMortals:Map<String, HitMortal>;
 	private var reactRecord:ISet<String>;

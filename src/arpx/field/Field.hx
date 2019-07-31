@@ -1,7 +1,6 @@
 package arpx.field;
 
 import arp.domain.IArpObject;
-import arp.ds.impl.StdOmap;
 import arp.ds.IOmap;
 import arp.ds.lambda.OmapOp;
 import arp.hit.fields.HitField;
@@ -20,11 +19,9 @@ import arpx.reactFrame.ReactFrame;
 @:arpType("field")
 class Field implements IArpObject implements ITickable implements IInteractable implements IFieldImpl {
 
-	@:arpBarrier @:arpField(true) public var initMortals:IOmap<String, Mortal>;
-	@:arpBarrier @:arpField(false) private var _mortals:IOmap<String, Mortal>;
+	@:arpBarrier @:arpDeepCopy @:arpField(true) public var mortals:IOmap<String, Mortal>;
 	@:arpBarrier @:arpField public var anchors:IOmap<String, Anchor>;
 
-	public var mortals(default, null):IOmap<String, Mortal>;
 	public var gridSize(get, never):Int;
 	public var width(get, never):Int;
 	public var height(get, never):Int;
@@ -37,10 +34,8 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 	public function new() return;
 
 	@:arpHeatUp private function heatUp():Bool {
-		if (this.mortals == null) this.mortals = @:privateAccess new StdOmap<String, Mortal>();
 		if (this.hitField == null) this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());
 		if (this.anchorField == null) this.anchorField = new HitField<HitGeneric, Anchor>(new HitWithCuboid());
-		this.reinitMortals();
 		return true;
 	}
 
@@ -66,10 +61,6 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 
 	public function addAnchorHit(anchor:Anchor):HitGeneric {
 		return anchorField.add(anchor);
-	}
-
-	public function reinitMortals():Void {
-		OmapOp.copy(this.initMortals, this.mortals);
 	}
 
 	public function tick(timeslice:Float):Bool {
