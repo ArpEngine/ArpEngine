@@ -36,7 +36,6 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 	@:arpHeatUp private function heatUp():Bool {
 		if (this.hitField == null) this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());
 		if (this.anchorField == null) this.anchorField = new HitField<HitGeneric, Anchor>(new HitWithCuboid());
-		this.reinitMortals();
 		return true;
 	}
 
