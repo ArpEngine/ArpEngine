@@ -25,8 +25,6 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 	@:arpField public var params:ArpParams;
 	@:arpBarrier @:arpField(true) public var hitFrames:ISet<HitFrame>;
 
-	@:arpField private var field:Field;
-
 	private var hitMortals:Map<String, HitMortal>;
 	private var reactRecord:ISet<String>;
 	private var lastReactRecord:ISet<String>;
