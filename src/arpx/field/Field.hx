@@ -64,10 +64,6 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 		return anchorField.add(anchor);
 	}
 
-	public function reinitMortals():Void {
-		OmapOp.copy(this.initMortals, this.mortals);
-	}
-
 	public function tick(timeslice:Float):Bool {
 		for (mortal in this.mortals) mortal.tickChild(timeslice, this);
 		for (anchor in this.anchors) anchor.refresh(this);
