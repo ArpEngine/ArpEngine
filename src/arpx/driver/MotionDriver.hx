@@ -22,18 +22,12 @@ class MotionDriver extends Driver {
 	@:arpField public var dHitType:String;
 	@:arpField private var willReact:Bool;
 
-	@:arpHeatUp
-	private function heatUp():Bool {
-		// FIXME
-		// if (this.motionSet != null) this.startMotion(this.motionSet.initMotion);
+	public function new() super();
+
+	private function reset():Void {
 		this.nowMotion = this.motionSet.initMotion;
 		this.nowTime = 0;
 		this.nowMotionFrame = this.nowMotion.motionFrames.first();
-		return true;
-	}
-
-	public function new() {
-		super();
 	}
 
 	private function setFrame(mortal:Mortal, motionFrame:MotionFrame = null):Void {
@@ -47,30 +41,33 @@ class MotionDriver extends Driver {
 		return this.nowMotionFrame.hitFrames;
 	}
 
-	private function startMotion(mortal:Mortal, motion:Motion = null):Void {
-		if (motion == null) return;
+	private function startMotion(mortal:Mortal, motion:Motion, restart:Bool = true):Bool {
+		if (motion == null) return false;
+		if (!restart && this.nowMotion == motion) return false;
+
 		this.nowMotion = motion;
 		this.nowTime = 0;
 		this.setFrame(mortal, motion.motionFrames.first());
+		return true;
 	}
 
 	override public function startAction(mortal:Mortal, actionName:String, restart:Bool = false):Bool {
-		var newMotion:Motion;
-		newMotion = this.nowMotion.nextMotion(actionName, this.nowTime);
+		if (this.nowMotion == null) this.reset();
+		var newMotion:Motion = this.nowMotion.nextMotion(actionName, this.nowTime);
 		if (newMotion == null) {
 			newMotion = this.motionSet.nextMotion(actionName, this.nowTime);
 		}
 		if (newMotion == null) {
 			return false;
 		}
-		if (restart || (this.nowMotion != newMotion)) {
-			this.startMotion(mortal, newMotion);
+		if (this.startMotion(mortal, newMotion)) {
 			mortal.onStartAction(actionName, newMotion);
 		}
 		return true;
 	}
 
 	override public function tick(field:Field, mortal:Mortal):Void {
+		if (this.nowMotion == null) this.reset();
 		var nowMotion:Motion = this.nowMotion;
 		if (nowMotion != null) {
 			var oldTime:Float = this.nowTime;
