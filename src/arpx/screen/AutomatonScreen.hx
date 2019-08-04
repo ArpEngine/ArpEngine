@@ -1,48 +1,54 @@
 package arpx.screen;
 
+import arp.ds.IList;
 import arpx.automaton.Automaton;
 import arpx.automaton.events.AutomatonStateEvent;
 import arpx.impl.cross.screen.AutomatonScreenImpl;
 import arpx.input.Input;
+import arpx.state.AutomatonState;
 
 @:arpType("screen", "automaton")
 class AutomatonScreen extends Screen {
 
 	@:arpBarrier @:arpField public var automaton:Automaton;
-	@:arpField(false) private var screen:Screen;
+	@:arpField(false) private var screens:IList<Screen>;
 
 	@:arpImpl private var arpImpl:AutomatonScreenImpl;
 
 	public function new() super();
 
+	private function pushStateScreen(state:AutomatonState):Void {
+		var screen:Screen = state.toScreen();
+		this.screens.push(screen);
+		if (screen != null) screen.arpHeatLater();
+	}
+
 	@:arpHeatUp private function heatUp():Bool {
-		this.screen = this.automaton.state.toScreen();
-		if (this.screen != null) this.screen.arpHeatLater();
+		for (state in this.automaton.stateStack) this.pushStateScreen(state);
 		this.automaton.onEnterState.push(this.onEnterState);
 		this.automaton.onLeaveState.push(this.onLeaveState);
 		return true;
 	}
 
 	@:arpHeatDown private function heatDown():Bool {
-		this.screen = null;
+		this.screens.clear();
 		this.automaton.onEnterState.remove(this.onEnterState);
 		this.automaton.onLeaveState.remove(this.onLeaveState);
 		return true;
 	}
 
 	private function onEnterState(v:AutomatonStateEvent):Void {
-		this.screen = v.state.toScreen();
-		if (this.screen != null) this.screen.arpHeatLater();
+		this.pushStateScreen(v.state);
 	}
 
 	private function onLeaveState(v:AutomatonStateEvent):Void {
-		this.screen = null;
+		this.screens.pop();
 	}
 
 	override public function tick(timeslice:Float):Bool {
 		if (this.ticks) {
 			pushStack();
-			this.screen.tick(timeslice);
+			for (screen in this.screens) if (screen != null) screen.tick(timeslice);
 			var v:TransitionData = popStack();
 			if (v != null) return this.automaton.transition(v.key, v.payload);
 		}
@@ -50,7 +56,9 @@ class AutomatonScreen extends Screen {
 	}
 
 	override public function interact(input:Input):Bool {
-		return this.screen.interact(input);
+		var b:Bool = false;
+		for (screen in this.screens) if (screen != null) b = screen.interact(input) || b;
+		return b;
 	}
 
 	override public function collectInputLayers(layers:Array<Screen>):Void {
@@ -58,7 +66,7 @@ class AutomatonScreen extends Screen {
 		if (this.priority != 0) {
 			layers.push(this);
 		} else {
-			this.screen.collectInputLayers(layers);
+			for (screen in this.screens) if (screen != null) screen.collectInputLayers(layers);
 		}
 	}
 
