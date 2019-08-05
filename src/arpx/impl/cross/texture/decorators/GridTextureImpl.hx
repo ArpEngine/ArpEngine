@@ -59,7 +59,7 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 
 		_workParams.copyFrom(params);
 		var dir:ArpDirection = params.getArpDirection("dir");
-		if (dir != null) _workParams.set("index", dir.toIndex(this.texture.dirs));
+		if (dir != null) _workParams.set("index", _workParams.getInt("index", 0) + dir.toIndex(this.texture.dirs));
 		return super.getFaceIndex(_workParams);
 	}
 }
