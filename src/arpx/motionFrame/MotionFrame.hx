@@ -12,7 +12,7 @@ import arpx.structs.ArpPosition;
 class MotionFrame implements IArpObject {
 
 	@:arpField public var params:ArpParams;
-	@:arpBarrier @:arpField(true) public var hitFrames:ISet<HitFrame>;
+	@:arpField(true) public var hitFrames:ISet<HitFrame>;
 	@:arpField public var time:Float;
 	@:arpField public var dX:Float;
 	@:arpField public var dY:Float;

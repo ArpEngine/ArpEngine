@@ -13,6 +13,8 @@ class ChipMortal extends Mortal {
 	public function new() super();
 
 	override public function startAction(actionName:String, restart:Bool = false):Bool {
+		if (this.driver != null) return this.driver.startAction(this, actionName, restart);
+
 		this.params.set("face", actionName);
 		return true;
 	}

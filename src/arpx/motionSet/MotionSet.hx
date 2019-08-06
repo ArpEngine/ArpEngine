@@ -9,9 +9,9 @@ import arpx.nextMotion.NextMotion;
 @:arpType("motionSet", "motionSet")
 class MotionSet implements IArpObject {
 
-	@:arpBarrier @:arpField(true) public var motions:IMap<String, Motion>;
-	@:arpBarrier @:arpField(true) public var nextMotions:IList<NextMotion>;
-	@:arpBarrier @:arpField public var initMotion:Motion;
+	@:arpField(true) public var motions:IMap<String, Motion>;
+	@:arpField(true) public var nextMotions:IList<NextMotion>;
+	@:arpField public var initMotion:Motion;
 
 	public function new() {
 	}
