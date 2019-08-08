@@ -41,7 +41,7 @@ class MotionDriver extends Driver {
 		return this.nowMotionFrame.hitFrames;
 	}
 
-	private function startMotion(mortal:Mortal, motion:Motion, restart:Bool = true):Bool {
+	private function startMotion(mortal:Mortal, motion:Motion, restart:Bool):Bool {
 		if (motion == null) return false;
 		if (!restart && this.nowMotion == motion) return false;
 
@@ -60,7 +60,7 @@ class MotionDriver extends Driver {
 		if (newMotion == null) {
 			return false;
 		}
-		if (this.startMotion(mortal, newMotion)) {
+		if (this.startMotion(mortal, newMotion, restart)) {
 			mortal.onStartAction(actionName, newMotion);
 		}
 		return true;
@@ -124,7 +124,7 @@ class MotionDriver extends Driver {
 
 			if (newTime >= nowMotion.time) {
 				if (!this.startAction(mortal, nowMotion.loopAction, true)) {
-					this.startMotion(mortal, nowMotion);
+					this.startMotion(mortal, nowMotion, true);
 				}
 				var reactFrame:ReactFrame = this.nowMotion.reactFrames.first();
 				if (reactFrame != null) {
