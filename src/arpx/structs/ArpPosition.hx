@@ -18,13 +18,21 @@ class ArpPosition implements IArpStruct {
 	public var x:Float = 0;
 	public var y:Float = 0;
 	public var z:Float = 0;
-	public var dir:ArpDirection;
+
+	private var _dir:ArpDirection;
+	public var dir(get, set):ArpDirection;
+	inline private function get_dir():ArpDirection return this._dir;
+	inline private function set_dir(value:ArpDirection):ArpDirection {
+		if (value == null) return value;
+		this.dir.value = value.value;
+		return value;
+	}
 
 	public function new(x:Float = 0, y:Float = 0, z:Float = 0, dir:Int = 0) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.dir = new ArpDirection(dir);
+		this._dir = new ArpDirection(dir);
 	}
 
 	public function initWithSeed(seed:ArpSeed):ArpPosition {
