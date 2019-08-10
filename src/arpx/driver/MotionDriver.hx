@@ -134,6 +134,5 @@ class MotionDriver extends Driver {
 				this.setFrame(mortal, motionFrame);
 			}
 		}
-		super.tick(field, mortal);
 	}
 }
