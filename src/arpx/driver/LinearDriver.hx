@@ -12,9 +12,7 @@ class LinearDriver extends Driver {
 	@:arpField public var time:Float;
 	@:arpField public var period:Float;
 
-	public function new() {
-		super();
-	}
+	public function new() super();
 
 	override public function towardD(mortal:Mortal, period:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
 		this.dPos.x = x;
