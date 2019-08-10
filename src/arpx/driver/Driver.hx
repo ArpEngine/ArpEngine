@@ -15,11 +15,11 @@ class Driver implements IArpObject {
 	public function tick(field:Field, mortal:Mortal):Void {
 	}
 
-	public function toward(period:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Bool {
+	public function toward(mortal:Mortal, period:Float, x:Float, y:Float, z:Float = 0):Bool {
 		return false;
 	}
 
-	public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Bool {
+	public function towardD(mortal:Mortal, period:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
 		return false;
 	}
 

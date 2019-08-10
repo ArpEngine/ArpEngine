@@ -37,7 +37,7 @@ class LinearDriverCase {
 		assertMatch(0, me.target.z);
 		assertMatch(0, me.period);
 		assertMatch(0, pos.dir.value);
-		me.toward(2, 2, 4, 6);
+		mortal.toward(2, 2, 4, 6);
 		assertMatch(1, pos.x);
 		assertMatch(2, pos.y);
 		assertMatch(3, pos.z);
@@ -46,7 +46,7 @@ class LinearDriverCase {
 		assertMatch(6, me.target.z);
 		assertMatch(2, me.period);
 		//assertTrue(0 != pos.dir.value);
-		me.toward(3, 1, 2, 3, 3);
+		mortal.toward(3, 1, 2, 3, 3);
 		assertMatch(1, pos.x);
 		assertMatch(2, pos.y);
 		assertMatch(3, pos.z);
@@ -55,7 +55,7 @@ class LinearDriverCase {
 		assertMatch(9, me.target.z);
 		assertMatch(3, me.period);
 		//assertTrue(0 != pos.dir.value);
-		me.towardD(1, 1, 1, 1);
+		mortal.towardD(1, 1, 1, 1);
 		assertMatch(1, pos.x);
 		assertMatch(2, pos.y);
 		assertMatch(3, pos.z);
@@ -64,7 +64,7 @@ class LinearDriverCase {
 		assertMatch(1, me.target.z);
 		assertMatch(1, me.period);
 		//assertTrue(0 != pos.dir.value);
-		me.towardD(3, 1, 0, 1, 3);
+		mortal.towardD(3, 1, 0, 1, 3);
 		assertMatch(1, pos.x);
 		assertMatch(2, pos.y);
 		assertMatch(3, pos.z);
@@ -79,7 +79,7 @@ class LinearDriverCase {
 		var pos = mortal.position;
 		pos.relocate(0, 0, 0);
 		pos.dir = ArpDirection.RIGHT;
-		me.toward(4, 4, 4, 4);
+		mortal.toward(4, 4, 4, 4);
 		assertMatch(0, pos.x);
 		me.tick(null, mortal);
 		assertMatch(1, pos.x);

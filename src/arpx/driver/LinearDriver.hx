@@ -15,19 +15,19 @@ class LinearDriver extends Driver {
 		super();
 	}
 
-	override public function toward(period:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Bool {
-		this.target.x = x * gridSize;
-		this.target.y = y * gridSize;
-		this.target.z = z * gridSize;
+	override public function toward(mortal:Mortal, period:Float, x:Float, y:Float, z:Float = 0):Bool {
+		this.target.x = x;
+		this.target.y = y;
+		this.target.z = z;
 		this.isDelta = false;
 		this.period = period;
 		return true;
 	}
 
-	override public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Bool {
-		this.target.x = x * gridSize;
-		this.target.y = y * gridSize;
-		this.target.z = z * gridSize;
+	override public function towardD(mortal:Mortal, period:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
+		this.target.x = x;
+		this.target.y = y;
+		this.target.z = z;
 		this.isDelta = true;
 		this.period = period;
 		return true;
