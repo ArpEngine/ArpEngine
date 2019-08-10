@@ -61,8 +61,17 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 		return true;
 	}
 
+	public function toward(period:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Void {
+		if (this.driver != null) this.driver.toward(period, x * gridSize, y * gridSize, z * gridSize);
+	}
+
+	public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Void {
+		if (this.driver != null) this.driver.towardD(period, x * gridSize, y * gridSize, z * gridSize);
+	}
+
 	public function startAction(actionName:String, restart:Bool = false):Bool {
-		return this.driver.startAction(this, actionName, restart);
+		if (this.driver != null) return this.driver.startAction(this, actionName, restart);
+		return false;
 	}
 
 	public function onStartAction(actionName:String, newMotion:Motion):Void {
