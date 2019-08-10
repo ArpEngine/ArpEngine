@@ -19,7 +19,6 @@ class MotionDriver extends Driver {
 	@:arpField public var nowTime:Float;
 	@:arpField(false) public var nowMotionFrame:MotionFrame;
 
-	@:arpField public var dHitType:String;
 	@:arpField private var willReact:Bool;
 
 	public function new() super();

@@ -9,7 +9,6 @@ class LinearDriver extends Driver {
 
 	@:arpField public var target:ArpPosition;
 	@:arpField public var isDelta:Bool;
-	@:arpField public var dHitType:String;
 	@:arpField public var period:Float;
 
 	public function new() {

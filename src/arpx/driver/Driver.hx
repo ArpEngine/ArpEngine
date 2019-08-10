@@ -7,6 +7,8 @@ import arpx.mortal.Mortal;
 @:arpType("driver", "null")
 class Driver implements IArpObject {
 
+	@:arpField public var dHitType:String;
+
 	public function new() {
 	}
 
