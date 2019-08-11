@@ -13,7 +13,7 @@ class Driver implements IArpObject {
 
 	public function tick(field:Field, mortal:Mortal):Void return;
 
-	public function towardD(mortal:Mortal, period:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool return false;
+	public function towardD(mortal:Mortal, time:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool return false;
 
 	public function startAction(mortal:Mortal, actionName:String, restart:Bool = false):Bool return false;
 }

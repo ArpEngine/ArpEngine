@@ -9,12 +9,12 @@ class LinearDriver extends Driver {
 
 	@:arpField public var dPos:ArpPosition;
 	@:arpField public var hasDir:Bool;
-	@:arpField public var time:Float;
-	@:arpField public var period:Float;
+	@:arpField public var nowTime:Float = 0;
+	@:arpField public var time:Float = 0;
 
 	public function new() super();
 
-	override public function towardD(mortal:Mortal, period:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
+	override public function towardD(mortal:Mortal, time:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
 		this.dPos.x = x;
 		this.dPos.y = y;
 		this.dPos.z = z;
@@ -22,13 +22,13 @@ class LinearDriver extends Driver {
 			this.dPos.dir.valueRadian = Math.atan2(y, x);
 			this.hasDir = true;
 		}
-		this.period = period;
-		this.time = 0;
+		this.time = time;
+		this.nowTime = 0;
 		return true;
 	}
 
 	override public function tick(field:Field, mortal:Mortal):Void {
-		if (this.period <= 0) {
+		if (this.time <= 0) {
 			mortal.stayWithHit(field, this.dHitType);
 			return;
 		}
@@ -38,18 +38,18 @@ class LinearDriver extends Driver {
 			pos.dir.value = this.dPos.dir.value;
 			mortal.params.set("dir", pos.dir);
 		}
-		var dx = this.dPos.x / period;
-		var dy = this.dPos.y / period;
-		var dz = this.dPos.z / period;
+		var dx = this.dPos.x / time;
+		var dy = this.dPos.y / time;
+		var dz = this.dPos.z / time;
 
-		var dTime = this.period - this.time;
+		var dTime = this.time - this.nowTime;
 		if (dTime < 1) {
 			dx *= dTime;
 			dy *= dTime;
 			dz *= dTime;
-			this.time = this.period;
+			this.nowTime = this.time = 0;
 		} else {
-			this.time++;
+			this.nowTime++;
 		}
 		mortal.moveDWithHit(field, dx, dy, dz, this.dHitType);
 	}

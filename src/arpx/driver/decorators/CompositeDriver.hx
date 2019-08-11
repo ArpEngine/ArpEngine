@@ -11,9 +11,9 @@ class CompositeDriver extends Driver {
 
 	public function new() super();
 
-	override public function towardD(mortal:Mortal, period:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
+	override public function towardD(mortal:Mortal, time:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
 		for (driver in this.drivers) {
-			if (driver.towardD(mortal, period, x, y, z)) return true;
+			if (driver.towardD(mortal, time, x, y, z)) return true;
 		}
 		return false;
 	}
