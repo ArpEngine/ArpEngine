@@ -8,9 +8,7 @@ import arpx.mortal.Mortal;
 class Driver implements IArpObject {
 
 	@:arpField public var dHitType:String;
-
-	public var time(get, never):Float;
-	private function get_time():Float return 0;
+	@:arpField public var time:Float;
 
 	public function new() return;
 
