@@ -9,6 +9,9 @@ class Driver implements IArpObject {
 
 	@:arpField public var dHitType:String;
 
+	public var time(get, never):Float;
+	private function get_time():Float return 0;
+
 	public function new() return;
 
 	public function tick(field:Field, mortal:Mortal):Void return;

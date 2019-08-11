@@ -61,6 +61,12 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 		return true;
 	}
 
+	public var driverTime(get, never):Float;
+	public function get_driverTime():Float {
+		if (this.driver == null) return 0;
+		return this.driver.time;
+	}
+
 	public function toward(time:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Bool {
 		if (this.driver == null) return false;
 		var position:ArpPosition = this.position;

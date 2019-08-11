@@ -10,7 +10,8 @@ class LinearDriver extends Driver {
 	@:arpField public var dPos:ArpPosition;
 	@:arpField public var hasDir:Bool;
 	@:arpField public var nowTime:Float = 0;
-	@:arpField public var time:Float = 0;
+	@:arpField("time") private var _time:Float = 0;
+	override public function get_time():Float return this._time;
 
 	public function new() super();
 
@@ -22,7 +23,7 @@ class LinearDriver extends Driver {
 			this.dPos.dir.valueRadian = Math.atan2(y, x);
 			this.hasDir = true;
 		}
-		this.time = time;
+		this._time = time;
 		this.nowTime = 0;
 		return true;
 	}
@@ -47,7 +48,7 @@ class LinearDriver extends Driver {
 			dx *= dTime;
 			dy *= dTime;
 			dz *= dTime;
-			this.nowTime = this.time = 0;
+			this.nowTime = this._time = 0;
 		} else {
 			this.nowTime++;
 		}
