@@ -61,15 +61,21 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 		return true;
 	}
 
-	public function toward(period:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Bool {
-		if (this.driver == null) return false;
-		var position:ArpPosition = this.position;
-		return this.driver.towardD(this, period, x * gridSize - position.x, y * gridSize - position.y, z * gridSize - position.z);
+	public var driverTime(get, never):Float;
+	public function get_driverTime():Float {
+		if (this.driver == null) return 0;
+		return this.driver.time;
 	}
 
-	public function towardD(period:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Bool {
+	public function toward(time:Float, x:Float, y:Float, z:Float = 0, gridSize:Float = 1.0):Bool {
 		if (this.driver == null) return false;
-		return this.driver.towardD(this, period, x * gridSize, y * gridSize, z * gridSize);
+		var position:ArpPosition = this.position;
+		return this.driver.towardD(this, time, x * gridSize - position.x, y * gridSize - position.y, z * gridSize - position.z);
+	}
+
+	public function towardD(time:Float, x:Float = 0, y:Float = 0, z:Float = 0, gridSize:Float = 1.0):Bool {
+		if (this.driver == null) return false;
+		return this.driver.towardD(this, time, x * gridSize, y * gridSize, z * gridSize);
 	}
 
 	public function startAction(actionName:String, restart:Bool = false):Bool {

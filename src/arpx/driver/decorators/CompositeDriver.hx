@@ -9,11 +9,20 @@ class CompositeDriver extends Driver {
 
 	@:arpBarrier @:arpDeepCopy @:arpField(true) public var drivers:IList<Driver>;
 
+	override public function get_time():Float {
+		var t:Float = 0;
+		for (driver in this.drivers) {
+			t = driver.time;
+			if (t != 0) break;
+		}
+		return t;
+	}
+
 	public function new() super();
 
-	override public function towardD(mortal:Mortal, period:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
+	override public function towardD(mortal:Mortal, time:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool {
 		for (driver in this.drivers) {
-			if (driver.towardD(mortal, period, x, y, z)) return true;
+			if (driver.towardD(mortal, time, x, y, z)) return true;
 		}
 		return false;
 	}
