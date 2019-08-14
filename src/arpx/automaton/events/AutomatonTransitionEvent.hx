@@ -21,7 +21,7 @@ class AutomatonTransitionEvent extends AutomatonEvent<AutomatonTransitionEventKi
 	override public function describe():String {
 		switch (this.kind) {
 			case AutomatonTransitionEventKind.Transition:
-				return 'Transition: ${oldState.label} -> ${key} -> ${newState.label}';
+				return 'Transition(${key}): ${oldState.label} -> ${newState.label}';
 		}
 	}
 }
