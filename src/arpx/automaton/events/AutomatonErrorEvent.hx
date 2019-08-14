@@ -17,9 +17,9 @@ class AutomatonErrorEvent extends AutomatonEvent<AutomatonErrorEventKind> {
 	override public function describe():String {
 		switch (this.kind) {
 			case AutomatonErrorEventKind.Inactive:
-				return 'Error: Automaton is not active';
+				return 'Error(${key}): Automaton is not active';
 			case AutomatonErrorEventKind.TransitionNotFound:
-				return 'Error: ${stateStackLabels.join(", ")} -> ${key} -> No transition found';
+				return 'Error(${key}): No transition found: ${stateStackLabels.join(", ")}';
 		}
 	}
 }

@@ -146,7 +146,7 @@ class AutomatonCase {
 		assertEquals(1, me.stateStack.length);
 		assertEquals("state3", me.state.label);
 		assertMatch([
-			"Error: state3 -> command3 -> No transition found"
+			"Error(command3): No transition found: state3"
 		], parsedEvents());
 	}
 
@@ -165,8 +165,8 @@ class AutomatonCase {
 		state2a.record = true;
 
 		me.transition("command");
-		assertEquals(2, me.stateStack.length); // FIXME
-		assertEquals("state2.a", me.state.label); // FIXME
+		assertEquals(2, me.stateStack.length);
+		assertEquals("state2.a", me.state.label);
 		assertMatch([
 			"Transition(command): init -> state1",
 			"Leave(init): ",
@@ -184,7 +184,34 @@ class AutomatonCase {
 			"Enter(state2.a): state2, state2.a",
 			"BeforeEnter(state2.a): state2, state2.a",
 			"AfterEnter(state2.a): state2, state2.a",
-			"AfterEnter(state1): state2, state2.a",
+			"AfterEnter(state1): state2, state2.a"
+		], parsedEvents());
+
+		me.transition("command");
+		assertEquals(2, me.stateStack.length);
+		assertEquals("state2.a", me.state.label);
+		assertMatch([
+			"Transition(command): state2 -> state1",
+			"Leave(state2.a): state2",
+			"BeforeLeave(state2.a): state2",
+			"AfterLeave(state2.a): state2",
+			"Leave(state2): ",
+			"BeforeLeave(state2): ",
+			"Error(command3): Automaton is not active",
+			"AfterLeave(state2): ",
+			"Enter(state1): state1",
+			"BeforeEnter(state1): state1",
+			"Transition(command): state1 -> state2",
+			"Leave(state1): ",
+			"BeforeLeave(state1): ",
+			"AfterLeave(state1): ",
+			"Enter(state2): state2",
+			"BeforeEnter(state2): state2",
+			"AfterEnter(state2): state2",
+			"Enter(state2.a): state2, state2.a",
+			"BeforeEnter(state2.a): state2, state2.a",
+			"AfterEnter(state2.a): state2, state2.a",
+			"AfterEnter(state1): state2, state2.a"
 		], parsedEvents());
 	}
 }
