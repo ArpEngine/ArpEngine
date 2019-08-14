@@ -88,7 +88,7 @@ class AutomatonCase {
 		assertEquals("state1", me.state.label);
 		assertMatch([
 			"Transition(command): init -> state1",
-			"Leave(init): init",
+			"Leave(init): ",
 			"Enter(state1): state1"
 		], parsedEvents());
 
@@ -98,7 +98,7 @@ class AutomatonCase {
 		assertEquals("state2.a", me.state.label);
 		assertMatch([
 			"Transition(command): state1 -> state2",
-			"Leave(state1): state1",
+			"Leave(state1): ",
 			"Enter(state2): state2",
 			"Enter(state2.a): state2, state2.a"
 		], parsedEvents());
@@ -109,7 +109,7 @@ class AutomatonCase {
 		assertEquals("state2.b", me.state.label);
 		assertMatch([
 			"Transition(sub): state2.a -> state2.b",
-			"Leave(state2.a): state2, state2.a",
+			"Leave(state2.a): state2",
 			"Enter(state2.b): state2, state2.b"
 		], parsedEvents());
 
@@ -119,7 +119,7 @@ class AutomatonCase {
 		assertEquals("state2.a", me.state.label);
 		assertMatch([
 			"Transition(sub): state2.b -> state2.a",
-			"Leave(state2.b): state2, state2.b",
+			"Leave(state2.b): state2",
 			"Enter(state2.a): state2, state2.a"
 		], parsedEvents());
 
@@ -128,8 +128,8 @@ class AutomatonCase {
 		assertEquals("state1", me.state.label);
 		assertMatch([
 			"Transition(command): state2 -> state1",
-			"Leave(state2.a): state2, state2.a",
-			"Leave(state2): state2",
+			"Leave(state2.a): state2",
+			"Leave(state2): ",
 			"Enter(state1): state1"
 		], parsedEvents());
 
@@ -138,7 +138,7 @@ class AutomatonCase {
 		assertEquals("state3", me.state.label);
 		assertMatch([
 			"Transition(command3): state1 -> state3",
-			"Leave(state1): state1",
+			"Leave(state1): ",
 			"Enter(state3): state3"
 		], parsedEvents());
 
@@ -169,22 +169,22 @@ class AutomatonCase {
 		assertEquals("state2.a", me.state.label); // FIXME
 		assertMatch([
 			"Transition(command): init -> state1",
-			"BeforeLeave(init): init",
-			"AfterLeave(init): init",
-			"Leave(init): init",
+			"Leave(init): ",
+			"BeforeLeave(init): ",
+			"AfterLeave(init): ",
+			"Enter(state1): state1",
 			"BeforeEnter(state1): state1",
 			"Transition(command): state1 -> state2",
-			"BeforeLeave(state1): state1",
-			"AfterLeave(state1): state1",
-			"Leave(state1): state1",
+			"Leave(state1): ",
+			"BeforeLeave(state1): ",
+			"AfterLeave(state1): ",
+			"Enter(state2): state2",
 			"BeforeEnter(state2): state2",
 			"AfterEnter(state2): state2",
-			"Enter(state2): state2",
+			"Enter(state2.a): state2, state2.a",
 			"BeforeEnter(state2.a): state2, state2.a",
 			"AfterEnter(state2.a): state2, state2.a",
-			"Enter(state2.a): state2, state2.a",
 			"AfterEnter(state1): state2, state2.a",
-			"Enter(state1): state2, state2.a"
 		], parsedEvents());
 	}
 }

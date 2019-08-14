@@ -39,21 +39,21 @@ class Automaton implements IArpObject {
 
 	private function pushState(newState:AutomatonState, payload:Dynamic = null):AutomatonState {
 		this.stateStack.push(newState);
-		@:privateAccess newState.enterState(this, payload);
 		if (this._onEnterState.willTrigger()) {
 			this._onEnterState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Enter, newState, this.stateStack, payload));
 		}
+		@:privateAccess newState.enterState(this, payload);
 		return newState;
 	}
 
 	private function popState(payload:Dynamic = null):Void {
 		var nowState:AutomatonState = this.state;
 		if (nowState != null) {
-			@:privateAccess nowState.leaveState(this, payload);
+			this.stateStack.pop();
 			if (this._onLeaveState.willTrigger()) {
 				this._onLeaveState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Leave, nowState, this.stateStack, payload));
 			}
-			this.stateStack.pop();
+			@:privateAccess nowState.leaveState(this, payload);
 		}
 	}
 
