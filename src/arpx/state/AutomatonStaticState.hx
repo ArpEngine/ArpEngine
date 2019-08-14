@@ -14,11 +14,9 @@ class AutomatonStaticState extends AutomatonState {
 	override private function enterState(automaton:Automaton, payload:Dynamic = null):Void {
 		if (this.automaton != null) throw "this AutomatonStaticState is already active";
 		this.automaton = automaton;
-		super.enterState(automaton, payload);
 	}
 
 	override private function leaveState(automaton:Automaton, payload:Dynamic = null):Void {
-		super.leaveState(automaton, payload);
 		this.automaton = null;
 	}
 

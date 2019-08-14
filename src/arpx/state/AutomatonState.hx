@@ -16,11 +16,8 @@ class AutomatonState implements IArpObject {
 
 	public function getTransition(key:String, payload:Dynamic = null):Null<AutomatonState> return this.transitions.get(key);
 
-	private function enterState(automaton:Automaton, payload:Dynamic = null):Void onEnterState(automaton, payload);
-	private function leaveState(automaton:Automaton, payload:Dynamic = null):Void onLeaveState(automaton, payload);
-
-	public function onEnterState(automaton:Automaton, payload:Dynamic = null):Void return;
-	public function onLeaveState(automaton:Automaton, payload:Dynamic = null):Void return;
+	private function enterState(automaton:Automaton, payload:Dynamic = null):Void return; // override me
+	private function leaveState(automaton:Automaton, payload:Dynamic = null):Void return; // override me
 
 	public function toAutomaton():Automaton {
 		var automaton:Automaton = this.arpDomain.allocObject(Automaton);
