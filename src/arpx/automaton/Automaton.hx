@@ -37,13 +37,12 @@ class Automaton implements IArpObject {
 		this._onError = new ArpSignal();
 	}
 
-	private function pushState(newState:AutomatonState, payload:Dynamic = null):AutomatonState {
+	private function pushState(newState:AutomatonState, payload:Dynamic = null):Void {
 		this.stateStack.push(newState);
 		if (this._onEnterState.willTrigger()) {
 			this._onEnterState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Enter, newState, this.stateStack, payload));
 		}
 		@:privateAccess newState.enterState(this, payload);
-		return newState;
 	}
 
 	private function popState(payload:Dynamic = null):Void {
@@ -57,8 +56,8 @@ class Automaton implements IArpObject {
 		}
 	}
 
-	private function enterState(newStateTemplate:AutomatonState, payload:Dynamic = null):Void {
-		var newState:AutomatonState = this.pushState(newStateTemplate, payload);
+	private function enterState(newState:AutomatonState, payload:Dynamic = null):Void {
+		this.pushState(newState, payload);
 		var childState:AutomatonState = newState.childState;
 		if (childState != null) {
 			this.enterState(childState, payload);
