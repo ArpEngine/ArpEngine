@@ -16,6 +16,8 @@ class AutomatonErrorEvent extends AutomatonEvent<AutomatonErrorEventKind> {
 
 	override public function describe():String {
 		switch (this.kind) {
+			case AutomatonErrorEventKind.Conflict:
+				return 'Error(${key}): Cannot transition inside transition';
 			case AutomatonErrorEventKind.Inactive:
 				return 'Error(${key}): Automaton is not active';
 			case AutomatonErrorEventKind.TransitionNotFound:
@@ -25,6 +27,7 @@ class AutomatonErrorEvent extends AutomatonEvent<AutomatonErrorEventKind> {
 }
 
 enum AutomatonErrorEventKind {
+	Conflict;
 	Inactive;
 	TransitionNotFound;
 }

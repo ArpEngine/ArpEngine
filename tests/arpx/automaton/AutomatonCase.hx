@@ -157,11 +157,11 @@ class AutomatonCase {
 		state1.transitionInEnterState = "command";
 		state1.record = true;
 		var state2:AutomatonCallbackState = domain.query("state2", AutomatonCallbackState).value();
-		state2.transitionInLeaveState = "command3";
 		state2.record = true;
 		var state3:AutomatonCallbackState = domain.query("state3", AutomatonCallbackState).value();
 		state3.record = true;
 		var state2a:AutomatonCallbackState = domain.query("state2.a", AutomatonCallbackState).value();
+		state2a.transitionInLeaveState = "command3";
 		state2a.record = true;
 
 		me.transition("command");
@@ -187,31 +187,21 @@ class AutomatonCase {
 			"AfterEnter(state1): state2, state2.a"
 		], parsedEvents());
 
-		me.transition("command");
-		assertEquals(2, me.stateStack.length);
-		assertEquals("state2.a", me.state.label);
+		me.transition("command3");
+		assertEquals(1, me.stateStack.length);
+		assertEquals("state3", me.state.label);
 		assertMatch([
-			"Transition(command): state2 -> state1",
+			"Transition(command3): state2 -> state3",
 			"Leave(state2.a): state2",
 			"BeforeLeave(state2.a): state2",
+			"Error(command3): Cannot transition inside transition",
 			"AfterLeave(state2.a): state2",
 			"Leave(state2): ",
 			"BeforeLeave(state2): ",
-			"Error(command3): Automaton is not active",
 			"AfterLeave(state2): ",
-			"Enter(state1): state1",
-			"BeforeEnter(state1): state1",
-			"Transition(command): state1 -> state2",
-			"Leave(state1): ",
-			"BeforeLeave(state1): ",
-			"AfterLeave(state1): ",
-			"Enter(state2): state2",
-			"BeforeEnter(state2): state2",
-			"AfterEnter(state2): state2",
-			"Enter(state2.a): state2, state2.a",
-			"BeforeEnter(state2.a): state2, state2.a",
-			"AfterEnter(state2.a): state2, state2.a",
-			"AfterEnter(state1): state2, state2.a"
+			"Enter(state3): state3",
+			"BeforeEnter(state3): state3",
+			"AfterEnter(state3): state3"
 		], parsedEvents());
 	}
 }
