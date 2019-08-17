@@ -30,6 +30,8 @@ class Automaton implements IArpObject {
 	public var onError(get, never):IArpSignalOut<AutomatonErrorEvent>;
 	private function get_onError():IArpSignalOut<AutomatonErrorEvent> return this._onError;
 
+	private var isTransitionIncomplete:Bool = false;
+
 	public function new() {
 		this._onEnterState = new ArpSignal();
 		this._onLeaveState = new ArpSignal();
@@ -37,35 +39,38 @@ class Automaton implements IArpObject {
 		this._onError = new ArpSignal();
 	}
 
-	private function pushState(newState:AutomatonState, payload:Dynamic = null):AutomatonState {
+	private function pushState(newState:AutomatonState, payload:Dynamic = null):Void {
 		this.stateStack.push(newState);
-		@:privateAccess newState.enterState(this, payload);
 		if (this._onEnterState.willTrigger()) {
-			this._onEnterState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Enter, this.stateStack, payload));
+			this._onEnterState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Enter, newState, this.stateStack, payload));
 		}
-		return newState;
+		@:privateAccess newState.enterState(this, payload);
 	}
 
 	private function popState(payload:Dynamic = null):Void {
 		var nowState:AutomatonState = this.state;
 		if (nowState != null) {
-			@:privateAccess nowState.leaveState(this, payload);
-			if (this._onLeaveState.willTrigger()) {
-				this._onLeaveState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Leave, this.stateStack, payload));
-			}
 			this.stateStack.pop();
+			if (this._onLeaveState.willTrigger()) {
+				this._onLeaveState.dispatch(new AutomatonStateEvent(AutomatonStateEventKind.Leave, nowState, this.stateStack, payload));
+			}
+			@:privateAccess nowState.leaveState(this, payload);
 		}
 	}
 
-	private function enterState(newStateTemplate:AutomatonState, payload:Dynamic = null):Void {
-		var newState:AutomatonState = this.pushState(newStateTemplate, payload);
+	private function enterState(newState:AutomatonState, payload:Dynamic = null):Void {
 		var childState:AutomatonState = newState.childState;
-		if (childState != null) {
+		if (childState == null) {
+			this.isTransitionIncomplete = false;
+			this.pushState(newState, payload);
+		} else {
+			this.pushState(newState, payload);
 			this.enterState(childState, payload);
 		}
 	}
 
 	private function leaveState(oldState:AutomatonState, payload:Dynamic = null):Void {
+		this.isTransitionIncomplete = true;
 		var index:Int = this.stateStack.indexOf(oldState);
 		if (index >= 0) {
 			while (this.state != oldState) this.popState(payload);
@@ -82,6 +87,12 @@ class Automaton implements IArpObject {
 	}
 
 	public function transition(key:String, payload:Dynamic = null):Bool {
+		if (this.isTransitionIncomplete) {
+			if (this._onError.willTrigger()) {
+				this._onError.dispatch(new AutomatonErrorEvent(AutomatonErrorEventKind.Conflict, this.stateStack, key, payload));
+			}
+			return false;
+		}
 		var nowState:AutomatonState = this.state;
 		var newState:AutomatonState;
 		if (nowState == null) {
@@ -89,10 +100,6 @@ class Automaton implements IArpObject {
 				this._onError.dispatch(new AutomatonErrorEvent(AutomatonErrorEventKind.Inactive, this.stateStack, key, payload));
 			}
 			return false;
-		}
-		if ((newState = nowState.getTransition(key, payload)) != null) {
-			this.switchState(nowState, newState, key, payload);
-			return true;
 		}
 		var i:Int = this.stateStack.length - 1;
 		while (i >= 0) {

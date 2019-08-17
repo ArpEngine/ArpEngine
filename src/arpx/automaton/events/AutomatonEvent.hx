@@ -10,12 +10,6 @@ class AutomatonEvent<T> {
 	public var kind(default, null):T;
 	public var stateStack(default, null):IList<AutomatonState>;
 
-	public var state(get, never):AutomatonState;
-	inline private function get_state() return stateStack.last();
-
-	public var stateLabel(get, never):String;
-	private function get_stateLabel() return (state != null) ? state.label : null;
-
 	public var stateStackLabels(get, never):Array<String>;
 	private function get_stateStackLabels():Array<String> {
 		var list:ArrayList<String> = new ArrayList<String>();
