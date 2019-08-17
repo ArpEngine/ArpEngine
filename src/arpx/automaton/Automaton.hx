@@ -30,7 +30,7 @@ class Automaton implements IArpObject {
 	public var onError(get, never):IArpSignalOut<AutomatonErrorEvent>;
 	private function get_onError():IArpSignalOut<AutomatonErrorEvent> return this._onError;
 
-	private var isTransitionIncomplete:Bool = true;
+	private var isTransitionIncomplete:Bool = false;
 
 	public function new() {
 		this._onEnterState = new ArpSignal();
