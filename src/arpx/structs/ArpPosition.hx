@@ -90,6 +90,16 @@ class ArpPosition implements IArpStruct {
 		);
 	}
 
+	public function relocatePolar(r:Float = 0, dir:ArpDirection = null, z:Float = 0, gridSize:Float = 1.0):Void {
+		if (dir == null) dir = this.dir;
+		var valueRadian:Float = dir.valueRadian;
+		this.relocateD(
+			r * Math.cos(valueRadian) * gridSize,
+			r * Math.sin(valueRadian) * gridSize,
+			z * gridSize
+		);
+	}
+
 	public function distanceTo(other:ArpPosition):Float {
 		return Math.sqrt(this.distanceTo(other));
 	}
