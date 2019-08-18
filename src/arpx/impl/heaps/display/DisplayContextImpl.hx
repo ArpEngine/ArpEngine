@@ -25,19 +25,30 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 
 	private var renderer:RendererImpl;
 
+	private var cachedFillRectTiles:Map<UInt, Tile>;
+	private var cachedFillRectTilesCount:Int;
+
 	public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
 		super(transform, clearColor);
 		this.buf = buf;
 		this._width = width;
 		this._height = height;
 		this.renderer = new RendererImpl(Engine.getCurrent());
+		this.cachedFillRectTiles = new Map<UInt, Tile>();
 	}
 
 	public function start():Void {
 		this.buf.removeChildren();
 		this.renderer.start();
 	}
-	public function display():Void this.renderer.display();
+
+	public function display():Void {
+		this.renderer.display();
+		if (cachedFillRectTilesCount > 65536) {
+			this.cachedFillRectTiles = new Map<UInt, Tile>();
+			this.cachedFillRectTilesCount = 0;
+		}
+	}
 
 	private var _workMatrix:ArpTransform = new ArpTransform();
 	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
@@ -47,7 +58,13 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		_workTransform.impl.tx = l;
 		_workTransform.impl.ty = t;
 		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
-		var tile:Tile = Tile.fromColor(color);
+		var alpha:Float = (color >>> 24) / 0xff;
+		var tile:Tile = cachedFillRectTiles.get(color);
+		if (tile == null) {
+			tile = Tile.fromColor(color, 1, 1, alpha);
+			cachedFillRectTiles.set(color, tile);
+			cachedFillRectTilesCount++;
+		}
 		this.renderer.renderTile(matrix, tile);
 		popTransform();
 	}
