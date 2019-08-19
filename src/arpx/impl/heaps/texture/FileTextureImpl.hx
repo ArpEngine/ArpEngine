@@ -18,6 +18,7 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 
 	private var texture:FileTexture;
 	private var value:Tile;
+	private var impl:TextureFaceDataImpl;
 
 	override private function get_width():Float return this.value.width;
 	override private function get_height():Float return this.value.height;
@@ -38,17 +39,19 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 		// private function onLoadComplete(image:Image):Void {
 		this.value = new Image(fileEntry).toTile();
 		this.value.getTexture().filter = if (texture.smoothing) Filter.Linear else Filter.Nearest;
+		this.impl = new TextureFaceDataImpl(this.value);
 		// this.texture.arpDomain.notifyFor(this.texture);
 		return true;
 	}
 
 	override public function arpHeatDownNow():Bool {
 		this.value = null;
+		this.impl = null;
 		return true;
 	}
 
 	public function getFaceData(params:IArpParamsRead = null):TextureFaceData {
-		return new TextureFaceDataImpl(this.value).trim(0, 0, this.texture.width, this.texture.height);
+		return this.impl;
 	}
 }
 

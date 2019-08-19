@@ -19,6 +19,7 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 	private var texture:FileTexture;
 	private var loader:Loader;
 	private var value:BitmapData;
+	private var impl:TextureFaceDataImpl;
 
 	override private function get_width():Int return this.value.width;
 	override private function get_height():Int return this.value.height;
@@ -48,17 +49,19 @@ class FileTextureImpl extends TextureImplBase implements ITextureImpl {
 
 	private function onLoadComplete(event:Event):Void {
 		this.value = cast(this.loader.content, Bitmap).bitmapData;
+		this.impl = new TextureFaceDataImpl(this.value);
 		this.texture.arpDomain.notifyFor(this.texture);
 	}
 
 	override public function arpHeatDownNow():Bool {
 		this.loader = null;
 		this.value = null;
+		this.impl = null;
 		return true;
 	}
 
 	public function getFaceData(params:IArpParamsRead = null):TextureFaceDataImpl {
-		return new TextureFaceDataImpl(this.value);
+		return this.impl;
 	}
 }
 
