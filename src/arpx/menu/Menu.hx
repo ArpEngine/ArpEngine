@@ -61,8 +61,8 @@ class Menu implements IArpObject {
 				this.shift(-1);
 			}
 		}
-		for (kv in this.menuItems.amend()) {
-			var index:Int = kv.index;
+		var index:Int = 0;
+		for (kv in this.menuItems.keyValueIterator()) {
 			var name:String = kv.key;
 			var menuItem:MenuItem = kv.value;
 			if (menuItem.shortcut != null) {
@@ -82,6 +82,7 @@ class Menu implements IArpObject {
 					return this.execute(index);
 				}
 			}
+			index++;
 		}
 		var execute:InputAxis = input.axis(axes.execute);
 		if (execute.isTriggerDown) {
