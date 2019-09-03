@@ -61,14 +61,36 @@ class Menu implements IArpObject {
 				this.shift(-1);
 			}
 		}
+		for (kv in this.menuItems.amend()) {
+			var index:Int = kv.index;
+			var name:String = kv.key;
+			var menuItem:MenuItem = kv.value;
+			if (menuItem.shortcut != null) {
+				var shortcut:InputAxis = input.axis(menuItem.shortcut);
+				if (shortcut.isTriggerDown) {
+					if (this.value != index) {
+						this.value = index;
+						if (menuItem.shortcut == menuItem.hotkey) {
+							return true;
+						}
+					}
+				}
+			}
+			if (menuItem.hotkey != null) {
+				var hotkey:InputAxis = input.axis(menuItem.hotkey);
+				if (hotkey.isTriggerDown) {
+					return this.execute(index);
+				}
+			}
+		}
 		var execute:InputAxis = input.axis(axes.execute);
 		if (execute.isTriggerDown) {
-			this.executeSelection();
+			return this.executeSelection();
 		}
 		if (axes.abort != null) {
 			var abort:InputAxis = input.axis(axes.abort);
 			if (abort.isTriggerDown) {
-				this.executeAbort();
+				return this.executeAbort();
 			}
 		}
 		return true;
