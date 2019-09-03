@@ -1,7 +1,7 @@
 package arpx.menu;
 
 interface IMenuAxes {
-	var axis:String;
-	var execute:String;
-	var abort:String;
+	var axis(get, set):String;
+	var execute(get, set):String;
+	var abort(get, set):String;
 }
