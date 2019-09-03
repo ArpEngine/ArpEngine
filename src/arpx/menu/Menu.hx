@@ -5,11 +5,14 @@ import arp.ds.IOmap;
 import arpx.input.Input;
 import arpx.inputAxis.InputAxis;
 import arpx.menuItem.MenuItem;
+import arpx.proc.Proc;
 
 @:arpType("menu")
 class Menu implements IArpObject {
 	@:arpField public var visible:Bool = true;
 	@:arpField(true) public var menuItems:IOmap<String, MenuItem>;
+
+	@:arpField public var abort:Proc;
 
 	@:arpField public var value:Int;
 
@@ -43,6 +46,12 @@ class Menu implements IArpObject {
 		return execute(this.value);
 	}
 
+	inline public function executeAbort():Bool {
+		if (this.abort == null) return false;
+		this.abort.execute();
+		return true;
+	}
+
 	public function interactWith(input:Input, axes:IMenuAxes):Bool {
 		var axis:InputAxis = input.axis(axes.axis);
 		if (axis.isTrigger) {
@@ -55,6 +64,12 @@ class Menu implements IArpObject {
 		var execute:InputAxis = input.axis(axes.execute);
 		if (execute.isTriggerDown) {
 			this.executeSelection();
+		}
+		if (axes.abort != null) {
+			var abort:InputAxis = input.axis(axes.abort);
+			if (abort.isTriggerDown) {
+				this.executeAbort();
+			}
 		}
 		return true;
 	}

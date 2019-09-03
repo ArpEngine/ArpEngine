@@ -14,6 +14,7 @@ class ChipMenuHud extends Hud implements IMenuAxes {
 	@:arpField public var dPosition:ArpPosition;
 	@:arpField public var axis:String = "y";
 	@:arpField public var execute:String = "s";
+	@:arpField public var abort:String = null;
 	@:arpBarrier @:arpField public var menu:Menu;
 
 	@:arpImpl private var arpImpl:ChipMenuHudImpl;
