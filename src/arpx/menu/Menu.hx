@@ -2,6 +2,8 @@ package arpx.menu;
 
 import arp.domain.IArpObject;
 import arp.ds.IOmap;
+import arpx.input.Input;
+import arpx.inputAxis.InputAxis;
 import arpx.menuItem.MenuItem;
 
 @:arpType("menu")
@@ -39,6 +41,22 @@ class Menu implements IArpObject {
 
 	inline public function executeSelection():Bool {
 		return execute(this.value);
+	}
+
+	public function interactWith(input:Input, axes:IMenuAxes):Bool {
+		var axis:InputAxis = input.axis(axes.axis);
+		if (axis.isTrigger) {
+			if (axis.value > 0) {
+				this.shift(1);
+			} else if (axis.value < 0) {
+				this.shift(-1);
+			}
+		}
+		var execute:InputAxis = input.axis(axes.execute);
+		if (execute.isTriggerDown) {
+			this.executeSelection();
+		}
+		return true;
 	}
 }
 
