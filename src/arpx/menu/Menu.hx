@@ -25,6 +25,28 @@ class Menu implements IArpObject {
 		return if (item != null) item else null;
 	}
 
+	inline public function resolveKeyIndex(key:String):Int {
+		return this.menuItems.resolveKeyIndex(key);
+	}
+
+	public function resolveShortcutIndex(shortcut:String):Int {
+		var i:Int = 0;
+		for (menuItem in menuItems) {
+			if (menuItem.shortcut == shortcut) return i;
+			i++;
+		}
+		return -1;
+	}
+
+	public function resolveHotkeyIndex(hotkey:String):Int {
+		var i:Int = 0;
+		for (menuItem in menuItems) {
+			if (menuItem.hotkey == hotkey) return i;
+			i++;
+		}
+		return -1;
+	}
+
 	public function new() return;
 
 	private function shift(delta:Int):Int {
