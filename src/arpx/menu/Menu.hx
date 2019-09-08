@@ -29,7 +29,7 @@ class Menu implements IArpObject {
 		return this.menuItems.resolveKeyIndex(key);
 	}
 
-	inline public function resolveShortcutIndex(shortcut:String):Int {
+	public function resolveShortcutIndex(shortcut:String):Int {
 		var i:Int = 0;
 		for (menuItem in menuItems) {
 			if (menuItem.shortcut == shortcut) return i;
@@ -38,7 +38,7 @@ class Menu implements IArpObject {
 		return -1;
 	}
 
-	inline public function resolveHotkeyIndex(hotkey:String):Int {
+	public function resolveHotkeyIndex(hotkey:String):Int {
 		var i:Int = 0;
 		for (menuItem in menuItems) {
 			if (menuItem.hotkey == hotkey) return i;
