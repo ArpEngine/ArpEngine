@@ -7,6 +7,7 @@ import arpx.file.LocalFileCase;
 import arpx.impl.cross.structs.ArpTransformCase;
 import arpx.input.KeyInputCase;
 import arpx.macro.ArpStructsMacroArpObjectCase;
+import arpx.menu.MenuCase;
 import arpx.paramsOp.RewireParamsOpCase;
 import arpx.structs.ArpColorCase;
 import arpx.structs.ArpColorFlashCase;
@@ -57,6 +58,8 @@ class ArpEngineTestSuite {
 		r.load(LocalFileCase);
 
 		r.load(KeyInputCase);
+
+		r.load(MenuCase);
 
 		r.load(RewireParamsOpCase);
 
