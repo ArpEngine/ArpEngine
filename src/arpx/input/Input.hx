@@ -20,7 +20,10 @@ class Input implements IArpObject implements ITickable implements IInputImpl {
 		this.states = new StdMap<InputSource, Float>();
 	}
 
-	public function getState(source:InputSource):Float return this.states.get(source);
+	public function getState(source:InputSource):Float {
+		var result = this.states.get(source);
+		return if (result != null) result else 0.0;
+	}
 	public function setState(source:InputSource, value:Float = 1.0):Void this.states.set(source, value);
 	public function unsetState(source:InputSource, value:Float = 0.0):Void this.states.set(source, value);
 	public function clearStates():Void this.states.clear();
