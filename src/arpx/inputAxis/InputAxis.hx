@@ -14,24 +14,24 @@ class InputAxis implements ITickableChild<Input> implements IArpObject {
 	private var bindings:ArrayList<InputAxisBinding>;
 	private var nextValue:Float = 0;
 
-	private var state(default, null):Bool = false;
+	private var state(default, null):Int = 0;
 	private var stateDuration(default, null):Float = 0;
 	private var threshold(default, default):Float = 0.6;
 
 	public var isUp(get, null):Bool;
-	inline private function get_isUp():Bool return !this.state;
+	inline private function get_isUp():Bool return this.state == 0;
 
 	public var isDown(get, null):Bool;
-	inline private function get_isDown():Bool return this.state;
+	inline private function get_isDown():Bool return this.state != 0;
 
 	public var isTrigger(get, null):Bool;
 	inline private function get_isTrigger():Bool return this.stateDuration == 0;
 
 	public var isTriggerUp(get, null):Bool;
-	inline private function get_isTriggerUp():Bool return this.isTrigger && !this.state;
+	inline private function get_isTriggerUp():Bool return this.isTrigger && this.isUp;
 
 	public var isTriggerDown(get, null):Bool;
-	inline private function get_isTriggerDown():Bool return this.isTrigger && this.state;
+	inline private function get_isTriggerDown():Bool return this.isTrigger && this.isDown;
 
 	public function new() {
 		bindings = new ArrayList<InputAxisBinding>();
@@ -47,7 +47,7 @@ class InputAxis implements ITickableChild<Input> implements IArpObject {
 			this.nextValue += value * binding.factor;
 		}
 
-		var newState:Bool = this.nextValue >= threshold || this.nextValue <= -threshold;
+		var newState:Int = if (this.nextValue >= threshold) 1 else if (this.nextValue <= -threshold) -1 else 0;
 		if (this.state != newState) {
 			this.stateDuration = 0;
 			this.state = newState;
