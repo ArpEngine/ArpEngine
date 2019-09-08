@@ -27,7 +27,7 @@ class Menu implements IArpObject {
 
 	public function new() return;
 
-	public function shift(delta:Int):Int {
+	private function shift(delta:Int):Int {
 		var value:Int = this.value + delta;
 		if (value < 0) value = 0;
 		var length:Int = this.menuItems.length;
@@ -35,18 +35,18 @@ class Menu implements IArpObject {
 		return this.value = value;
 	}
 
-	public function execute(value:Int):Bool {
+	private function execute(value:Int):Bool {
 		var item:MenuItem = this.menuItems.getAt(value);
 		if (item == null || item.proc == null) return false;
 		item.proc.execute();
 		return true;
 	}
 
-	inline public function executeSelection():Bool {
+	private function executeSelection():Bool {
 		return execute(this.value);
 	}
 
-	inline public function executeAbort():Bool {
+	private function executeAbort():Bool {
 		if (this.abort == null) return false;
 		this.abort.execute();
 		return true;
