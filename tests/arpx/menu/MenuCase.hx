@@ -45,7 +45,7 @@ class MenuCase {
 				<menuItem>
 					<text value="item4" />
 				</menuItem>
-				<menuItem shortcut="5" hotkey="7">
+				<menuItem key="key5" shortcut="5" hotkey="7">
 					<text value="item5" />
 				</menuItem>
 				<menuItem shortcut="6" hotkey="6">
@@ -86,6 +86,23 @@ class MenuCase {
 		PicoAssert.assertEquals("item0", me.selection.text.publish(null));
 		me.value = 3;
 		PicoAssert.assertEquals("item3", me.selection.text.publish(null));
+	}
+
+	public function testResolveKeyIndex():Void {
+		PicoAssert.assertEquals(-1, me.resolveKeyIndex("null"));
+		PicoAssert.assertEquals(5, me.resolveKeyIndex("key5"));
+	}
+
+	public function testResolveShortcutIndex():Void {
+		PicoAssert.assertEquals(-1, me.resolveShortcutIndex("null"));
+		PicoAssert.assertEquals(5, me.resolveShortcutIndex("5"));
+		PicoAssert.assertEquals(6, me.resolveShortcutIndex("6"));
+	}
+
+	public function testResolveHotkeyIndex():Void {
+		PicoAssert.assertEquals(-1, me.resolveHotkeyIndex("null"));
+		PicoAssert.assertEquals(5, me.resolveHotkeyIndex("7"));
+		PicoAssert.assertEquals(6, me.resolveHotkeyIndex("6"));
 	}
 
 	public function testInteractWith():Void {
