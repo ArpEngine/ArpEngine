@@ -80,9 +80,9 @@ class ArpDirection implements IArpStruct {
 
 	private var _value:Int32;
 
-	public var value(get, set):UInt;
-	inline private function get_value():UInt return (this._value:Int);
-	inline private function set_value(value:UInt):UInt { this._value = clampInt(value); return value; }
+	public var value(get, set):Int;
+	inline private function get_value():Int return this._value;
+	inline private function set_value(value:Int):Int { this._value = clampInt(value); return value; }
 
 	public var valueRadian(get, set):Float;
 	private function get_valueRadian():Float {
