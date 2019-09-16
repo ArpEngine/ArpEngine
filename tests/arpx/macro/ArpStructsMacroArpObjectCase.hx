@@ -29,7 +29,7 @@ class ArpStructsMacroArpObjectCase {
 <arpHitCuboidField>1,2,3,4,5,6</arpHitCuboidField>
 <arpPositionField>2,4,6,0</arpPositionField>
 <arpRangeField>7..9</arpRangeField>
-<arpParamsField>a:b,c:10,d:2147483648:idir,faceValue</arpParamsField>
+<arpParamsField>a:b,c:10,d:80000000:idir,faceValue</arpParamsField>
 </mock>
 		').firstElement();
 		seed = ArpSeed.fromXml(xml);
@@ -59,7 +59,7 @@ class ArpStructsMacroArpObjectCase {
 		assertMatch({color:0x7fff00ff}, arpObj.arpColorField.toHash());
 		assertMatch({dir:0x20000000}, arpObj.arpDirectionField.toHash());
 		assertMatch({dX:1, dY:2, dZ:3, sizeX:4, sizeY:5, sizeZ:6}, arpObj.arpHitCuboidField.toHash());
-		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:2147483648:idir", "face:faceValue"), arpObj.arpParamsField.toHash().params.split(","));
+		assertMatch(Matchers.containsInAnyOrder("a:b", "c:10", "d:80000000:idir", "face:faceValue"), arpObj.arpParamsField.toHash().params.split(","));
 		assertMatch({dir:0, x:2, y:4, z:6}, arpObj.arpPositionField.toHash());
 		assertMatch({min:7, max:9}, arpObj.arpRangeField.toHash());
 	}

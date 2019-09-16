@@ -27,6 +27,7 @@ class ProcExternalReload extends Proc {
 	public function new() super();
 
 	override public function execute():Void {
+		arpDomain.allowOverwrite = true;
 		for (external in this.externals) {
 			external.arpHeatDownNow();
 			external.arpHeatLater(false);

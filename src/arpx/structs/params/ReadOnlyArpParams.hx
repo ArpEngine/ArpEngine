@@ -26,7 +26,7 @@ class ReadOnlyArpParams implements IArpParamsRead {
 			var value:ArpParamsValue = this.get(name);
 			if (value == null) continue;
 			if (Std.is(value, ArpDirection)) {
-				value = cast(value, ArpDirection).value + ":idir";
+				value = StringTools.hex(cast(value, ArpDirection).value, 8) + ":idir";
 			}
 			result.push(name.toString() + ":" + Std.string(value));
 		}
