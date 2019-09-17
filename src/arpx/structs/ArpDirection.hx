@@ -112,7 +112,7 @@ class ArpDirection implements IArpStruct {
 	}
 
 	public function toIndex(dirs:Int):Int {
-		return Math.round(this.value * VAL_TO_REV * dirs) % dirs;
+		return Math.round((this.value * VAL_TO_REV + 1) * dirs) % dirs;
 	}
 
 	public function new(value:Int = 0) {

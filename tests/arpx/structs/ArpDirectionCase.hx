@@ -43,4 +43,16 @@ class ArpDirectionCase {
 		dir2.readSelf(provider.input);
 		assertEquals(dir.value, dir2.value);
 	}
+
+	public function testToIndex():Void {
+		var dir:ArpDirection;
+		dir = ArpDirection.RIGHT;
+		assertEquals(0, dir.toIndex(1));
+		assertEquals(0, dir.toIndex(2));
+		assertEquals(0, dir.toIndex(8));
+		dir = ArpDirection.NORTH_WEST;
+		assertEquals(0, dir.toIndex(1));
+		assertEquals(1, dir.toIndex(2));
+		assertEquals(5, dir.toIndex(8));
+	}
 }
