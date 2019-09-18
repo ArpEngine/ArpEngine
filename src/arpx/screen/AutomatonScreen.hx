@@ -15,6 +15,8 @@ class AutomatonScreen extends Screen {
 
 	@:arpImpl private var arpImpl:AutomatonScreenImpl;
 
+	private var isActive:Bool = false;
+
 	public function new() super();
 
 	private function pushStateScreen(state:AutomatonState):Void {
@@ -24,6 +26,8 @@ class AutomatonScreen extends Screen {
 	}
 
 	@:arpHeatUp private function heatUp():Bool {
+		if (this.isActive) return true;
+		this.isActive = true;
 		for (state in this.automaton.stateStack) this.pushStateScreen(state);
 		this.automaton.onEnterState.push(this.onEnterState);
 		this.automaton.onLeaveState.push(this.onLeaveState);
@@ -31,6 +35,8 @@ class AutomatonScreen extends Screen {
 	}
 
 	@:arpHeatDown private function heatDown():Bool {
+		if (!this.isActive) return true;
+		this.isActive = true;
 		this.screens.clear();
 		this.automaton.onEnterState.remove(this.onEnterState);
 		this.automaton.onLeaveState.remove(this.onLeaveState);

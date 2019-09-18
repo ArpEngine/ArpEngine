@@ -19,10 +19,11 @@ class FieldImpl extends ArpObjectImplBase implements IFieldImpl {
 		copySortedMortals(field.mortals, context);
 	}
 
-	inline private static function compareMortals(a:Mortal, b:Mortal):Int {
+	private static function compareMortals(a:Mortal, b:Mortal):Int {
 		return Reflect.compare(a.position.y + a.position.z, b.position.y + b.position.z);
 	}
-	inline public static function copySortedMortals(mortals:Iterable<Mortal>, context:RenderContext):Void {
+
+	public static function copySortedMortals(mortals:Iterable<Mortal>, context:RenderContext):Void {
 		if (mortals == null) return;
 		var temp:Array<Mortal> = [for (m in mortals) m];
 		ArraySort.sort(temp, compareMortals);
