@@ -8,7 +8,11 @@ import arp.domain.ArpDomain;
 
 class ArpEngineShellBase {
 
-	public var domain(default, null):ArpDomain;
+	private var currentDomain:ArpDomain;
+	private var nextDomain:ArpDomain;
+	public var domain(get, set):ArpDomain;
+	inline private function get_domain():ArpDomain return currentDomain;
+	inline private function set_domain(value:ArpDomain):ArpDomain return nextDomain = value;
 
 	public var displayContext(get, never):DisplayContext;
 	private var _displayContext:DisplayContext;
@@ -32,12 +36,18 @@ class ArpEngineShellBase {
 	private dynamic function onTick(timeslice:Float):Void return;
 	private dynamic function onRender(context:RenderContext):Void return;
 
+	private function switchDomain():Void {
+		if (this.nextDomain != this.currentDomain) {
+			if (this.currentDomain != null) {
+				this.domain.tick.remove(this.onDomainFirstTick);
+				this.domain.tick.remove(this.onDomainTick);
+			}
+			this.currentDomain = this.nextDomain;
+			this.domain.tick.push(this.onDomainFirstTick);
+		}
+	}
 
 	public function new(domain:ArpDomain, config:ArpEngineConfig) {
-		this.domain = domain;
-
-		this.domain.tick.push(this.onDomainFirstTick);
-
 		@:privateAccess @:mergeBlock {
 			this.width = config.shellBufferParams.width;
 			this.height = config.shellBufferParams.height;
@@ -53,6 +63,9 @@ class ArpEngineShellBase {
 		}
 
 		this.inputContext = InputContext.create(config);
+
+		this.domain = domain;
+		this.switchDomain();
 	}
 
 	private function createDisplayContext():DisplayContext return null;
@@ -60,6 +73,7 @@ class ArpEngineShellBase {
 	private function domainRawTick(timeslice:Float):Void {
 		this.domain.rawTick.dispatch(timeslice);
 		this.onRawTick(timeslice);
+		this.switchDomain();
 	}
 
 	private function doRender(displayContext:DisplayContext):Void {

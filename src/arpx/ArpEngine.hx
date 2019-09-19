@@ -8,7 +8,15 @@ import arpx.impl.cross.ArpEngineShell;
 
 class ArpEngine {
 
-	public var domain(default, null):ArpDomain;
+	private var _domain:ArpDomain;
+	public var domain(get, set):ArpDomain;
+	private function get_domain():ArpDomain {
+		return if (this.shell == null) this._domain else this.shell.domain;
+	}
+	private function set_domain(value:ArpDomain):ArpDomain {
+		return if (this.shell == null) this._domain = value else this.shell.domain = value;
+	}
+
 	public var config(default, null):ArpEngineConfig;
 
 	public var shell(default, null):ArpEngineShell;
@@ -23,13 +31,13 @@ class ArpEngine {
 	inline private function get_audioContext():AudioContext return AudioContext.instance;
 
 	public function new(domain:ArpDomain) {
-		this.domain = domain;
+		this._domain = domain;
 		this.config = new ArpEngineConfig();
 	}
 
 	public function start():Void {
 		var config = this.config;
 		this.config = null;
-		this.shell = new ArpEngineShell(domain, config);
+		this.shell = new ArpEngineShell(this._domain, config);
 	}
 }
