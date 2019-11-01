@@ -2,6 +2,7 @@ package arpx.console;
 
 import arp.domain.IArpObject;
 import arp.ds.IOmap;
+import arp.task.Heartbeat;
 import arp.task.ITickable;
 import arpx.impl.cross.display.RenderContext;
 import arpx.input.Input;
@@ -17,7 +18,7 @@ class Console implements IArpObject implements ITickable {
 
 	public function new() return;
 
-	public function tick(timeslice:Float):Bool {
+	public function tick(timeslice:Float):Heartbeat {
 		this.input.tick(timeslice);
 		for (screen in this.screens) screen.tick(timeslice);
 
@@ -32,12 +33,12 @@ class Console implements IArpObject implements ITickable {
 			}
 			for (layer in layers) {
 				if (layer.priority == priority) {
-					if (layer.interact(this.input)) return true;
+					if (layer.interact(this.input)) return Heartbeat.Keep;
 				}
 			}
 			lastPriority = priority;
 		}
-		return true;
+		return Heartbeat.Keep;
 	}
 
 	public function render(context:RenderContext):Void {

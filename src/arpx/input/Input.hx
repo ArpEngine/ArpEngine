@@ -3,6 +3,7 @@ package arpx.input;
 import arp.domain.IArpObject;
 import arp.ds.IMap;
 import arp.ds.impl.StdMap;
+import arp.task.Heartbeat;
 import arp.task.ITickable;
 import arpx.impl.cross.input.IInputImpl;
 import arpx.inputAxis.InputAxis;
@@ -43,9 +44,9 @@ class Input implements IArpObject implements ITickable implements IInputImpl {
 
 	public function unbind():Void for (axis in this.inputAxes) axis.unbind();
 
-	public function tick(timeslice:Float):Bool {
+	public function tick(timeslice:Float):Heartbeat {
 		for (axis in this.inputAxes) axis.tickChild(timeslice, this);
-		return true;
+		return Heartbeat.Keep;
 	}
 }
 

@@ -1,6 +1,7 @@
 package arpx.screen;
 
 import arp.domain.IArpObject;
+import arp.task.Heartbeat;
 import arp.task.ITickable;
 import arpx.impl.cross.screen.IScreenImpl;
 import arpx.input.focus.IInputLayer;
@@ -16,8 +17,8 @@ class Screen implements IArpObject implements ITickable implements IInputLayer<S
 
 	public function new() return;
 
-	public function tick(timeslice:Float):Bool {
-		return true;
+	public function tick(timeslice:Float):Heartbeat {
+		return Heartbeat.Keep;
 	}
 
 	public function interact(input:Input):Bool {

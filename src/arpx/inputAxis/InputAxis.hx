@@ -2,6 +2,7 @@ package arpx.inputAxis;
 
 import arp.domain.IArpObject;
 import arp.ds.impl.ArrayList;
+import arp.task.Heartbeat;
 import arp.task.ITickableChild;
 import arpx.input.Input;
 import arpx.input.InputSource;
@@ -41,7 +42,7 @@ class InputAxis implements ITickableChild<Input> implements IArpObject {
 
 	public function unbind():Void this.bindings.clear();
 
-	public function tickChild(timeslice:Float, parent:Input):Bool {
+	public function tickChild(timeslice:Float, parent:Input):Heartbeat {
 		for (binding in this.bindings) {
 			var value:Float = parent.getState(binding.source);
 			this.nextValue += value * binding.factor;
@@ -57,7 +58,7 @@ class InputAxis implements ITickableChild<Input> implements IArpObject {
 
 		this.value = this.nextValue;
 		this.nextValue = 0;
-		return true;
+		return Heartbeat.Keep;
 	}
 }
 

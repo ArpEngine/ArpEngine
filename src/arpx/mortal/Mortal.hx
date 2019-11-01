@@ -6,6 +6,7 @@ import arp.ds.impl.ArraySet;
 import arp.ds.ISet;
 import arp.hit.fields.HitObject;
 import arp.hit.structs.HitGeneric;
+import arp.task.Heartbeat;
 import arp.task.ITickableChild;
 import arpx.driver.Driver;
 import arpx.field.Field;
@@ -47,7 +48,7 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 		return hitMortal;
 	}
 
-	public function tickChild(timeslice:Float, field:Field):Bool {
+	public function tickChild(timeslice:Float, field:Field):Heartbeat {
 		if (this.driver != null) {
 			this.driver.tick(field, this);
 		} else {
@@ -58,7 +59,7 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 		if (!rr.isEmpty()) rr.clear();
 		this.lastReactRecord = reactRecord;
 		this.reactRecord = rr;
-		return true;
+		return Heartbeat.Keep;
 	}
 
 	public var driverTime(get, never):Float;

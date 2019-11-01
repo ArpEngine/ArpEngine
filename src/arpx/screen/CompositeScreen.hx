@@ -1,6 +1,7 @@
 package arpx.screen;
 
 import arp.ds.IOmap;
+import arp.task.Heartbeat;
 import arpx.impl.cross.screen.CompositeScreenImpl;
 
 @:arpType("screen", "composite")
@@ -11,9 +12,9 @@ class CompositeScreen extends Screen {
 
 	public function new() super();
 
-	override public function tick(timeslice:Float):Bool {
+	override public function tick(timeslice:Float):Heartbeat {
 		for (screen in this.screens) screen.tick(timeslice);
-		return true;
+		return Heartbeat.Keep;
 	}
 
 	override public function collectInputLayers(layers:Array<Screen>):Void {

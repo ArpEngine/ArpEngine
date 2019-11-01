@@ -1,6 +1,7 @@
 package arpx.mortal;
 
 import arp.ds.IList;
+import arp.task.Heartbeat;
 import arpx.field.Field;
 import arpx.impl.cross.mortal.CompositeMortalImpl;
 import arpx.mortal.Mortal;
@@ -19,12 +20,12 @@ class CompositeMortal extends Mortal {
 
 	override private function get_isComplex():Bool return true;
 
-	override public function tickChild(timeslice:Float, field:Field):Bool {
+	override public function tickChild(timeslice:Float, field:Field):Heartbeat {
 		super.tickChild(timeslice, field);
 		for (mortal in this.mortals) {
 			mortal.tickChild(timeslice, field);
 		}
-		return true;
+		return Heartbeat.Keep;
 	}
 
 	override public function startAction(actionName:String, restart:Bool = false):Bool {
