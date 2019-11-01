@@ -1,5 +1,6 @@
 package arpx.driver;
 
+import arp.task.Heartbeat;
 import arp.domain.IArpObject;
 import arpx.field.Field;
 import arpx.mortal.Mortal;
@@ -12,7 +13,7 @@ class Driver implements IArpObject {
 
 	public function new() return;
 
-	public function tick(field:Field, mortal:Mortal):Void return;
+	public function tick(field:Field, mortal:Mortal):Heartbeat return Heartbeat.Keep;
 
 	public function towardD(mortal:Mortal, time:Float, x:Float = 0, y:Float = 0, z:Float = 0):Bool return false;
 
