@@ -1,5 +1,6 @@
 package arpx.driver.decorators;
 
+import arp.task.Heartbeat;
 import arp.ds.IList;
 import arpx.field.Field;
 import arpx.mortal.Mortal;
@@ -34,8 +35,9 @@ class CompositeDriver extends Driver {
 		return false;
 	}
 
-	override public function tick(field:Field, mortal:Mortal):Void {
+	override public function tick(field:Field, mortal:Mortal):Heartbeat {
 		for (driver in drivers) driver.tick(field, mortal);
+		return Heartbeat.Keep;
 	}
 }
 

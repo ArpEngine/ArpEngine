@@ -1,5 +1,6 @@
 package arpx.driver;
 
+import arp.task.Heartbeat;
 import arpx.field.Field;
 import arpx.mortal.Mortal;
 import arpx.structs.ArpPosition;
@@ -26,10 +27,10 @@ class LinearDriver extends Driver {
 		return true;
 	}
 
-	override public function tick(field:Field, mortal:Mortal):Void {
+	override public function tick(field:Field, mortal:Mortal):Heartbeat {
 		if (this.time <= 0) {
 			mortal.stayWithHit(field, this.dHitType);
-			return;
+			return Heartbeat.Keep;
 		}
 
 		var pos:ArpPosition = mortal.position;
@@ -51,6 +52,7 @@ class LinearDriver extends Driver {
 			this.nowTime++;
 		}
 		mortal.moveDWithHit(field, dx, dy, dz, this.dHitType);
+		return Heartbeat.Keep;
 	}
 }
 

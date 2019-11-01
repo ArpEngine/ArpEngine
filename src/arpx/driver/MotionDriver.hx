@@ -1,5 +1,6 @@
 package arpx.driver;
 
+import arp.task.Heartbeat;
 import arp.ds.impl.VoidSet;
 import arp.ds.ISet;
 import arpx.field.Field;
@@ -65,7 +66,7 @@ class MotionDriver extends Driver {
 		return true;
 	}
 
-	override public function tick(field:Field, mortal:Mortal):Void {
+	override public function tick(field:Field, mortal:Mortal):Heartbeat {
 		if (this.nowMotion == null) this.reset();
 		var nowMotion:Motion = this.nowMotion;
 		if (nowMotion != null) {
@@ -134,5 +135,6 @@ class MotionDriver extends Driver {
 				this.setFrame(mortal, motionFrame);
 			}
 		}
+		return Heartbeat.Keep;
 	}
 }
