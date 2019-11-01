@@ -2,11 +2,11 @@ package arpx.field;
 
 import arp.domain.IArpObject;
 import arp.ds.IOmap;
-import arp.ds.lambda.OmapOp;
 import arp.hit.fields.HitField;
 import arp.hit.fields.HitObjectField;
 import arp.hit.strategies.HitWithCuboid;
 import arp.hit.structs.HitGeneric;
+import arp.task.Heartbeat;
 import arp.task.ITickable;
 import arpx.anchor.Anchor;
 import arpx.impl.cross.field.FieldImpl;
@@ -63,7 +63,7 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 		return anchorField.add(anchor);
 	}
 
-	public function tick(timeslice:Float):Bool {
+	public function tick(timeslice:Float):Heartbeat {
 		for (mortal in this.mortals) mortal.tickChild(timeslice, this);
 		for (anchor in this.anchors) anchor.refresh(this);
 		this.hitField.tick();
@@ -83,7 +83,7 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 			b.mortal.collide(this, a.mortal);
 			return false;
 		});
-		return true;
+		return Heartbeat.Keep;
 	}
 
 	public function interact(input:Input):Bool return false;

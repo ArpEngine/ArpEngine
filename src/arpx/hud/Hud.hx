@@ -1,6 +1,7 @@
 package arpx.hud;
 
 import arp.domain.IArpObject;
+import arp.task.Heartbeat;
 import arp.task.ITickable;
 import arpx.driver.Driver;
 import arpx.impl.cross.hud.IHudImpl;
@@ -22,8 +23,8 @@ class Hud implements IArpObject implements ITickable implements IFocusTarget imp
 
 	public function new() return;
 
-	public function tick(timeslice:Float):Bool {
-		return true;
+	public function tick(timeslice:Float):Heartbeat {
+		return Heartbeat.Keep;
 	}
 
 	public function interact(input:Input):Bool {

@@ -1,6 +1,7 @@
 package arpx.screen;
 
 import arp.ds.IList;
+import arp.task.Heartbeat;
 import arpx.automaton.Automaton;
 import arpx.automaton.events.AutomatonStateEvent;
 import arpx.impl.cross.screen.AutomatonScreenImpl;
@@ -51,14 +52,14 @@ class AutomatonScreen extends Screen {
 		this.screens.pop();
 	}
 
-	override public function tick(timeslice:Float):Bool {
+	override public function tick(timeslice:Float):Heartbeat {
 		if (this.ticks) {
 			pushStack();
 			for (screen in this.screens) if (screen != null) screen.tick(timeslice);
 			var v:TransitionData = popStack();
-			if (v != null) return this.automaton.transition(v.key, v.payload);
+			if (v != null) return Heartbeat.keepIf(this.automaton.transition(v.key, v.payload));
 		}
-		return true;
+		return Heartbeat.Keep;
 	}
 
 	override public function interact(input:Input):Bool {

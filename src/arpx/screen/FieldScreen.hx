@@ -1,11 +1,12 @@
 package arpx.screen;
 
-import arpx.input.Input;
 import arp.ds.IList;
+import arp.task.Heartbeat;
 import arpx.camera.Camera;
 import arpx.field.Field;
 import arpx.fieldGizmo.FieldGizmo;
 import arpx.impl.cross.screen.FieldScreenImpl;
+import arpx.input.Input;
 
 @:arpType("screen", "screen")
 class FieldScreen extends Screen {
@@ -17,11 +18,11 @@ class FieldScreen extends Screen {
 
 	public function new() super();
 
-	override public function tick(timeslice:Float):Bool {
+	override public function tick(timeslice:Float):Heartbeat {
 		if (this.ticks) {
 			return field.tick(timeslice);
 		}
-		return true;
+		return Heartbeat.Keep;
 	}
 
 	override public function interact(input:Input):Bool return this.field.interact(input);
