@@ -64,7 +64,9 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 	}
 
 	public function tick(timeslice:Float):Heartbeat {
-		for (mortal in this.mortals) mortal.tickChild(timeslice, this);
+		for (cursor in this.mortals.amend()) {
+			if (!cursor.value.tickChild(timeslice, this).isKeep()) cursor.remove();
+		}
 		for (anchor in this.anchors) anchor.refresh(this);
 		this.hitField.tick();
 		this.anchorField.tick();
