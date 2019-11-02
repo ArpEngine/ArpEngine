@@ -49,8 +49,9 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 	}
 
 	public function tickChild(timeslice:Float, field:Field):Heartbeat {
+		var result:Heartbeat = Heartbeat.Keep;
 		if (this.driver != null) {
-			this.driver.tick(field, this);
+			result = this.driver.tick(field, this);
 		} else {
 			refreshHitMortals(field);
 		}
@@ -59,7 +60,7 @@ class Mortal implements IArpObject implements ITickableChild<Field> implements I
 		if (!rr.isEmpty()) rr.clear();
 		this.lastReactRecord = reactRecord;
 		this.reactRecord = rr;
-		return Heartbeat.Keep;
+		return result;
 	}
 
 	public var driverTime(get, never):Float;

@@ -22,8 +22,8 @@ class CompositeMortal extends Mortal {
 
 	override public function tickChild(timeslice:Float, field:Field):Heartbeat {
 		super.tickChild(timeslice, field);
-		for (mortal in this.mortals) {
-			mortal.tickChild(timeslice, field);
+		for (cursor in this.mortals.amend()) {
+			if (!cursor.value.tickChild(timeslice, field).isKeep()) cursor.remove();
 		}
 		return Heartbeat.Keep;
 	}
