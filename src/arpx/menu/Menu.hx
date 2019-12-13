@@ -19,6 +19,15 @@ class Menu implements IArpObject {
 	public var length(get, never):Int;
 	inline private function get_length():Int return this.menuItems.length;
 
+	public var selectedKey(get, set):Null<String>;
+	inline private function get_selectedKey():Null<String> {
+		return this.menuItems.resolveKeyAt(this.value);
+	}
+	inline private function set_selectedKey(value:Null<String>):Null<String> {
+		this.value = this.menuItems.resolveKeyIndex(value);
+		return value;
+	}
+
 	public var selection(get, never):Null<MenuItem>;
 	inline private function get_selection():Null<MenuItem> {
 		var item:MenuItem = this.menuItems.getAt(this.value);
