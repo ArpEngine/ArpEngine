@@ -33,9 +33,9 @@ class ArrayFaceList extends FaceList {
 		return findi(this.arrayValue, (n:FaceSpan) -> n.face == name);
 	}
 
-	override public function get(index:Int):String {
+	override public function get(index:Int):Null<FaceSpan> {
 		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue[index].face;
+		return this.arrayValue[index];
 	}
 
 	override public function iterator():Iterator<FaceSpan> {
