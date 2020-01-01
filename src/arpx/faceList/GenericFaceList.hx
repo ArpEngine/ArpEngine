@@ -15,13 +15,11 @@ class GenericFaceList extends ArrayFaceList {
 
 	public function new() super();
 
-	override private function heatUp():Bool {
-		if (!super.heatUp()) return false;
+	override private function populate():Void {
 		if (this.chars != null) for (face in new ERegIterator(~/[^\n\r\t\/ ]|\/[^\/]*\//, this.chars)) this.add(face, 1, this.isVertical);
 		if (this.range.hasValue) for (face in this.range.split()) this.add(face, 1, this.isVertical);
 		if (this.csvFaces != null) for (face in ~/\s/g.replace(this.csvFaces, "").split(",")) this.add(face, 1, this.isVertical);
 		if (this.extraFaces != null) for (face in this.extraFaces) this.add(face, 1, this.isVertical);
 		if (this.arrayValue.length == 0) this.add("", 1, this.isVertical);
-		return true;
 	}
 }

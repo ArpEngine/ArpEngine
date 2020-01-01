@@ -15,8 +15,7 @@ class TextDataFaceList extends ArrayFaceList {
 
 	public function new() super();
 
-	override private function heatUp():Bool {
-		if (!super.heatUp()) return false;
+	override private function populate():Void {
 		var chars:Map<String, Bool> = new Map();
 		for (v in texts) {
 			var text:String = v.publish();
@@ -37,6 +36,5 @@ class TextDataFaceList extends ArrayFaceList {
 					}
 			}
 		}
-		return true;
 	}
 }

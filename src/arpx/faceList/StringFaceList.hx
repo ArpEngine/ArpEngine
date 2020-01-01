@@ -14,8 +14,7 @@ class StringFaceList extends ArrayFaceList {
 
 	public function new() super();
 
-	override private function heatUp():Bool {
-		if (!super.heatUp()) return false;
+	override private function populate():Void {
 		var chars:Map<String, Bool> = new Map();
 		for (v in this.value) {
 			switch (format) {
@@ -35,6 +34,5 @@ class StringFaceList extends ArrayFaceList {
 					}
 			}
 		}
-		return true;
 	}
 }

@@ -12,9 +12,13 @@ class ArrayFaceList extends FaceList {
 	public function new() super();
 
 	@:arpHeatUp
-	private function heatUp():Bool {
+	final private function heatUp():Bool {
 		this.arrayValue = [];
+		populate();
 		return true;
+	}
+
+	private function populate():Void {
 	}
 
 	@:arpHeatDown
