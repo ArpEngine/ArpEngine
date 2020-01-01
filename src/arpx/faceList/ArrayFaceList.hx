@@ -3,12 +3,11 @@ package arpx.faceList;
 @:arpType("faceList", "array")
 class ArrayFaceList extends FaceList {
 
-	@:arpField public var isVertical:Bool;
-	@:arpField public var unique:Bool;
+	private var arrayValue:Array<FaceSpan>;
 
-	private var arrayValue:Array<String>;
-
-	private function add(value:String):Void if (!unique || this.arrayValue.indexOf(value) == -1) this.arrayValue.push(value);
+	private function add(face:String, length:Int, isVertical:Bool):Void {
+		this.arrayValue.push(new FaceSpan(face, length, isVertical));
+	}
 
 	public function new() super();
 
@@ -31,16 +30,26 @@ class ArrayFaceList extends FaceList {
 
 	override public function indexOf(name:String):Int {
 		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue.indexOf(name);
+		return findi(this.arrayValue, (n:FaceSpan) -> n.face == name);
 	}
 
 	override public function get(index:Int):String {
 		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue[index];
+		return this.arrayValue[index].face;
 	}
 
-	override public function iterator():Iterator<String> {
+	override public function iterator():Iterator<FaceSpan> {
 		if (this.arrayValue == null) this.heatUp();
 		return this.arrayValue.iterator();
+	}
+
+	private static function findi<T>(it:Iterable<T>, f:(item:T) -> Bool):Int {
+		var i = 0;
+		for (v in it) {
+			if (f(v))
+				return i;
+			i++;
+		}
+		return -1;
 	}
 }
