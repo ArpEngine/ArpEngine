@@ -6,11 +6,15 @@ class ArrayFaceList extends FaceList {
 	private var arrayValue:Array<FaceSpan>;
 	private var resolveFace:Map<String, Int>;
 
-	private function add(face:String, length:Int, isVertical:Bool):Void {
-		// Don't use Omap because face may be not unique
-		var faceSpan:FaceSpan = new FaceSpan(face, length, isVertical);
+	private var _length:Int;
+	override private function get_length():Int return _length;
+
+	private function add(face:String, size:Int, isVertical:Bool):Void {
+		// Don't use Omap because face may be not unique and is sparse index
+		var faceSpan:FaceSpan = new FaceSpan(face, size, isVertical);
 		if (!this.resolveFace.exists(face)) this.resolveFace.set(face, this.arrayValue.length);
-		this.arrayValue.push(faceSpan);
+		this.arrayValue[this._length] = faceSpan;
+		this._length += size;
 	}
 
 	public function new() super();
@@ -19,6 +23,7 @@ class ArrayFaceList extends FaceList {
 	final private function heatUp():Bool {
 		this.arrayValue = [];
 		this.resolveFace = new Map();
+		this._length = 0;
 		populate();
 		return true;
 	}
@@ -30,17 +35,13 @@ class ArrayFaceList extends FaceList {
 	private function heatDown():Bool {
 		this.arrayValue = null;
 		this.resolveFace = null;
+		this._length = 0;
 		return true;
 	}
 
-	override private function get_length():Int {
+	override public function indexOf(face:String):Int {
 		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue.length;
-	}
-
-	override public function indexOf(name:String):Int {
-		if (this.arrayValue == null) this.heatUp();
-		return if (this.resolveFace.exists(name)) this.resolveFace.get(name) else -1;
+		return if (this.resolveFace.exists(face)) this.resolveFace.get(face) else -1;
 	}
 
 	override public function get(index:Int):Null<FaceSpan> {
