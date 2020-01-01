@@ -4,9 +4,13 @@ package arpx.faceList;
 class ArrayFaceList extends FaceList {
 
 	private var arrayValue:Array<FaceSpan>;
+	private var resolveFace:Map<String, Int>;
 
 	private function add(face:String, length:Int, isVertical:Bool):Void {
-		this.arrayValue.push(new FaceSpan(face, length, isVertical));
+		// Don't use Omap because face may be not unique
+		var faceSpan:FaceSpan = new FaceSpan(face, length, isVertical);
+		if (!this.resolveFace.exists(face)) this.resolveFace.set(face, this.arrayValue.length);
+		this.arrayValue.push(faceSpan);
 	}
 
 	public function new() super();
@@ -14,6 +18,7 @@ class ArrayFaceList extends FaceList {
 	@:arpHeatUp
 	final private function heatUp():Bool {
 		this.arrayValue = [];
+		this.resolveFace = new Map();
 		populate();
 		return true;
 	}
@@ -24,6 +29,7 @@ class ArrayFaceList extends FaceList {
 	@:arpHeatDown
 	private function heatDown():Bool {
 		this.arrayValue = null;
+		this.resolveFace = null;
 		return true;
 	}
 
@@ -34,7 +40,7 @@ class ArrayFaceList extends FaceList {
 
 	override public function indexOf(name:String):Int {
 		if (this.arrayValue == null) this.heatUp();
-		return findi(this.arrayValue, (n:FaceSpan) -> n.face == name);
+		return if (this.resolveFace.exists(name)) this.resolveFace.get(name) else -1;
 	}
 
 	override public function get(index:Int):Null<FaceSpan> {
@@ -45,15 +51,5 @@ class ArrayFaceList extends FaceList {
 	override public function iterator():Iterator<FaceSpan> {
 		if (this.arrayValue == null) this.heatUp();
 		return this.arrayValue.iterator();
-	}
-
-	private static function findi<T>(it:Iterable<T>, f:(item:T) -> Bool):Int {
-		var i = 0;
-		for (v in it) {
-			if (f(v))
-				return i;
-			i++;
-		}
-		return -1;
 	}
 }
