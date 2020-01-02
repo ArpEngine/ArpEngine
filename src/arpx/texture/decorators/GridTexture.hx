@@ -1,6 +1,5 @@
 package arpx.texture.decorators;
 
-import arpx.faceList.FaceList;
 import arpx.impl.cross.texture.decorators.GridTextureImpl;
 
 @:arpType("texture", "grid")
@@ -9,7 +8,6 @@ class GridTexture extends MultiTexture {
 	@:arpField(readonly) public var width:Int;
 	@:arpField(readonly) public var height:Int;
 
-	@:arpBarrier(true) @:arpField public var faceList:FaceList;
 	@:arpField public var isVertical:Bool;
 
 	@:arpImpl private var arpImpl:GridTextureImpl;

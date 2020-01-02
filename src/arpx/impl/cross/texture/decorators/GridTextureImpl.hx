@@ -1,8 +1,5 @@
 package arpx.impl.cross.texture.decorators;
 
-import arpx.structs.ArpParams;
-import arpx.structs.ArpDirection;
-import arpx.structs.IArpParamsRead;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.decorators.GridTexture;
 
@@ -52,22 +49,5 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 			}
 		}
 		return true;
-	}
-
-	private var _workParams:ArpParams = new ArpParams();
-	override public function getFaceIndex(params:IArpParamsRead = null):Int {
-		// TODO shortcut
-		// if (this.texture.dirs < 1) return super.getFaceIndex(params);
-
-		_workParams.copyFrom(params);
-		var dir:ArpDirection = params.getArpDirection("dir");
-		// FIXME should this logic be here?
-		var face = _workParams.get("face");
-		if (face != null) {
-			var faceIndex = this.texture.faceList.indexOf(face);
-			var faceSpan = this.texture.faceList.get(faceIndex);
-			if (dir != null) _workParams.set("index", dir.toIndex(faceSpan.dirs));
-		}
-		return super.getFaceIndex(_workParams);
 	}
 }

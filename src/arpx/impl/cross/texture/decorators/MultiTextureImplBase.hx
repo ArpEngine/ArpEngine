@@ -2,6 +2,8 @@ package arpx.impl.cross.texture.decorators;
 
 import arpx.impl.cross.geom.RectImpl;
 import arpx.impl.cross.texture.TextureImplBase;
+import arpx.structs.ArpDirection;
+import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 import arpx.texture.decorators.MultiTexture;
 
@@ -46,6 +48,12 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 				index = this.indexesByFaces.get(face);
 			} else {
 				this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Face name not found in: ${this.texture.arpSlot}:$params');
+			}
+			var dir:ArpDirection = params.getArpDirection("dir");
+			if (dir != null) {
+				var faceIndex = this.texture.faceList.indexOf(face);
+				var faceSpan = this.texture.faceList.get(faceIndex);
+				if (faceSpan != null) index += dir.toIndex(faceSpan.dirs);
 			}
 		}
 
