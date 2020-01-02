@@ -6,8 +6,10 @@ import arp.iterators.ERegIterator;
 @:arpType("faceList", "string")
 class StringFaceList extends ArrayFaceList {
 
+	@:arpField public var dirs:Int = 1;
 	@:arpField public var format:String;
 	@:arpField public var unique:Bool;
+
 	@:arpField public var value:ISet<String>;
 
 	public function new() super();
@@ -19,14 +21,14 @@ class StringFaceList extends ArrayFaceList {
 				case "csv":
 					for (face in ~/\s/g.replace(v, "").split(",")) {
 						if (!chars.exists(face)) {
-							this.add(face, 1);
+							this.add(face, this.dirs);
 							if (unique) chars.set(face, true);
 						}
 					}
 				case _:
 					for (face in new ERegIterator(~/[^\n\r\t\/ ]|\/[^\/]*\//, v)) {
 						if (!chars.exists(face)) {
-							this.add(face, 1);
+							this.add(face, this.dirs);
 							if (unique) chars.set(face, true);
 						}
 					}

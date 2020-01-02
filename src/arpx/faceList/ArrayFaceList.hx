@@ -4,6 +4,7 @@ package arpx.faceList;
 class ArrayFaceList extends FaceList {
 
 	private var arrayValue:Array<FaceSpan>;
+	private var resolveIndex:Map<Int, FaceSpan>;
 	private var resolveFace:Map<String, Int>;
 
 	private var _length:Int;
@@ -12,8 +13,9 @@ class ArrayFaceList extends FaceList {
 	private function add(face:String, size:Int):Void {
 		// Don't use Omap because face may be not unique and is sparse index
 		var faceSpan:FaceSpan = new FaceSpan(face, size);
-		if (!this.resolveFace.exists(face)) this.resolveFace.set(face, this.arrayValue.length);
-		this.arrayValue[this._length] = faceSpan;
+		if (!this.resolveFace.exists(face)) this.resolveFace.set(face, this._length);
+		this.arrayValue.push(faceSpan);
+		this.resolveIndex.set(this._length, faceSpan);
 		this._length += size;
 	}
 
@@ -23,6 +25,7 @@ class ArrayFaceList extends FaceList {
 	final private function heatUp():Bool {
 		this.arrayValue = [];
 		this.resolveFace = new Map();
+		this.resolveIndex = new Map();
 		this._length = 0;
 		populate();
 		return true;
@@ -46,7 +49,7 @@ class ArrayFaceList extends FaceList {
 
 	override public function get(index:Int):Null<FaceSpan> {
 		if (this.arrayValue == null) this.heatUp();
-		return this.arrayValue[index];
+		return this.resolveIndex.get(index);
 	}
 
 	override public function iterator():Iterator<FaceSpan> {

@@ -33,7 +33,8 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		var isVertical:Bool = this.texture.isVertical;
 		for (faceSpan in this.texture.faceList) {
 			this.nextFaceName(faceSpan.face);
-			for (dir in 0...this.texture.dirs) {
+			var dirs:Int = faceSpan.dirs;
+			for (dir in 0...dirs) {
 				this.pushFaceInfo(faceInfo.trim(x, y, faceWidth, faceHeight));
 				if (isVertical) {
 					y += faceHeight;
@@ -55,11 +56,18 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 
 	private var _workParams:ArpParams = new ArpParams();
 	override public function getFaceIndex(params:IArpParamsRead = null):Int {
-		if (this.texture.dirs < 1) return super.getFaceIndex(params);
+		// TODO shortcut
+		// if (this.texture.dirs < 1) return super.getFaceIndex(params);
 
 		_workParams.copyFrom(params);
 		var dir:ArpDirection = params.getArpDirection("dir");
-		if (dir != null) _workParams.set("index", dir.toIndex(this.texture.dirs));
+		// FIXME should this logic be here?
+		var face = _workParams.get("face");
+		if (face != null) {
+			var faceIndex = this.texture.faceList.indexOf(face);
+			var faceSpan = this.texture.faceList.get(faceIndex);
+			if (dir != null) _workParams.set("index", dir.toIndex(faceSpan.dirs));
+		}
 		return super.getFaceIndex(_workParams);
 	}
 }

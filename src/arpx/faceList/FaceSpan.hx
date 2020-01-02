@@ -3,10 +3,10 @@ package arpx.faceList;
 class FaceSpan {
 
 	public var face:String;
-	public var size:Int;
+	public var dirs:Int;
 
-	public function new(face:String, size:Int) {
+	public function new(face:String, dirs:Int) {
 		this.face = face;
-		this.size = size;
+		this.dirs = dirs;
 	}
 }
