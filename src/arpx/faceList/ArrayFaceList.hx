@@ -9,9 +9,9 @@ class ArrayFaceList extends FaceList {
 	private var _length:Int;
 	override private function get_length():Int return _length;
 
-	private function add(face:String, size:Int, isVertical:Bool):Void {
+	private function add(face:String, size:Int):Void {
 		// Don't use Omap because face may be not unique and is sparse index
-		var faceSpan:FaceSpan = new FaceSpan(face, size, isVertical);
+		var faceSpan:FaceSpan = new FaceSpan(face, size);
 		if (!this.resolveFace.exists(face)) this.resolveFace.set(face, this.arrayValue.length);
 		this.arrayValue[this._length] = faceSpan;
 		this._length += size;

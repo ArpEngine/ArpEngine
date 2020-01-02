@@ -30,11 +30,12 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 
 		var x:Float = 0;
 		var y:Float = 0;
+		var isVertical:Bool = this.texture.isVertical;
 		for (faceSpan in this.texture.faceList) {
 			this.nextFaceName(faceSpan.face);
 			for (dir in 0...this.texture.dirs) {
 				this.pushFaceInfo(faceInfo.trim(x, y, faceWidth, faceHeight));
-				if (faceSpan.isVertical) {
+				if (isVertical) {
 					y += faceHeight;
 					if (y >= sourceHeight) {
 						y = 0;
@@ -58,7 +59,7 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 
 		_workParams.copyFrom(params);
 		var dir:ArpDirection = params.getArpDirection("dir");
-		if (dir != null) _workParams.set("index", _workParams.getInt("index", 0) + dir.toIndex(this.texture.dirs));
+		if (dir != null) _workParams.set("index", dir.toIndex(this.texture.dirs));
 		return super.getFaceIndex(_workParams);
 	}
 }

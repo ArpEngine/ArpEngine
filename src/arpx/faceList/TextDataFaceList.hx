@@ -7,8 +7,6 @@ import arpx.text.TextData;
 @:arpType("faceList", "text")
 class TextDataFaceList extends ArrayFaceList {
 
-	@:arpField public var isVertical:Bool;
-
 	@:arpField public var format:String;
 	@:arpField(true) public var texts:ISet<TextData>;
 	@:arpField public var unique:Bool;
@@ -23,14 +21,14 @@ class TextDataFaceList extends ArrayFaceList {
 				case "csv":
 					for (face in ~/\s/g.replace(text, "").split(",")) {
 						if (!chars.exists(face)) {
-							this.add(face, 1, isVertical);
+							this.add(face, 1);
 							if (unique) chars.set(face, true);
 						}
 					}
 				case _:
 					for (face in new ERegIterator(~/[^\n\r\t\/ ]|\/[^\/]*\//, text)) {
 						if (!chars.exists(face)) {
-							this.add(face, 1, isVertical);
+							this.add(face, 1);
 							if (unique) chars.set(face, true);
 						}
 					}
