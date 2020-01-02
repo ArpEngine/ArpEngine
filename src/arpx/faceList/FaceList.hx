@@ -11,6 +11,7 @@ class FaceList implements IArpObject {
 	public var length(get, never):Int;
 	private function get_length():Int return 0;
 	public function indexOf(face:String):Int return -1;
-	public function get(index:Int):Null<FaceSpan> return null;
+	public function faceSpan(face:String):Null<FaceSpan> return null;
+	public function faceSpanAt(index:Int):Null<FaceSpan> return null;
 	public function iterator():Iterator<FaceSpan> return new EmptyIterator();
 }

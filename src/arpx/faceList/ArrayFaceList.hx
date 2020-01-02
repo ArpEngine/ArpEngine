@@ -47,7 +47,12 @@ class ArrayFaceList extends FaceList {
 		return if (this.resolveFace.exists(face)) this.resolveFace.get(face) else -1;
 	}
 
-	override public function get(index:Int):Null<FaceSpan> {
+	override public function faceSpan(face:String):Null<FaceSpan> {
+		if (this.arrayValue == null) this.heatUp();
+		return this.resolveIndex.get(this.resolveFace.get(face));
+	}
+
+	override public function faceSpanAt(index:Int):Null<FaceSpan> {
 		if (this.arrayValue == null) this.heatUp();
 		return this.resolveIndex.get(index);
 	}
