@@ -28,7 +28,7 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 		if (this.tile != null) return true;
 
 		var chars:String = "";
-		for (char in this.texture.faceList) chars += char;
+		for (faceSpan in this.texture.faceList) chars += faceSpan.face;
 
 		if (this.font == null) {
 			var fontName:String = this.texture.font;
@@ -41,9 +41,9 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 			this.font.charset = CharsetCjk.instance;
 		}
 
-		for (char in this.texture.faceList) {
-			this.nextFaceName(char);
-			var charCode:Int = char.charCodeAt(0);
+		for (faceSpan in this.texture.faceList) {
+			this.nextFaceName(faceSpan.face);
+			var charCode:Int = faceSpan.face.charCodeAt(0);
 			var fontChar:FontChar = font.getChar(charCode);
 			var t:Tile = fontChar.t;
 			this.pushFaceInfo(new TextureFaceDataImpl(t, RectImpl.alloc(t.x, t.y, fontChar.width, t.height)));
