@@ -33,9 +33,9 @@ class NativeTextTextureImpl extends MultiTextureImplBase<NativeTextTexture> impl
 
 		var cursor:BitmapFontDrawCursor = new BitmapFontDrawCursor(bitmapFont, this._bitmapData.width, this._bitmapData.height);
 		var faceInfo:TextureFaceData = new TextureFaceDataImpl(this._bitmapData);
-		for (char in this.texture.faceList) {
-			this.nextFaceName(char);
-			var charCode:Int = char.charCodeAt(0);
+		for (faceSpan in this.texture.faceList) {
+			this.nextFaceName(faceSpan.face);
+			var charCode:Int = faceSpan.face.charCodeAt(0);
 			cursor.move(charCode);
 			bitmapFont.drawChar(this._bitmapData, charCode, cursor.x, cursor.y);
 			var bounds:Rectangle = bitmapFont.getBounds(charCode);

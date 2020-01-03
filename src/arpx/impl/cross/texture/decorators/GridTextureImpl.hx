@@ -1,8 +1,5 @@
 package arpx.impl.cross.texture.decorators;
 
-import arpx.structs.ArpParams;
-import arpx.structs.ArpDirection;
-import arpx.structs.IArpParamsRead;
 import arpx.impl.cross.texture.decorators.MultiTextureImplBase;
 import arpx.texture.decorators.GridTexture;
 
@@ -28,12 +25,13 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 		var faceHeight:Float = this.texture.height;
 		if (faceHeight == 0) faceHeight = sourceHeight;
 
-		var isVertical:Bool = this.texture.faceList.isVertical;
 		var x:Float = 0;
 		var y:Float = 0;
-		for (face in this.texture.faceList) {
-			this.nextFaceName(face);
-			for (dir in 0...this.texture.dirs) {
+		var isVertical:Bool = this.texture.isVertical;
+		for (faceSpan in this.texture.faceList) {
+			this.nextFaceName(faceSpan.face);
+			var dirs:Int = faceSpan.dirs;
+			for (dir in 0...dirs) {
 				this.pushFaceInfo(faceInfo.trim(x, y, faceWidth, faceHeight));
 				if (isVertical) {
 					y += faceHeight;
@@ -51,15 +49,5 @@ class GridTextureImpl extends MultiTextureImplBase<GridTexture> implements IText
 			}
 		}
 		return true;
-	}
-
-	private var _workParams:ArpParams = new ArpParams();
-	override public function getFaceIndex(params:IArpParamsRead = null):Int {
-		if (this.texture.dirs < 1) return super.getFaceIndex(params);
-
-		_workParams.copyFrom(params);
-		var dir:ArpDirection = params.getArpDirection("dir");
-		if (dir != null) _workParams.set("index", _workParams.getInt("index", 0) + dir.toIndex(this.texture.dirs));
-		return super.getFaceIndex(_workParams);
 	}
 }
