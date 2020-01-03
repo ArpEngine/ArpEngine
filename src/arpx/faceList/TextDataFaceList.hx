@@ -5,7 +5,7 @@ import arp.iterators.ERegIterator;
 import arpx.text.TextData;
 
 @:arpType("faceList", "text")
-class TextDataFaceList extends ArrayFaceList {
+class TextDataFaceList extends FaceList {
 
 	@:arpField public var dirs:Int = 1;
 	@:arpField public var format:String;

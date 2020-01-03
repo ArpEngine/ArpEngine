@@ -3,7 +3,7 @@ package arpx.faceList.decorators;
 import arp.ds.IList;
 
 @:arpType("faceList", "composite")
-class CompositeFaceList extends ArrayFaceList {
+class CompositeFaceList extends FaceList {
 
 	@:arpField(true) @:arpBarrier public var faceLists:IList<FaceList>;
 	public function new() super();

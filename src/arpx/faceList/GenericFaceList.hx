@@ -4,7 +4,7 @@ import arp.iterators.ERegIterator;
 import arpx.structs.ArpRange;
 
 @:arpType("faceList", "faceList")
-class GenericFaceList extends ArrayFaceList {
+class GenericFaceList extends FaceList {
 
 	@:arpField public var dirs:Int = 1;
 

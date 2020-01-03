@@ -4,7 +4,7 @@ import arp.ds.ISet;
 import arp.iterators.ERegIterator;
 
 @:arpType("faceList", "string")
-class StringFaceList extends ArrayFaceList {
+class StringFaceList extends FaceList {
 
 	@:arpField public var dirs:Int = 1;
 	@:arpField public var format:String;

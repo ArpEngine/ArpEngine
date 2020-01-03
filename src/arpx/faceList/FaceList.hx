@@ -1,17 +1,65 @@
 package arpx.faceList;
 
 import arp.domain.IArpObject;
-import arp.iterators.EmptyIterator;
 
 @:arpType("faceList", "null")
 class FaceList implements IArpObject {
 
+	private var arrayValue:Array<FaceSpan>;
+	private var resolveIndex:Map<Int, FaceSpan>;
+	private var resolveFace:Map<String, FaceSpan>;
+
+	public var length(default, null):Int;
+
+	private function add(face:String, size:Int):Void {
+		// Don't use Omap because face may be not unique and is sparse index
+		var faceSpan:FaceSpan = new FaceSpan(face, this.length, size);
+		this.arrayValue.push(faceSpan);
+		if (!this.resolveFace.exists(face)) this.resolveFace.set(face, faceSpan);
+		this.resolveIndex.set(this.length, faceSpan);
+		this.length += size;
+	}
+
 	public function new() return;
 
-	public var length(get, never):Int;
-	private function get_length():Int return 0;
-	public function indexOf(face:String):Int return -1;
-	public function faceSpan(face:String):Null<FaceSpan> return null;
-	public function faceSpanAt(index:Int):Null<FaceSpan> return null;
-	public function iterator():Iterator<FaceSpan> return new EmptyIterator();
+	@:arpHeatUp
+	final private function heatUp():Bool {
+		this.arrayValue = [];
+		this.resolveFace = new Map();
+		this.resolveIndex = new Map();
+		this.length = 0;
+		populate();
+		return true;
+	}
+
+	private function populate():Void {
+	}
+
+	@:arpHeatDown
+	private function heatDown():Bool {
+		this.arrayValue = null;
+		this.resolveFace = null;
+		this.length = 0;
+		return true;
+	}
+
+	public function indexOf(face:String):Int {
+		if (this.arrayValue == null) this.heatUp();
+		return if (this.resolveFace.exists(face)) this.resolveFace.get(face).index else -1;
+	}
+
+	public function faceSpan(face:String):Null<FaceSpan> {
+		if (this.arrayValue == null) this.heatUp();
+		return this.resolveFace.get(face);
+	}
+
+	public function faceSpanAt(index:Int):Null<FaceSpan> {
+		if (this.arrayValue == null) this.heatUp();
+		return this.resolveIndex.get(index);
+	}
+
+	public function iterator():Iterator<FaceSpan> {
+		if (this.arrayValue == null) this.heatUp();
+		return this.arrayValue.iterator();
+	}
 }

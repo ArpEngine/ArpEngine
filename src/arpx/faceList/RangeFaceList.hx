@@ -3,7 +3,7 @@ package arpx.faceList;
 import arpx.structs.ArpRange;
 
 @:arpType("faceList", "range")
-class RangeFaceList extends ArrayFaceList {
+class RangeFaceList extends FaceList {
 
 	@:arpField public var dirs:Int = 1;
 
