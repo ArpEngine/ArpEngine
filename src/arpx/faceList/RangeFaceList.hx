@@ -11,7 +11,7 @@ class RangeFaceList extends FaceList {
 
 	public function new() super();
 
-	override private function populate():Void {
-		if (this.range.hasValue) for (face in this.range.split()) this.add(face, this.dirs);
+	override private function populate(add:(face:String, size:Int)->Void):Void {
+		if (this.range.hasValue) for (face in this.range.split()) add(face, this.dirs);
 	}
 }

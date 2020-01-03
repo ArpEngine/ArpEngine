@@ -15,7 +15,7 @@ class TextDataFaceList extends FaceList {
 
 	public function new() super();
 
-	override private function populate():Void {
+	override private function populate(add:(face:String, size:Int)->Void):Void {
 		var chars:Map<String, Bool> = new Map();
 		for (v in texts) {
 			var text:String = v.publish();
@@ -23,14 +23,14 @@ class TextDataFaceList extends FaceList {
 				case "csv":
 					for (face in ~/\s/g.replace(text, "").split(",")) {
 						if (!chars.exists(face)) {
-							this.add(face, this.dirs);
+							add(face, this.dirs);
 							if (unique) chars.set(face, true);
 						}
 					}
 				case _:
 					for (face in new ERegIterator(~/[^\n\r\t\/ ]|\/[^\/]*\//, text)) {
 						if (!chars.exists(face)) {
-							this.add(face, this.dirs);
+							add(face, this.dirs);
 							if (unique) chars.set(face, true);
 						}
 					}

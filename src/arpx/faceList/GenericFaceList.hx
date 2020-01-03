@@ -15,11 +15,11 @@ class GenericFaceList extends FaceList {
 
 	public function new() super();
 
-	override private function populate():Void {
-		if (this.chars != null) for (face in new ERegIterator(~/[^\n\r\t\/ ]|\/[^\/]*\//, this.chars)) this.add(face, this.dirs);
-		if (this.range.hasValue) for (face in this.range.split()) this.add(face, this.dirs);
-		if (this.csvFaces != null) for (face in ~/\s/g.replace(this.csvFaces, "").split(",")) this.add(face, this.dirs);
-		if (this.extraFaces != null) for (face in this.extraFaces) this.add(face, this.dirs);
-		if (this.arrayValue.length == 0) this.add("", this.dirs);
+	override private function populate(add:(face:String, size:Int)->Void):Void {
+		if (this.chars != null) for (face in new ERegIterator(~/[^\n\r\t\/ ]|\/[^\/]*\//, this.chars)) add(face, this.dirs);
+		if (this.range.hasValue) for (face in this.range.split()) add(face, this.dirs);
+		if (this.csvFaces != null) for (face in ~/\s/g.replace(this.csvFaces, "").split(",")) add(face, this.dirs);
+		if (this.extraFaces != null) for (face in this.extraFaces) add(face, this.dirs);
+		if (this.arrayValue.length == 0) add("", this.dirs);
 	}
 }

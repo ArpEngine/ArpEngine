@@ -11,14 +11,6 @@ class FaceList implements IArpObject {
 
 	public var length(default, null):Int;
 
-	private function add(face:String, size:Int):Void {
-		// Don't use Omap because face may be not unique and is sparse index
-		var faceSpan:FaceSpan = new FaceSpan(face, this.length, size);
-		this.arrayValue.push(faceSpan);
-		if (!this.resolveFace.exists(face)) this.resolveFace.set(face, faceSpan);
-		this.resolveIndex.set(this.length, faceSpan);
-		this.length += size;
-	}
 
 	public function new() return;
 
@@ -28,11 +20,18 @@ class FaceList implements IArpObject {
 		this.resolveFace = new Map();
 		this.resolveIndex = new Map();
 		this.length = 0;
-		populate();
+		populate((face:String, size:Int) -> {
+			// Don't use Omap because face may be not unique and is sparse index
+			var faceSpan:FaceSpan = new FaceSpan(face, this.length, size);
+			this.arrayValue.push(faceSpan);
+			if (!this.resolveFace.exists(face)) this.resolveFace.set(face, faceSpan);
+			this.resolveIndex.set(this.length, faceSpan);
+			this.length += size;
+		});
 		return true;
 	}
 
-	private function populate():Void {
+	private function populate(add:(face:String, size:Int)->Void):Void {
 	}
 
 	@:arpHeatDown
