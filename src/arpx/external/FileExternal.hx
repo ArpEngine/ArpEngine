@@ -2,8 +2,6 @@
 
 import haxe.io.Bytes;
 import arp.data.DataGroup;
-import arp.domain.ArpUntypedSlot;
-import arp.domain.IArpObject;
 import arp.seed.ArpSeed;
 import arp.seed.ArpSeedEnv;
 import arpx.file.File;
@@ -22,9 +20,9 @@ class FileExternal extends External {
 		super();
 	}
 
-	// NOTE hack to acquire ArpSeedEnv
-	override public function __arp_init(slot:ArpUntypedSlot, seed:ArpSeed):IArpObject {
-		this.env = seed.env();
+	@:arpLoadSeed
+	private function loadSeed(seed:ArpSeed):Void {
+		if (seed != null) this.env = seed.env;
 	}
 
 	@:arpHeatUp
