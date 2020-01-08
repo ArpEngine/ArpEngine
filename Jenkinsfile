@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    options {
+        ansiColor('xterm')
+    }
+
     environment {
         HAXELIB_CACHE = '../../.haxelib_cache/ArpEngine/.haxelib'
     }
