@@ -19,6 +19,7 @@ pipeline {
                 githubNotify(context: 'js_heaps', description: '', status: 'PENDING');
                 // githubNotify(context: 'js_sys', description: '', status: 'PENDING');
                 githubNotify(context: 'neko_sys', description: '', status: 'PENDING');
+                githubNotify(context: 'cpp_sys', description: '', status: 'PENDING');
                 sh "haxelib newrepo"
                 sh "haxelib git arp_ci https://github.com/ArpEngine/Arp-ci master --always"
                 sh "haxelib run arp_ci sync"
@@ -100,6 +101,19 @@ pipeline {
             }
             post {
                 always { junit(testResults: "bin/junit/neko_sys.xml", keepLongStdio: true); }
+                success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
+                unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
+            }
+        }
+
+        stage('cpp_sys') {
+            steps {
+                catchError {
+                    sh "ARPCI_PROJECT=ArpEngine ARPCI_TARGET=cpp ARPCI_BACKEND=sys haxelib run arp_ci test"
+                }
+            }
+            post {
+                always { junit(testResults: "bin/junit/cpp_sys.xml", keepLongStdio: true); }
                 success { githubNotify(context: "${STAGE_NAME}", description: '', status: 'SUCCESS'); }
                 unsuccessful { githubNotify(context: "${STAGE_NAME}", description: '', status: 'FAILURE'); }
             }
