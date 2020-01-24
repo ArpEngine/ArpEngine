@@ -15,7 +15,7 @@ class Anchor implements IArpObject {
 	}
 
 	public function refresh(field:Field):Void {
-		hitFrame.exportHitGeneric(new ArpPosition(), field.addAnchorHit(this));
+		hitFrame.exportHitGeneric(position, field.addAnchorHit(this));
 	}
 
 }
