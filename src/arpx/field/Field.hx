@@ -20,35 +20,16 @@ import arpx.reactFrame.ReactFrame;
 class Field implements IArpObject implements ITickable implements IInteractable implements IFieldImpl {
 
 	@:arpBarrier @:arpDeepCopy @:arpField(true) public var mortals:IOmap<String, Mortal>;
-	@:arpBarrier @:arpField public var anchors:IOmap<String, Anchor>;
-
-	public var gridSize(get, never):Int;
-	public var width(get, never):Int;
-	public var height(get, never):Int;
+	@:arpBarrier @:arpField(true) public var anchors:IOmap<String, Anchor>;
 
 	private var hitField:HitObjectField<HitGeneric, HitMortal>;
 	private var anchorField:HitField<HitGeneric, Anchor>;
 
 	@:arpImpl private var arpImpl:FieldImpl;
 
-	public function new() return;
-
-	@:arpHeatUp private function heatUp():Bool {
-		if (this.hitField == null) this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());
-		if (this.anchorField == null) this.anchorField = new HitField<HitGeneric, Anchor>(new HitWithCuboid());
-		return true;
-	}
-
-	private function get_gridSize():Int {
-		return 1;
-	}
-
-	private function get_width():Int {
-		return 0;
-	}
-
-	private function get_height():Int {
-		return 0;
+	public function new() {
+		this.hitField = new HitObjectField<HitGeneric, HitMortal>(new HitWithCuboid());
+		this.anchorField = new HitField<HitGeneric, Anchor>(new HitWithCuboid());
 	}
 
 	public function addHit(mortal:Mortal, hitType:String):HitGeneric {
