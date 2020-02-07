@@ -16,11 +16,14 @@ class FixedTextData extends TextData {
 		return this.value;
 	}
 
-	public static function allocObject(arpDomain:ArpDomain, value:String):FixedTextData {
+	public static function allocFixedTextData(arpDomain:ArpDomain, value:String):FixedTextData {
 		var result:FixedTextData = arpDomain.allocObject(FixedTextData);
 		result.value = value;
 		return result;
 	}
+
+	@:noUsing
+	inline public static function allocObject(arpDomain:ArpDomain, value:String):FixedTextData return allocFixedTextData(arpDomain, value);
 }
 
 
