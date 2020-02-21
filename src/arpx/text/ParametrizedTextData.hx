@@ -8,21 +8,29 @@ class ParametrizedTextData extends TextData {
 
 	@:arpField public var value:String = null;
 
-	private var impl:FormatText;
+	private var _impl:FormatText;
+	private var impl(get, null):FormatText;
+	private function get_impl():FormatText {
+		var value = if (this.value == null) "null" else this.value;
+		if (this._impl != null && this._impl.source == value) return this._impl;
+		this._impl = new FormatText(value, _customFormatter, _customAlign);
+		return this._impl;
+	}
 
 	public function new() super();
 
-	@:arpHeatUp private function heatUp():Bool {
-		if (this.impl != null) return true;
-		var value = if (this.value == null) "null" else this.value;
-		var customFormatter = (param:Any) -> if (Std.is(param, TextData)) (param:TextData).publish() else null;
-		this.impl = new FormatText(value, customFormatter);
-		return true;
+	override public function publish(params:ArpParams = null):String {
+		return if (params == null) this.value else this.impl.publish((name:String) -> params.get(name));
 	}
 
-	override public function publish(params:ArpParams = null):String {
-		if (this.impl == null) this.heatUp();
+	private function _customFormatter(param:Any):String return customFormatter(param);
+	private function _customAlign(str:String):String return customAlign(str);
 
-		return if (params == null) this.value else this.impl.publish((name:String) -> params.get(name));
+	dynamic public static function customFormatter(param:Any):String {
+		return if (Std.is(param, TextData)) (param:TextData).publish() else null;
+	}
+
+	dynamic public static function customAlign(str:String):String {
+		return null;
 	}
 }
