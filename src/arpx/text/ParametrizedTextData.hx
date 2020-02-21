@@ -1,5 +1,6 @@
 package arpx.text;
 
+import arp.utils.FormatOption;
 import arp.utils.FormatText;
 import arpx.structs.ArpParams;
 
@@ -23,14 +24,14 @@ class ParametrizedTextData extends TextData {
 		return if (params == null) this.value else this.impl.publish((name:String) -> params.get(name));
 	}
 
-	private function _customFormatter(param:Any):String return customFormatter(param);
-	private function _customAlign(str:String):String return customAlign(str);
+	private function _customFormatter(param:Any, formatOption:FormatOption):String return customFormatter(param, formatOption);
+	private function _customAlign(str:String, formatOption:FormatOption):String return customAlign(str, formatOption);
 
-	dynamic public static function customFormatter(param:Any):String {
+	dynamic public static function customFormatter(param:Any, formatOption:FormatOption):String {
 		return if (Std.is(param, TextData)) (param:TextData).publish() else null;
 	}
 
-	dynamic public static function customAlign(str:String):String {
+	dynamic public static function customAlign(str:String, formatOption:FormatOption):String {
 		return null;
 	}
 }
