@@ -68,7 +68,7 @@ class Menu implements IArpObject {
 
 	private function execute(value:Int):Bool {
 		var item:MenuItem = this.menuItems.getAt(value);
-		if (item == null || item.proc == null) return false;
+		if (item == null || item.proc == null || !item.enabled) return false;
 		item.proc.execute();
 		return true;
 	}
@@ -96,6 +96,7 @@ class Menu implements IArpObject {
 		for (kv in this.menuItems.keyValueIterator()) {
 			var name:String = kv.key;
 			var menuItem:MenuItem = kv.value;
+			if (!menuItem.enabled) continue;
 			if (menuItem.shortcut != null) {
 				var shortcut:InputAxis = input.axis(menuItem.shortcut);
 				if (shortcut.isTriggerDown) {
