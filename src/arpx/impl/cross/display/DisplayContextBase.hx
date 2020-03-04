@@ -8,22 +8,11 @@ class DisplayContextBase {
 	public var clearColor(default, null):UInt;
 
 	public var transform(get, never):ArpTransform;
-	private var transforms:Array<ArpTransform>;
-	private var transformIndex:Int = 0;
+	private var transforms:ArpStructStack<ArpTransform>;
 
-	private function get_transform():ArpTransform return this.transforms[this.transformIndex];
-	public function dupTransform():ArpTransform {
-		var value:ArpTransform = this.transform;
-		var transform:ArpTransform;
-		if (++this.transformIndex < this.transforms.length) {
-			transform = this.transform.copyFrom(value);
-		} else {
-			transform = value.clone();
-			this.transforms.push(transform);
-		}
-		return transform;
-	}
-	public function popTransform():Void if (this.transformIndex > 0) this.transformIndex--;
+	inline private function get_transform():ArpTransform return this.transforms.head;
+	inline public function dupTransform():ArpTransform return this.transforms.dup();
+	inline public function popTransform():Void this.transforms.pop();
 
 	public var focus(get, never):IFocusTarget;
 	private var focuses:Array<IFocusTarget>;
@@ -32,7 +21,7 @@ class DisplayContextBase {
 	inline public function popFocus():IFocusTarget return this.focuses.pop();
 
 	public function new(transform:ArpTransform = null, clearColor:UInt = 0xff000000) {
-		this.transforms = [new ArpTransform()];
+		this.transforms = new ArpStructStack();
 		this.focuses = [null];
 		if (transform != null) this.transform.copyFrom(transform);
 		this.clearColor = clearColor;
