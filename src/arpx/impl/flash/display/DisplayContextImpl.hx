@@ -31,19 +31,19 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	public function display():Void return;
 
 	private var _workRect:Rectangle = new Rectangle();
-	inline public function fillRect(l:Int, t:Int, w:Int, h:Int, color:ArpColor):Void {
+	inline public function fillRect(l:Int, t:Int, w:Int, h:Int):Void {
 		var workRect:Rectangle = this._workRect;
 		workRect.setTo(this.transform.impl.tx + l, this.transform.impl.ty + t, w, h);
-		this.bitmapData.fillRect(workRect, color.value32);
+		this.bitmapData.fillRect(workRect, this.tint.value32);
 	}
 
 	private var _workPt:PointImpl = PointImpl.alloc();
-	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void {
+	public function fillFace(faceData:TextureFaceData, hasAlpha:Bool, smoothing:Bool):Void {
 		var pt:PointImpl = transform.asPoint(_workPt);
-		if (pt != null && (color == null || color.value32 == 0xffffffff)) {
+		if (pt != null && (this.tint.value32 == 0xffffffff)) {
 			bitmapData.copyPixels(faceData.source, faceData.bound, pt.raw, null, null, hasAlpha);
 		} else {
-			bitmapData.draw(faceData.trimmed, transform.impl.raw, color.toMultiplier(), BlendMode.NORMAL, null, smoothing);
+			bitmapData.draw(faceData.trimmed, transform.impl.raw, this.tint.toMultiplier(), BlendMode.NORMAL, null, smoothing);
 		}
 	}
 

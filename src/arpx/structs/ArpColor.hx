@@ -142,6 +142,18 @@ class ArpColor implements IArpStruct {
 	public function writeSelf(output:IPersistOutput):Void {
 		output.writeUInt32("color", this.value32);
 	}
+
+	public function applyMul(color:ArpColor):ArpColor {
+		if (this.value32 == 0xffffffff) {
+			this.value32 = color.value32;
+		} else {
+			this.falpha = this.falpha * color.falpha;
+			this.fred = this.fred * color.fred;
+			this.fgreen = this.fgreen * color.fgreen;
+			this.fblue = this.fblue * color.fblue;
+		}
+		return this;
+	}
 }
 
 

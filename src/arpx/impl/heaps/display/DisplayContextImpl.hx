@@ -51,15 +51,15 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	}
 
 	private var _workMatrix:ArpTransform = new ArpTransform();
-	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:ArpColor):Void {
+	public function fillRect(l:Int, t:Int, w:Int, h:Int):Void {
 		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.impl.xx = w;
 		_workTransform.impl.yy = h;
 		_workTransform.impl.tx = l;
 		_workTransform.impl.ty = t;
 		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
-		var alpha:Float = color.falpha;
-		var value32:Int = color.value32;
+		var alpha:Float = this.tint.falpha;
+		var value32:Int = this.tint.value32;
 		var tile:Tile = cachedFillRectTiles.get(value32);
 		if (tile == null) {
 			tile = Tile.fromColor(value32, 1, 1, alpha);
@@ -70,7 +70,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		popTransform();
 	}
 
-	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void {
+	public function fillFace(faceData:TextureFaceData, hasAlpha:Bool, smoothing:Bool):Void {
 		var tile:Tile = faceData.impl.tile;
 		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.impl.xx = tile.width;
@@ -78,7 +78,8 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		_workTransform.impl.tx = 0;
 		_workTransform.impl.ty = 0;
 		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
-		this.renderer.renderTile(matrix, tile, color.fred, color.fgreen, color.fblue, color.falpha);
+		var tint:ArpColor = this.tint;
+		this.renderer.renderTile(matrix, tile, tint.fred, tint.fgreen, tint.fblue, tint.falpha);
 		popTransform();
 	}
 

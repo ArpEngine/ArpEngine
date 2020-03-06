@@ -23,13 +23,18 @@ class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 		var t:Int = -chip.baseY;
 		var w:Int = Std.int(chip.chipWidth);
 		var h:Int = Std.int(chip.chipHeight);
-		var c:ArpColor = chip.border;
-		context.fillRect(l, t, w, 1, c);
-		context.fillRect(l, t + h - 1, w, 1, c);
+		context.tints.dup();
+		context.tint.applyMul(chip.border);
+		context.fillRect(l, t, w, 1);
+		context.fillRect(l, t + h - 1, w, 1);
 		t++;
 		h -= 2;
-		context.fillRect(l, t, 1, h, c);
-		context.fillRect(l + w - 1, t, 1, h, c);
-		context.fillRect(++l, t, w - 2, h, chip.color);
+		context.fillRect(l, t, 1, h);
+		context.fillRect(l + w - 1, t, 1, h);
+		context.tints.pop();
+		context.tints.dup();
+		context.tint.applyMul(chip.color);
+		context.fillRect(++l, t, w - 2, h);
+		context.tints.pop();
 	}
 }

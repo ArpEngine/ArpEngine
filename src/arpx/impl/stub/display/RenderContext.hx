@@ -6,6 +6,7 @@ package arpx.impl.stub.display;
 	width, height, clearColor,
 	display,
 	transform, dupTransform, popTransform,
+	tint, tints, colors,
 	focus, pushFocus, popFocus,
 	fillRect, fillFace
 )

@@ -20,15 +20,15 @@ class DisplayContextBase {
 	public var tint(get, never):ArpColor;
 	inline private function get_tint():ArpColor return this.tints.head;
 	public var tints(get, never):ArpColorStack;
-	inline private function get_tints():ArpColorStack return this.color("tint");
+	inline private function get_tints():ArpColorStack return this.colors("tint");
 
-	public function color(key:String):ArpColorStack {
-		if (colors.exists(key)) return colors.get(key);
+	public function colors(key:String):ArpColorStack {
+		if (_colors.exists(key)) return _colors.get(key);
 		var result = new ArpColorStack();
-		colors.set(key, result);
+		_colors.set(key, result);
 		return result;
 	}
-	private var colors:Map<String, ArpColorStack>;
+	private var _colors:Map<String, ArpColorStack>;
 
 	public var focus(get, never):IFocusTarget;
 	private var focuses:Array<IFocusTarget>;
@@ -38,7 +38,7 @@ class DisplayContextBase {
 
 	public function new(transform:ArpTransform = null, clearColor:ArpColor = null) {
 		this.transforms = new ArpTransformStack();
-		this.colors = new Map<String, ArpColorStack>();
+		this._colors = new Map<String, ArpColorStack>();
 		this.focuses = [null];
 		if (transform != null) this.transform.copyFrom(transform);
 		this.clearColor = if (clearColor != null) clearColor else new ArpColor(0xff000000);
