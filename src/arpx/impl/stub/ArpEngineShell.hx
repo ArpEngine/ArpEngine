@@ -6,6 +6,7 @@ import arp.domain.ArpDomain;
 import arpx.impl.cross.ArpEngineShellBase;
 import arpx.impl.cross.display.DisplayContext;
 import arpx.impl.cross.structs.ArpTransform;
+import arpx.structs.ArpColor;
 
 class ArpEngineShell extends ArpEngineShellBase {
 
