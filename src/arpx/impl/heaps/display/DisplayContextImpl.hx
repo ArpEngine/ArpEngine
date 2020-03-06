@@ -28,7 +28,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	private var cachedFillRectTiles:Map<UInt, Tile>;
 	private var cachedFillRectTilesCount:Int;
 
-	public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
+	public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:ArpColor = null) {
 		super(transform, clearColor);
 		this.buf = buf;
 		this._width = width;

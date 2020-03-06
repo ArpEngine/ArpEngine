@@ -5,6 +5,7 @@ package arpx.impl.heaps.display;
 import h2d.Object;
 
 import arpx.impl.cross.structs.ArpTransform;
+import arpx.structs.ArpColor;
 
 @:forward(
 	buf, drawTile,
@@ -12,7 +13,7 @@ import arpx.impl.cross.structs.ArpTransform;
 	renderContext
 )
 abstract DisplayContext(DisplayContextImpl) {
-	inline public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
+	inline public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:ArpColor = null) {
 		this = new DisplayContextImpl(buf, width, height, transform, clearColor);
 	}
 }

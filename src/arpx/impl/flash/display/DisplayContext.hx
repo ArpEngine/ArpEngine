@@ -5,6 +5,7 @@ package arpx.impl.flash.display;
 import flash.display.BitmapData;
 
 import arpx.impl.cross.structs.ArpTransform;
+import arpx.structs.ArpColor;
 
 @:forward(
 	bitmapData,
@@ -12,7 +13,7 @@ import arpx.impl.cross.structs.ArpTransform;
 	renderContext
 )
 abstract DisplayContext(DisplayContextImpl) {
-	inline public function new(bitmapData:BitmapData, transform:ArpTransform = null, clearColor:UInt = 0xff000000) {
+	inline public function new(bitmapData:BitmapData, transform:ArpTransform = null, clearColor:ArpColor = null) {
 		this = new DisplayContextImpl(bitmapData, transform, clearColor);
 	}
 }

@@ -6,6 +6,7 @@ import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.geom.PointImpl;
 import arpx.structs.IArpParamsRead;
+import arpx.structs.ArpColor;
 
 class RectChipImpl extends ArpObjectImplBase implements IChipImpl {
 

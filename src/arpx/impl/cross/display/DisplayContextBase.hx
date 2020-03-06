@@ -8,7 +8,7 @@ import arpx.structs.ArpColor;
 
 class DisplayContextBase {
 
-	public var clearColor(default, null):UInt;
+	public var clearColor(default, null):ArpColor;
 
 	public var transform(get, never):ArpTransform;
 	private var transforms:ArpTransformStack;
@@ -36,11 +36,11 @@ class DisplayContextBase {
 	inline public function pushFocus(value:IFocusTarget):Void this.focuses.push(value);
 	inline public function popFocus():IFocusTarget return this.focuses.pop();
 
-	public function new(transform:ArpTransform = null, clearColor:UInt = 0xff000000) {
+	public function new(transform:ArpTransform = null, clearColor:ArpColor = null) {
 		this.transforms = new ArpTransformStack();
 		this.colors = new Map<String, ArpColorStack>();
 		this.focuses = [null];
 		if (transform != null) this.transform.copyFrom(transform);
-		this.clearColor = clearColor;
+		this.clearColor = if (clearColor != null) clearColor else new ArpColor(0xff000000);
 	}
 }

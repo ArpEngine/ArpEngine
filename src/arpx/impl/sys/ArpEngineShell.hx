@@ -12,7 +12,7 @@ class ArpEngineShell extends ArpEngineShellBase {
 	public function new(domain:ArpDomain, config:ArpEngineConfig) super(domain, config);
 
 	override private function createDisplayContext():DisplayContext {
-		return new DisplayContext(this.width, this.height, new ArpTransform(), this.clearColor);
+		return new DisplayContext(this.width, this.height, new ArpTransform(), new ArpColor(this.clearColor));
 	}
 }
 

@@ -22,12 +22,12 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	public var height(get, never):Int;
 	private function get_height():Int return bitmapData.height;
 
-	public function new(bitmapData:BitmapData, transform:ArpTransform = null, clearColor:UInt = 0xff000000) {
+	public function new(bitmapData:BitmapData, transform:ArpTransform = null, clearColor:ArpColor = null) {
 		super(transform, clearColor);
 		this.bitmapData = bitmapData;
 	}
 
-	public function start():Void this.bitmapData.fillRect(this.bitmapData.rect, new ArpColor(clearColor));
+	public function start():Void this.bitmapData.fillRect(this.bitmapData.rect, clearColor.value32);
 	public function display():Void return;
 
 	private var _workRect:Rectangle = new Rectangle();
