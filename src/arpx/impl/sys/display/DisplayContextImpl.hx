@@ -26,7 +26,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 
 	public function start():Void return;
 	public function display():Void return;
-	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void return;
+	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:ArpColor):Void return;
 	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void return;
 
 	inline public function renderContext():RenderContext return new RenderContext(this);

@@ -51,18 +51,19 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	}
 
 	private var _workMatrix:ArpTransform = new ArpTransform();
-	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
+	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:ArpColor):Void {
 		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.impl.xx = w;
 		_workTransform.impl.yy = h;
 		_workTransform.impl.tx = l;
 		_workTransform.impl.ty = t;
 		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
-		var alpha:Float = (color >>> 24) / 0xff;
-		var tile:Tile = cachedFillRectTiles.get(color);
+		var alpha:Float = color.falpha;
+		var value32:Int = color.value32;
+		var tile:Tile = cachedFillRectTiles.get(value32);
 		if (tile == null) {
-			tile = Tile.fromColor(color, 1, 1, alpha);
-			cachedFillRectTiles.set(color, tile);
+			tile = Tile.fromColor(value32, 1, 1, alpha);
+			cachedFillRectTiles.set(value32, tile);
 			cachedFillRectTilesCount++;
 		}
 		this.renderer.renderTile(matrix, tile);

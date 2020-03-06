@@ -27,14 +27,14 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		this.bitmapData = bitmapData;
 	}
 
-	public function start():Void this.bitmapData.fillRect(this.bitmapData.rect, clearColor);
+	public function start():Void this.bitmapData.fillRect(this.bitmapData.rect, new ArpColor(clearColor));
 	public function display():Void return;
 
 	private var _workRect:Rectangle = new Rectangle();
-	inline public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
+	inline public function fillRect(l:Int, t:Int, w:Int, h:Int, color:ArpColor):Void {
 		var workRect:Rectangle = this._workRect;
 		workRect.setTo(this.transform.impl.tx + l, this.transform.impl.ty + t, w, h);
-		this.bitmapData.fillRect(workRect, color);
+		this.bitmapData.fillRect(workRect, color.value32);
 	}
 
 	private var _workPt:PointImpl = PointImpl.alloc();
