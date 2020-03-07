@@ -25,8 +25,7 @@ class HitMortalFieldGizmoImpl extends ArpObjectImplBase implements IFieldGizmoIm
 					var y:Int = Math.round(hitMortal.hit.y);
 					var sX:Int = Math.round(hitMortal.hit.sizeX);
 					var sY:Int = Math.round(hitMortal.hit.sizeY);
-					context.tints.dup();
-					context.tint.applyMul(fieldGizmo.hitColorFor(hitMortal));
+					context.tints.dup().applyMul(fieldGizmo.hitColorFor(hitMortal));
 					context.fillRect(x - sX, y - sY, 1, sY * 2);
 					context.fillRect(x + sX, y - sY, 1, sY * 2);
 					context.fillRect(x - sX, y - sY, sX * 2, 1);

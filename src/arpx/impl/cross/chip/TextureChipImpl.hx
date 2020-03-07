@@ -31,8 +31,7 @@ class TextureChipImpl extends ArpObjectImplBase implements IChipImpl {
 		if (this.chip.baseX | this.chip.baseY != 0) {
 			transform.prependXY(-this.chip.baseX, -this.chip.baseY);
 		}
-		context.tints.dup();
-		context.tint.applyMul(this.chip.color);
+		context.tints.dup().applyMul(this.chip.color);
 		context.fillFace(faceInfo, this.chip.texture.hasAlpha, this.chip.texture.smoothing);
 		context.tints.pop();
 		context.popTransform();
