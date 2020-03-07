@@ -14,14 +14,14 @@ class ArpStructStack<T> {
 	private function get_head():T return this.stack[this.index];
 	public function dup():T {
 		var value:T = this.head;
-		var transform:T;
+		var instance:T;
 		if (++this.index < this.stack.length) {
-			transform = this.copyFrom(this.head, value);
+			instance = this.copyFrom(this.head, value);
 		} else {
-			transform = this.clone(value);
-			this.stack.push(transform);
+			instance = this.clone(value);
+			this.stack.push(instance);
 		}
-		return transform;
+		return instance;
 	}
 	public function pop():Void if (this.index > 0) this.index--;
 
