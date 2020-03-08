@@ -28,7 +28,14 @@ class TransformParamChipImpl extends ArpObjectImplBase implements IChipImpl {
 	inline private function transform(params:IArpParamsRead, paramsOp:ParamsOp):ArpTransform {
 		var transform:ArpTransform = _workTransform;
 		if (paramsOp != null) params = paramsOp.filter(params);
-		transform.reset(params.getFloat("a", 1), params.getFloat("b", 0), params.getFloat("c", 0), params.getFloat("d", 1), params.getFloat("x", 0), params.getFloat("y", 0));
+		transform.reset(
+			params.getFloatOrDefault("a", 1),
+			params.getFloatOrDefault("b", 0),
+			params.getFloatOrDefault("c", 0),
+			params.getFloatOrDefault("d", 1),
+			params.getFloatOrDefault("x", 0),
+			params.getFloatOrDefault("y", 0)
+		);
 		return transform;
 	}
 }

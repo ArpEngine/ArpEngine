@@ -27,7 +27,7 @@ class TintParamChipImpl extends ArpObjectImplBase implements IChipImpl {
 	private var _workColor:ArpColor = new ArpColor();
 	inline private function tint(params:IArpParamsRead):ArpColor {
 		var color:ArpColor = _workColor;
-		color.value32 = params.getInt(chip.key);
+		color.value32 = params.getIntOrDefault(chip.key, 0xffffffff);
 		return color;
 	}
 }
