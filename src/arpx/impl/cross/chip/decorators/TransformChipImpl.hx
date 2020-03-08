@@ -1,12 +1,12 @@
 package arpx.impl.cross.chip.decorators;
 
 import arpx.chip.decorators.TransformChip;
-import arpx.impl.cross.display.RenderContext;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
+import arpx.impl.cross.display.RenderContext;
 import arpx.structs.IArpParamsRead;
 
-class TranslateChipImpl extends ArpObjectImplBase implements IChipImpl {
+class TransformChipImpl extends ArpObjectImplBase implements IChipImpl {
 
 	private var chip:TransformChip;
 
