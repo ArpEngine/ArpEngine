@@ -14,9 +14,15 @@ class ReadOnlyArpParams implements IArpParamsRead {
 
 	public function getInt(key:ArpParamsKey, defaultValue = null):Null<Int> return ArpParamsMacros.getSafe(key, defaultValue, Int);
 	public function getFloat(key:ArpParamsKey, defaultValue = null):Null<Float> return ArpParamsMacros.getSafe(key, defaultValue, Float);
-	public function getString(key:ArpParamsKey, defaultValue = null):String return ArpParamsMacros.getSafe(key, defaultValue, String);
+	public function getString(key:ArpParamsKey, defaultValue = null):Null<String> return ArpParamsMacros.getSafe(key, defaultValue, String);
 	public function getBool(key:ArpParamsKey, defaultValue = null):Null<Bool> return ArpParamsMacros.getSafe(key, defaultValue, Bool);
-	public function getArpDirection(key:ArpParamsKey, defaultValue = null):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue, ArpDirection);
+	public function getArpDirection(key:ArpParamsKey, defaultValue = null):Null<ArpDirection> return ArpParamsMacros.getSafe(key, defaultValue, ArpDirection);
+
+	public function getIntOrDefault(key:ArpParamsKey, defaultValue = 0):Int return ArpParamsMacros.getSafe(key, defaultValue, Int);
+	public function getFloatOrDefault(key:ArpParamsKey, defaultValue = 0.0):Float return ArpParamsMacros.getSafe(key, defaultValue, Float);
+	public function getStringOrDefault(key:ArpParamsKey, defaultValue = ""):String return ArpParamsMacros.getSafe(key, defaultValue, String);
+	public function getBoolOrDefault(key:ArpParamsKey, defaultValue = false):Bool return ArpParamsMacros.getSafe(key, defaultValue, Bool);
+	public function getArpDirectionOrDefault(key:ArpParamsKey, defaultValue):ArpDirection return ArpParamsMacros.getSafe(key, defaultValue, ArpDirection);
 
 	public function getAsString(key:ArpParamsKey, defaultValue = null):String return ArpParamsMacros.getAsString(key, defaultValue);
 
