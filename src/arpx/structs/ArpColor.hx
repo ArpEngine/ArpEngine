@@ -21,6 +21,26 @@ import openfl.geom.ColorTransform;
 @:arpStructPlaceholder("#ffffff@ff", { value: "#ffffff@ff" })
 class ArpColor implements IArpStruct {
 
+	public static var WHITE(get, never):ArpColor;
+	public static var BLACK(get, never):ArpColor;
+	public static var RED(get, never):ArpColor;
+	public static var GREEN(get, never):ArpColor;
+	public static var BLUE(get, never):ArpColor;
+	public static var CYAN(get, never):ArpColor;
+	public static var MAGENTA(get, never):ArpColor;
+	public static var YELLOW(get, never):ArpColor;
+	public static var TRANSPARENT(get, never):ArpColor;
+
+	inline private static function get_WHITE():ArpColor {return new ArpColor(0xffffffff);}
+	inline private static function get_BLACK():ArpColor {return new ArpColor(0xff000000);}
+	inline private static function get_RED():ArpColor {return new ArpColor(0xffff0000);}
+	inline private static function get_GREEN():ArpColor {return new ArpColor(0xff00ff00);}
+	inline private static function get_BLUE():ArpColor {return new ArpColor(0xff0000ff);}
+	inline private static function get_CYAN():ArpColor {return new ArpColor(0xff00ffff);}
+	inline private static function get_MAGENTA():ArpColor {return new ArpColor(0xffff00ff);}
+	inline private static function get_YELLOW():ArpColor {return new ArpColor(0xffffff00);}
+	inline private static function get_TRANSPARENT():ArpColor {return new ArpColor(0x00000000);}
+
 	public var value32:Int;
 
 	public var value(get, set):Int;
