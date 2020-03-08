@@ -1,24 +1,24 @@
 package arpx.impl.cross.chip.decorators;
 
-import arpx.chip.decorators.TransformChip;
-import arpx.impl.cross.display.RenderContext;
+import arpx.chip.decorators.TintChip;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
+import arpx.impl.cross.display.RenderContext;
 import arpx.structs.IArpParamsRead;
 
-class TranslateChipImpl extends ArpObjectImplBase implements IChipImpl {
+class TintChipImpl extends ArpObjectImplBase implements IChipImpl {
 
-	private var chip:TransformChip;
+	private var chip:TintChip;
 
-	public function new(chip:TransformChip) {
+	public function new(chip:TintChip) {
 		super();
 		this.chip = chip;
 	}
 
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
-		context.dupTransform().prependTransform(chip.transform);
+		context.tints.dup().applyMul(chip.color);
 		this.chip.chip.render(context, params);
-		context.popTransform();
+		context.tints.pop();
 	}
 }
 

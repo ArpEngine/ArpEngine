@@ -8,6 +8,7 @@ package arpx.impl.heaps.display;
 	display,
 	transform, dupTransform, popTransform,
 	focus, pushFocus, popFocus,
+	tint, tints, colors,
 	fillRect, fillFace
 )
 abstract RenderContext(DisplayContextImpl) {

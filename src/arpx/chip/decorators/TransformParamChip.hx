@@ -1,22 +1,19 @@
 package arpx.chip.decorators;
 
-import arp.ds.IMap;
-import arpx.impl.cross.chip.decorators.DecorateChipImpl;
+import arpx.impl.cross.chip.decorators.TransformParamChipImpl;
 import arpx.impl.cross.geom.RectImpl;
 import arpx.impl.cross.structs.ArpTransform;
 import arpx.paramsOp.ParamsOp;
-import arpx.structs.ArpColor;
 import arpx.structs.IArpParamsRead;
 
-@:arpType("chip", "decorate")
-class DecorateChip extends Chip {
+@:arpType("chip", "transformParam")
+class TransformParamChip extends Chip {
 
 	@:arpField @:arpBarrier public var chip:Chip;
-	@:arpField @:arpBarrier public var paramsOp:ParamsOp;
 	@:arpField public var transform:ArpTransform;
-	@:arpField(true) public var colors:IMap<String, ArpColor>;
+	@:arpField public var paramsOp:ParamsOp;
 
-	@:arpImpl private var arpImpl:DecorateChipImpl;
+	@:arpImpl private var flashImpl:TransformParamChipImpl;
 
 	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
 		chip.layoutSize(params, rect);

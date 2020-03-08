@@ -28,7 +28,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	private var cachedFillRectTiles:Map<UInt, Tile>;
 	private var cachedFillRectTilesCount:Int;
 
-	public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
+	public function new(buf:Object, width:Int, height:Int, transform:ArpTransform = null, clearColor:ArpColor = null) {
 		super(transform, clearColor);
 		this.buf = buf;
 		this._width = width;
@@ -51,25 +51,26 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	}
 
 	private var _workMatrix:ArpTransform = new ArpTransform();
-	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void {
+	public function fillRect(l:Int, t:Int, w:Int, h:Int):Void {
 		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.impl.xx = w;
 		_workTransform.impl.yy = h;
 		_workTransform.impl.tx = l;
 		_workTransform.impl.ty = t;
 		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
-		var alpha:Float = (color >>> 24) / 0xff;
-		var tile:Tile = cachedFillRectTiles.get(color);
+		var alpha:Float = this.tint.falpha;
+		var value32:Int = this.tint.value32;
+		var tile:Tile = cachedFillRectTiles.get(value32);
 		if (tile == null) {
-			tile = Tile.fromColor(color, 1, 1, alpha);
-			cachedFillRectTiles.set(color, tile);
+			tile = Tile.fromColor(value32, 1, 1, alpha);
+			cachedFillRectTiles.set(value32, tile);
 			cachedFillRectTilesCount++;
 		}
 		this.renderer.renderTile(matrix, tile);
 		popTransform();
 	}
 
-	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void {
+	public function fillFace(faceData:TextureFaceData, hasAlpha:Bool, smoothing:Bool):Void {
 		var tile:Tile = faceData.impl.tile;
 		var _workTransform:ArpTransform = _workMatrix;
 		_workTransform.impl.xx = tile.width;
@@ -77,7 +78,8 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 		_workTransform.impl.tx = 0;
 		_workTransform.impl.ty = 0;
 		var matrix:Matrix = dupTransform().prependTransform(_workTransform).impl.raw;
-		this.renderer.renderTile(matrix, tile, color.fred, color.fgreen, color.fblue, color.falpha);
+		var tint:ArpColor = this.tint;
+		this.renderer.renderTile(matrix, tile, tint.fred, tint.fgreen, tint.fblue, tint.falpha);
 		popTransform();
 	}
 

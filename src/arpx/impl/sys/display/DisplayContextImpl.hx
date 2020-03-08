@@ -18,7 +18,7 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 	public var height(get, null):Int;
 	private function get_height():Int return _height;
 
-	public function new(width:Int, height:Int, transform:ArpTransform = null, clearColor:UInt = 0) {
+	public function new(width:Int, height:Int, transform:ArpTransform = null, clearColor:ArpColor = null) {
 		super(transform, clearColor);
 		this._width = width;
 		this._height = height;
@@ -26,8 +26,8 @@ class DisplayContextImpl extends DisplayContextBase implements IDisplayContext i
 
 	public function start():Void return;
 	public function display():Void return;
-	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void return;
-	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void return;
+	public function fillRect(l:Int, t:Int, w:Int, h:Int):Void return;
+	public function fillFace(faceData:TextureFaceData, hasAlpha:Bool, smoothing:Bool):Void return;
 
 	inline public function renderContext():RenderContext return new RenderContext(this);
 }

@@ -29,7 +29,13 @@ class DecorateChipImpl extends ArpObjectImplBase implements IChipImpl {
 			p = this.chip.paramsOp.filter(p);
 		}
 		context.dupTransform().prependTransform(chip.transform);
+		for (kv in chip.colors.keyValueIterator()) {
+			context.colors(kv.key).dup().applyMul(kv.value);
+		}
 		this.chip.chip.render(context, p);
+		for (k in chip.colors.keys()) {
+			context.colors(k).pop();
+		}
 		context.popTransform();
 	}
 }

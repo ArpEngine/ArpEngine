@@ -1,20 +1,25 @@
 package arpx.impl.cross.display;
 
+import arpx.impl.cross.display.stack.ArpColorStack;
 import arpx.structs.ArpColor;
-import arpx.impl.cross.texture.TextureFaceData;
 import arpx.impl.cross.structs.ArpTransform;
+import arpx.impl.cross.texture.TextureFaceData;
 
 interface IRenderContext {
 
 	var transform(get, never):ArpTransform;
 
-	public function start():Void;
-	public function display():Void;
+	function start():Void;
+	function display():Void;
 
-	public function dupTransform():ArpTransform;
-	public function popTransform():Void;
+	function dupTransform():ArpTransform;
+	function popTransform():Void;
 
-	public function fillRect(l:Int, t:Int, w:Int, h:Int, color:UInt):Void;
+	var tint(get, never):ArpColor;
+	var tints(get, never):ArpColorStack;
+	function colors(key:String):ArpColorStack;
 
-	public function fillFace(faceData:TextureFaceData, color:ArpColor, hasAlpha:Bool, smoothing:Bool):Void;
+	function fillRect(l:Int, t:Int, w:Int, h:Int):Void;
+
+	function fillFace(faceData:TextureFaceData, hasAlpha:Bool, smoothing:Bool):Void;
 }

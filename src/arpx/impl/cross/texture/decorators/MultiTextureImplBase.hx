@@ -56,8 +56,8 @@ class MultiTextureImplBase<T:MultiTexture> extends TextureImplBase {
 		}
 
 		index += texture.offset;
-		var dIndex:Null<Int> = params.getInt("index");
-		if (dIndex != null) index += dIndex;
+		var dIndex:Int = params.getIntOrDefault("index", 0);
+		index += dIndex;
 
 		if (this.faces[index] == null) {
 			this.texture.arpDomain.log("texture", 'MultiTextureImplBase.getFaceIndex(): Face index out of range: ${this.texture.arpSlot}:$index');
