@@ -1,5 +1,6 @@
 package arpx.chip.decorators;
 
+import arpx.structs.ArpColor;
 import arp.ds.IMap;
 import arpx.impl.cross.chip.decorators.ColorizeChipImpl;
 
@@ -7,7 +8,7 @@ import arpx.impl.cross.chip.decorators.ColorizeChipImpl;
 class ColorizeChip extends Chip {
 
 	@:arpField @:arpBarrier public var chip:Chip;
-	@:arpField(true) public var keys:IMap<String, String>;
+	@:arpField("colors", "color") public var colors:IMap<String, ArpColor>;
 
 	@:arpImpl private var arpImpl:ColorizeChipImpl;
 

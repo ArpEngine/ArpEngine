@@ -8,7 +8,7 @@ import arpx.structs.ArpColor;
 class ColorizeParamChip extends Chip {
 
 	@:arpField @:arpBarrier public var chip:Chip;
-	@:arpField(true) public var colors:IMap<String, ArpColor>;
+	@:arpField(true) public var colors:IMap<String, String>;
 
 	@:arpImpl private var arpImpl:ColorizeParamChipImpl;
 

@@ -5,7 +5,6 @@ import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.structs.ArpColor;
-import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 class ColorizeParamChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -28,7 +27,7 @@ class ColorizeParamChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	private var _workColor:ArpColor = new ArpColor();
-	inline private function color(params:ArpParams, key:String):ArpColor {
+	inline private function color(params:IArpParamsRead, key:String):ArpColor {
 		var color:ArpColor = _workColor;
 		color.value32 = params.getInt(key);
 		return color;

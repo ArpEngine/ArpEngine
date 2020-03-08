@@ -1,5 +1,6 @@
 package arpx.chip.decorators;
 
+import arpx.impl.cross.chip.decorators.TintChipImpl;
 import arpx.structs.ArpColor;
 
 @:arpType("chip", "tint")
