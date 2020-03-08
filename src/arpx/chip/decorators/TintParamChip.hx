@@ -6,7 +6,7 @@ import arpx.impl.cross.chip.decorators.TintParamChipImpl;
 class TintParamChip extends Chip {
 
 	@:arpField @:arpBarrier public var chip:Chip;
-	@:arpField public var key:String;
+	@:arpField public var key:String = "tint";
 
 	@:arpImpl private var arpImpl:TintParamChipImpl;
 
