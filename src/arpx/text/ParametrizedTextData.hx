@@ -2,6 +2,7 @@ package arpx.text;
 
 import arp.utils.FormatOption;
 import arp.utils.FormatText;
+import arpx.chip.utils.StringChipUtil;
 import arpx.structs.ArpParams;
 
 @:arpType("text", "ptext")
@@ -28,10 +29,18 @@ class ParametrizedTextData extends TextData {
 	private function _customAlign(str:String, formatOption:FormatOption):String return customAlign(str, formatOption);
 
 	dynamic public static function customFormatter(param:Any, formatOption:FormatOption):String {
-		return if (Std.is(param, TextData)) (param:TextData).publish() else null;
+		return defaultCustomFormatter(param, formatOption);
 	}
 
 	dynamic public static function customAlign(str:String, formatOption:FormatOption):String {
-		return null;
+		return defaultCustomAlign(str, formatOption);
+	}
+
+	inline public static function defaultCustomFormatter(param:Any, formatOption:FormatOption):String {
+		return if (Std.is(param, TextData)) (param:TextData).publish() else Std.string(param);
+	}
+
+	inline public static function defaultCustomAlign(str:String, formatOption:FormatOption):String {
+		return formatOption.basicPad(str, " ", (formatOption.width - StringChipUtil.lengthForStringChip(str)));
 	}
 }
