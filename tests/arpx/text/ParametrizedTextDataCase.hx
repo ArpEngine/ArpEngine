@@ -14,7 +14,7 @@ class ParametrizedTextDataCase {
 
 	public function setup() {
 		var xml:Xml = Xml.parse('<data>
-		<text class="ptext" name="name1" value="{foo}{bar}" />
+		<text class="ptext" name="name1" value="{foo}{bar:3r}" />
 		</data>
 		').firstElement();
 		var seed:ArpSeed = ArpSeed.fromXml(xml);
@@ -26,11 +26,11 @@ class ParametrizedTextDataCase {
 	}
 
 	public function testFields() {
-		assertEquals("{foo}{bar}", me.value);
+		assertEquals("{foo}{bar:3r}", me.value);
 	}
 
 	public function testPublish() {
-		assertEquals("{foo}{bar}", me.publish(null));
+		assertEquals("{foo}{bar:3r}", me.publish(null));
 	}
 
 	public function testComplexPublish() {
@@ -38,6 +38,10 @@ class ParametrizedTextDataCase {
 		params.set("foo", "hoge");
 		params.set("bar", "fuga");
 		assertEquals("hogefuga", me.publish(params));
+		var params:ArpParams = new ArpParams();
+		params.set("foo", "/hoge/");
+		params.set("bar", "/fuga/");
+		assertEquals("/hoge/  /fuga/", me.publish(params));
 	}
 
 }

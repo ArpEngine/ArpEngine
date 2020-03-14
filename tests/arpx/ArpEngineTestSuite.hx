@@ -2,6 +2,7 @@ package arpx;
 
 import arp.testParams.PersistIoProviders.*;
 import arpx.automaton.AutomatonCase;
+import arpx.chip.utils.StringChipUtilCase;
 import arpx.driver.LinearDriverCase;
 import arpx.file.LocalFileCase;
 import arpx.impl.cross.structs.ArpTransformCase;
@@ -39,19 +40,19 @@ class ArpEngineTestSuite {
 
 		r.load(ArpStructsMacroArpObjectCase);
 
-		#if !arp_display_backend_stub
-		r.load(ArpTransformCase, persistIoProvider());
-		#end
-
 		#if arp_display_backend_flash
+		r.load(ArpTransformCase, persistIoProvider());
 		r.load(ArpTransformFlashCase);
 		#elseif arp_display_backend_heaps
+		r.load(ArpTransformCase, persistIoProvider());
 		r.load(ArpTransformHeapsCase);
 		#end
 
 		r.load(ArpEngineComponentsCase);
 
 		r.load(AutomatonCase);
+
+		r.load(StringChipUtilCase);
 
 		r.load(LinearDriverCase);
 
