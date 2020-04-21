@@ -16,10 +16,10 @@ class MotionFrame implements IArpObject {
 
 	public function new() return;
 
-	public function updateShadowPosition(shadow:Mortal, oldTime:Float, newTime:Float):Void {
+	public function updateShadowPosition(shadow:Mortal, oldTime:Float, newTime:Float, nextTime:Float):Void {
 	}
 
-	public function updateMortalPosition(field:Field, mortal:Mortal, oldTime:Float, newTime:Float, dHitType:String):Void {
+	public function updateMortalPosition(field:Field, mortal:Mortal, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
 		mortal.stayWithHit(field, dHitType);
 	}
 }
