@@ -17,7 +17,7 @@ class CurveMotionFrame extends MotionFrame {
 
 	public function new() super();
 
-	override public function updateShadowPosition(shadow:Mortal, oldTime:Float, newTime:Float, nextTime:Float):Void {
+	override public function updateShadowPosition(shadow:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float):Void {
 		var pos:ArpPosition = shadow.position;
 		var t0:Float = oldTime - time;
 		var t1:Float = newTime - time;
@@ -43,7 +43,7 @@ class CurveMotionFrame extends MotionFrame {
 		}
 	}
 
-	override public function updateMortalPosition(field:Field, mortal:Mortal, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
+	override public function updateMortalPosition(field:Field, mortal:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
 		var pos:ArpPosition = mortal.position;
 		var t0:Float = oldTime - time;
 		var t1:Float = newTime - time;

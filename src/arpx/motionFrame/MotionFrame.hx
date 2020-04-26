@@ -6,6 +6,7 @@ import arpx.field.Field;
 import arpx.hitFrame.HitFrame;
 import arpx.mortal.Mortal;
 import arpx.structs.ArpParams;
+import arpx.structs.ArpPosition;
 
 @:arpType("motionFrame", "motionFrame")
 class MotionFrame implements IArpObject {
@@ -16,10 +17,10 @@ class MotionFrame implements IArpObject {
 
 	public function new() return;
 
-	public function updateShadowPosition(shadow:Mortal, oldTime:Float, newTime:Float, nextTime:Float):Void {
+	public function updateShadowPosition(shadow:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float):Void {
 	}
 
-	public function updateMortalPosition(field:Field, mortal:Mortal, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
+	public function updateMortalPosition(field:Field, mortal:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
 		mortal.stayWithHit(field, dHitType);
 	}
 }

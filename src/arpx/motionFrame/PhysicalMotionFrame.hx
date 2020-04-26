@@ -20,7 +20,7 @@ class PhysicalMotionFrame extends MotionFrame {
 
 	public function new() super();
 
-	override public function updateShadowPosition(shadow:Mortal, oldTime:Float, newTime:Float, nextTime:Float):Void {
+	override public function updateShadowPosition(shadow:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float):Void {
 		var factor:Float = newTime - oldTime;
 		var pos:ArpPosition = shadow.position;
 		var dX:Float = this.dX + this.dR * Math.cos(pos.dir.valueRadian) + this.dS * Math.sin(pos.dir.valueRadian);
@@ -35,7 +35,7 @@ class PhysicalMotionFrame extends MotionFrame {
 		pos.z += dZ;
 	}
 
-	override public function updateMortalPosition(field:Field, mortal:Mortal, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
+	override public function updateMortalPosition(field:Field, mortal:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
 		var factor:Float = newTime - oldTime;
 		var pos:ArpPosition = mortal.position;
 		var dX:Float = this.dX + this.dR * Math.cos(pos.dir.valueRadian) + this.dS * Math.sin(pos.dir.valueRadian);

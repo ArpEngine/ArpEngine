@@ -10,6 +10,7 @@ import arpx.motion.Motion;
 import arpx.motionFrame.MotionFrame;
 import arpx.motionSet.MotionSet;
 import arpx.reactFrame.ReactFrame;
+import arpx.structs.ArpPosition;
 
 @:arpType("driver", "motion")
 class MotionDriver extends Driver {
@@ -19,6 +20,7 @@ class MotionDriver extends Driver {
 	@:arpField(false) public var nowMotion:Motion;
 	@:arpField public var nowTime:Float;
 	@:arpField(false) public var nowMotionFrame:MotionFrame;
+	@:arpField public var target:ArpPosition;
 
 	@:arpField private var willReact:Bool;
 
@@ -86,7 +88,7 @@ class MotionDriver extends Driver {
 				} else if (time < newTime) {
 					// last frame has just ended
 					if (motionFrame != null) {
-						motionFrame.updateMortalPosition(field, mortal, oldTime, time, time, this.dHitType);
+						motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, time, time, this.dHitType);
 					}
 					oldTime = time;
 					motionFrame = frame;
@@ -98,7 +100,7 @@ class MotionDriver extends Driver {
 			}
 			if (motionFrame != null) {
 				// cleanup current motion frame
-				motionFrame.updateMortalPosition(field, mortal, oldTime, newTime, nextTime, this.dHitType);
+				motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, newTime, nextTime, this.dHitType);
 			} else {
 				// movement did not occur
 				mortal.stayWithHit(field, this.dHitType);
