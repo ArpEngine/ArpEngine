@@ -59,12 +59,14 @@ class ArpCurve implements IArpStruct {
 	inline public function interpolate(t:Float):Float return this.impl.interpolate(t);
 	inline public function accumulate(t0:Float, t1:Float):Float return this.impl.accumulate(t0, t1);
 	public function accumulateByRatio(t0:Float, t1:Float):Float {
-		return if (t1 == this.impl.l) {
-			1;
+		if (t0 == this.impl.l) {
+			return 0;
+		} else if (t1 == this.impl.l) {
+			return 1;
 		} else {
 			var x0 = this.impl.interpolate(t0);
 			var x1 = this.impl.interpolate(t1);
-			(x1 - x0) / (1 - x0);
+			return if (x0 == 1) 0 else (x1 - x0) / (1 - x0);
 		}
 	}
 }
