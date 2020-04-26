@@ -1,5 +1,6 @@
 package arpx.driver;
 
+import arp.ds.IList;
 import arp.task.Heartbeat;
 import arpx.field.Field;
 import arpx.mortal.Mortal;
@@ -19,6 +20,7 @@ class MotionDriver extends Driver {
 	@:arpField public var target:ArpPosition;
 
 	@:arpField private var willReact:Bool;
+	@:arpField(false) private var reactQueue:IList<ReactFrame>;
 
 	public function new() super();
 
@@ -33,8 +35,14 @@ class MotionDriver extends Driver {
 
 		this.nowMotion = motion;
 		this.nowTime = 0;
+
 		var motionFrame:MotionFrame = motion.motionFrames.first();
 		if (motionFrame != null && motionFrame.time == 0) mortal.params.merge(motionFrame.params);
+
+		if (this.willReact) {
+			var reactFrame:ReactFrame = this.nowMotion.reactFrames.first();
+			if (reactFrame != null && reactFrame.time == 0) reactQueue.push(reactFrame);
+		}
 		return true;
 	}
 
@@ -53,7 +61,16 @@ class MotionDriver extends Driver {
 		return true;
 	}
 
+	private function flushReactQueue(field:Field, mortal:Mortal):Void {
+		if (!reactQueue.isEmpty()) {
+			for (reactFrame in reactQueue) field.dispatchReactFrame(mortal, reactFrame, 0);
+			reactQueue.clear();
+		}
+	}
+
 	override public function tick(field:Field, mortal:Mortal):Heartbeat {
+		this.flushReactQueue(field, mortal);
+
 		if (this.nowMotion == null) this.reset();
 		var nowMotion:Motion = this.nowMotion;
 		if (nowMotion != null) {
@@ -116,10 +133,7 @@ class MotionDriver extends Driver {
 				if (!this.startAction(mortal, nowMotion.loopAction, true)) {
 					this.startMotion(mortal, nowMotion, true);
 				}
-				var reactFrame:ReactFrame = this.nowMotion.reactFrames.first();
-				if (reactFrame != null && reactFrame.time == 0) {
-					field.dispatchReactFrame(mortal, reactFrame, 0);
-				}
+				this.flushReactQueue(field, mortal);
 			} else {
 				this.nowTime = newTime;
 			}
