@@ -1,8 +1,8 @@
 package arpx.driver;
 
-import arp.task.Heartbeat;
 import arp.ds.impl.VoidSet;
 import arp.ds.ISet;
+import arp.task.Heartbeat;
 import arpx.field.Field;
 import arpx.hitFrame.HitFrame;
 import arpx.mortal.Mortal;
@@ -10,6 +10,7 @@ import arpx.motion.Motion;
 import arpx.motionFrame.MotionFrame;
 import arpx.motionSet.MotionSet;
 import arpx.reactFrame.ReactFrame;
+import arpx.structs.ArpPosition;
 
 @:arpType("driver", "motion")
 class MotionDriver extends Driver {
@@ -19,6 +20,7 @@ class MotionDriver extends Driver {
 	@:arpField(false) public var nowMotion:Motion;
 	@:arpField public var nowTime:Float;
 	@:arpField(false) public var nowMotionFrame:MotionFrame;
+	@:arpField public var target:ArpPosition;
 
 	@:arpField private var willReact:Bool;
 
@@ -73,6 +75,7 @@ class MotionDriver extends Driver {
 			var oldTime:Float = this.nowTime;
 			var newTime:Float = this.nowTime + this.motionSpeed;
 			var time:Float;
+			var nextTime:Float = nowMotion.time;
 
 			var motionFrame:MotionFrame = null;
 			var moved:Bool = false;
@@ -85,18 +88,19 @@ class MotionDriver extends Driver {
 				} else if (time < newTime) {
 					// last frame has just ended
 					if (motionFrame != null) {
-						motionFrame.updateMortalPosition(field, mortal, oldTime, time, this.dHitType);
+						motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, time, time, this.dHitType);
 					}
 					oldTime = time;
 					motionFrame = frame;
 				} else {
 					// last frame has not ended
+					nextTime = time;
 					break;
 				}
 			}
 			if (motionFrame != null) {
 				// cleanup current motion frame
-				motionFrame.updateMortalPosition(field, mortal, oldTime, newTime, this.dHitType);
+				motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, newTime, nextTime, this.dHitType);
 			} else {
 				// movement did not occur
 				mortal.stayWithHit(field, this.dHitType);
