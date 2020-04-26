@@ -1,10 +1,7 @@
 package arpx.driver;
 
-import arp.ds.impl.VoidSet;
-import arp.ds.ISet;
 import arp.task.Heartbeat;
 import arpx.field.Field;
-import arpx.hitFrame.HitFrame;
 import arpx.mortal.Mortal;
 import arpx.motion.Motion;
 import arpx.motionFrame.MotionFrame;
@@ -19,7 +16,6 @@ class MotionDriver extends Driver {
 	@:arpBarrier @:arpField public var motionSet:MotionSet;
 	@:arpField(false) public var nowMotion:Motion;
 	@:arpField public var nowTime:Float;
-	@:arpField(false) public var nowMotionFrame:MotionFrame;
 	@:arpField public var target:ArpPosition;
 
 	@:arpField private var willReact:Bool;
@@ -29,18 +25,6 @@ class MotionDriver extends Driver {
 	private function reset():Void {
 		this.nowMotion = this.motionSet.initMotion;
 		this.nowTime = 0;
-		this.nowMotionFrame = this.nowMotion.motionFrames.first();
-	}
-
-	private function setFrame(mortal:Mortal, motionFrame:MotionFrame = null):Void {
-		if (motionFrame == null) return;
-		this.nowMotionFrame = motionFrame;
-		mortal.params.merge(motionFrame.params);
-	}
-
-	private function hitFrames():ISet<HitFrame> {
-		if (this.nowMotionFrame == null) return new VoidSet();
-		return this.nowMotionFrame.hitFrames;
 	}
 
 	private function startMotion(mortal:Mortal, motion:Motion, restart:Bool):Bool {
@@ -49,7 +33,8 @@ class MotionDriver extends Driver {
 
 		this.nowMotion = motion;
 		this.nowTime = 0;
-		this.setFrame(mortal, motion.motionFrames.first());
+		var motionFrame:MotionFrame = motion.motionFrames.first();
+		if (motionFrame != null && motionFrame.time == 0) mortal.params.merge(motionFrame.params);
 		return true;
 	}
 
@@ -78,7 +63,6 @@ class MotionDriver extends Driver {
 			var nextTime:Float = nowMotion.time;
 
 			var motionFrame:MotionFrame = null;
-			var moved:Bool = false;
 			for (frame in this.nowMotion.motionFrames) {
 				time = frame.time;
 				if (time < oldTime) {
@@ -89,6 +73,7 @@ class MotionDriver extends Driver {
 					// last frame has just ended
 					if (motionFrame != null) {
 						motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, time, time, this.dHitType);
+						mortal.params.merge(motionFrame.params);
 					}
 					oldTime = time;
 					motionFrame = frame;
@@ -101,6 +86,7 @@ class MotionDriver extends Driver {
 			if (motionFrame != null) {
 				// cleanup current motion frame
 				motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, newTime, nextTime, this.dHitType);
+				mortal.params.merge(motionFrame.params);
 			} else {
 				// movement did not occur
 				mortal.stayWithHit(field, this.dHitType);
@@ -131,12 +117,11 @@ class MotionDriver extends Driver {
 					this.startMotion(mortal, nowMotion, true);
 				}
 				var reactFrame:ReactFrame = this.nowMotion.reactFrames.first();
-				if (reactFrame != null) {
+				if (reactFrame != null && reactFrame.time == 0) {
 					field.dispatchReactFrame(mortal, reactFrame, 0);
 				}
 			} else {
 				this.nowTime = newTime;
-				this.setFrame(mortal, motionFrame);
 			}
 		}
 		return Heartbeat.Keep;
