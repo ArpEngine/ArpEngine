@@ -1,5 +1,6 @@
 package arpx.driver;
 
+import arpx.structs.ArpRange;
 import arp.ds.IList;
 import arp.task.Heartbeat;
 import arpx.field.Field;
@@ -100,34 +101,19 @@ class MotionDriver extends Driver {
 			mortal.hitFrames.clear();
 			for (hitFrame in motionFrame.hitFrames) mortal.hitFrames.add(hitFrame);
 
-			var motionTween:MotionTween = null;
 			_workPos.copyFrom(mortal.position);
 			var moved:Bool = false;
 			for (tween in this.nowMotion.motionTweens) {
-				time = tween.time;
-				if (time < oldTime) {
-					// last tween has already been ended
-					motionTween = tween;
-				} else if (time < newTime) {
-					// last tween has just ended
-					if (motionTween != null) {
-						motionTween.updatePosition(_workPos, this.target, oldTime, time, time);
-						moved = true;
-					}
-					oldTime = time;
-					motionTween = tween;
+				var timeRange:ArpRange = tween.time;
+				if (timeRange.minValue > newTime || timeRange.maxValue < newTime) {
+					// tween is out of range
 				} else {
-					// last tween has not ended
-					nextTime = time;
-					break;
+					var tweenMin:Float = if (oldTime > timeRange.minValue) oldTime else timeRange.minValue;
+					var tweenMax:Float = if (newTime < timeRange.maxValue) newTime else timeRange.maxValue;
+					tween.updatePosition(_workPos, this.target, tweenMin, tweenMax);
+					moved = true;
 				}
 			}
-			// cleanup current motion frame
-			if (motionTween != null) {
-				motionTween.updatePosition(_workPos, this.target, oldTime, newTime, nextTime);
-				moved = true;
-			}
-
 			if (moved) {
 				mortal.moveWithHit(field, _workPos.x, _workPos.y, _workPos.z, this.dHitType);
 			} else {

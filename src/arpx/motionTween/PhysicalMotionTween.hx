@@ -18,7 +18,7 @@ class PhysicalMotionTween extends MotionTween {
 
 	public function new() super();
 
-	override public function updatePosition(position:ArpPosition, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float):Void {
+	override public function updatePosition(position:ArpPosition, target:ArpPosition, oldTime:Float, newTime:Float):Void {
 		var factor:Float = newTime - oldTime;
 		var dX:Float = this.dX + this.dR * Math.cos(position.dir.valueRadian) + this.dS * Math.sin(position.dir.valueRadian);
 		var dY:Float = this.dY + this.dR * Math.sin(position.dir.valueRadian) - this.dS * Math.cos(position.dir.valueRadian);

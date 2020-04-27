@@ -12,9 +12,9 @@ class TargetMotionTween extends MotionTween {
 
 	public function new() super();
 
-	override public function updatePosition(position:ArpPosition, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float):Void {
-		var t0:Float = oldTime - time;
-		var t1:Float = newTime - time;
+	override public function updatePosition(position:ArpPosition, target:ArpPosition, oldTime:Float, newTime:Float):Void {
+		var t0:Float = oldTime - time.minValue;
+		var t1:Float = newTime - time.minValue;
 		var factor:Float = this.curve.accumulateByRatio(t0, t1);
 		var dPosX:Float;
 		var dPosY:Float;
