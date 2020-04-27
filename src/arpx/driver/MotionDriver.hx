@@ -7,6 +7,7 @@ import arpx.mortal.Mortal;
 import arpx.motion.Motion;
 import arpx.motionFrame.MotionFrame;
 import arpx.motionSet.MotionSet;
+import arpx.motionTween.MotionTween;
 import arpx.reactFrame.ReactFrame;
 import arpx.structs.ArpPosition;
 
@@ -85,25 +86,39 @@ class MotionDriver extends Driver {
 				if (time < oldTime) {
 					// last frame has already been ended
 					motionFrame = frame;
-					continue;
 				} else if (time < newTime) {
 					// last frame has just ended
-					if (motionFrame != null) {
-						motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, time, time, this.dHitType);
-						mortal.params.merge(motionFrame.params);
-					}
-					oldTime = time;
+					if (motionFrame != null) mortal.params.merge(motionFrame.params);
 					motionFrame = frame;
 				} else {
 					// last frame has not ended
+					break;
+				}
+			}
+			if (motionFrame != null) mortal.params.merge(motionFrame.params);
+
+			var motionTween:MotionTween = null;
+			for (tween in this.nowMotion.motionTweens) {
+				time = tween.time;
+				if (time < oldTime) {
+					// last tween has already been ended
+					motionTween = tween;
+				} else if (time < newTime) {
+					// last tween has just ended
+					if (motionTween != null) {
+						motionTween.updateMortalPosition(field, mortal, this.target, oldTime, time, time, this.dHitType);
+					}
+					oldTime = time;
+					motionTween = tween;
+				} else {
+					// last tween has not ended
 					nextTime = time;
 					break;
 				}
 			}
-			if (motionFrame != null) {
+			if (motionTween != null) {
 				// cleanup current motion frame
-				motionFrame.updateMortalPosition(field, mortal, this.target, oldTime, newTime, nextTime, this.dHitType);
-				mortal.params.merge(motionFrame.params);
+				motionTween.updateMortalPosition(field, mortal, this.target, oldTime, newTime, nextTime, this.dHitType);
 			} else {
 				// movement did not occur
 				mortal.stayWithHit(field, this.dHitType);
