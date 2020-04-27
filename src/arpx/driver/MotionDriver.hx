@@ -70,14 +70,6 @@ class MotionDriver extends Driver {
 	}
 
 	private static var _workPos:ArpPosition = new ArpPosition();
-	private function updateMortalPosition(motionTween:MotionTween, field:Field, mortal:Mortal, oldTime:Float, newTime:Float, nextTime:Float):Void {
-		_workPos.copyFrom(mortal.position);
-		motionTween.updateShadowPosition(_workPos, this.target, oldTime, newTime, nextTime);
-		mortal.hitFrames.clear();
-		for (hitFrame in motionTween.hitFrames) mortal.hitFrames.add(hitFrame);
-		mortal.moveWithHit(field, _workPos.x, _workPos.y, _workPos.z, this.dHitType);
-	}
-
 	override public function tick(field:Field, mortal:Mortal):Heartbeat {
 		this.flushReactQueue(field, mortal);
 
@@ -105,8 +97,12 @@ class MotionDriver extends Driver {
 				}
 			}
 			if (motionFrame != null) mortal.params.merge(motionFrame.params);
+			mortal.hitFrames.clear();
+			for (hitFrame in motionFrame.hitFrames) mortal.hitFrames.add(hitFrame);
 
 			var motionTween:MotionTween = null;
+			_workPos.copyFrom(mortal.position);
+			var moved:Bool = false;
 			for (tween in this.nowMotion.motionTweens) {
 				time = tween.time;
 				if (time < oldTime) {
@@ -115,7 +111,8 @@ class MotionDriver extends Driver {
 				} else if (time < newTime) {
 					// last tween has just ended
 					if (motionTween != null) {
-						updateMortalPosition(motionTween, field, mortal, oldTime, time, time);
+						motionTween.updatePosition(_workPos, this.target, oldTime, time, time);
+						moved = true;
 					}
 					oldTime = time;
 					motionTween = tween;
@@ -125,11 +122,15 @@ class MotionDriver extends Driver {
 					break;
 				}
 			}
+			// cleanup current motion frame
 			if (motionTween != null) {
-				// cleanup current motion frame
-				updateMortalPosition(motionTween, field, mortal, oldTime, newTime, nextTime);
+				motionTween.updatePosition(_workPos, this.target, oldTime, newTime, nextTime);
+				moved = true;
+			}
+
+			if (moved) {
+				mortal.moveWithHit(field, _workPos.x, _workPos.y, _workPos.z, this.dHitType);
 			} else {
-				// movement did not occur
 				mortal.stayWithHit(field, this.dHitType);
 			}
 
