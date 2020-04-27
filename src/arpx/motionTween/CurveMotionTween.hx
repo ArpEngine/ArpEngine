@@ -1,7 +1,5 @@
 package arpx.motionTween;
 
-import arpx.field.Field;
-import arpx.mortal.Mortal;
 import arpx.structs.ArpCurve;
 import arpx.structs.ArpPosition;
 
@@ -17,8 +15,7 @@ class CurveMotionTween extends MotionTween {
 
 	public function new() super();
 
-	override public function updateShadowPosition(shadow:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float):Void {
-		var pos:ArpPosition = shadow.position;
+	override public function updateShadowPosition(position:ArpPosition, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float):Void {
 		var t0:Float = oldTime - time;
 		var t1:Float = newTime - time;
 		if (absolute) {
@@ -26,9 +23,9 @@ class CurveMotionTween extends MotionTween {
 			var y:Float = this.y.interpolate(t1);
 			var z:Float = this.z.interpolate(t1);
 
-			pos.x = x;
-			pos.y = y;
-			pos.z = z;
+			position.x = x;
+			position.y = y;
+			position.z = z;
 
 		} else {
 			var x:Float = this.x.accumulate(t0, t1);
@@ -37,40 +34,9 @@ class CurveMotionTween extends MotionTween {
 			var r:Float = this.r.accumulate(t0, t1);
 			var s:Float = this.s.accumulate(t0, t1);
 
-			pos.x += x + r * Math.cos(pos.dir.valueRadian) + s * Math.sin(pos.dir.valueRadian);
-			pos.y += y + r * Math.sin(pos.dir.valueRadian) - s * Math.cos(pos.dir.valueRadian);
-			pos.z += z;
+			position.x += x + r * Math.cos(position.dir.valueRadian) + s * Math.sin(position.dir.valueRadian);
+			position.y += y + r * Math.sin(position.dir.valueRadian) - s * Math.cos(position.dir.valueRadian);
+			position.z += z;
 		}
-	}
-
-	override public function updateMortalPosition(field:Field, mortal:Mortal, target:ArpPosition, oldTime:Float, newTime:Float, nextTime:Float, dHitType:String):Void {
-		var pos:ArpPosition = mortal.position;
-		var t0:Float = oldTime - time;
-		var t1:Float = newTime - time;
-		var dPosX:Float;
-		var dPosY:Float;
-		var dPosZ:Float;
-		if (absolute) {
-			var x:Float = this.x.interpolate(t1);
-			var y:Float = this.y.interpolate(t1);
-			var z:Float = this.z.interpolate(t1);
-
-			dPosX = x - pos.x;
-			dPosY = y - pos.y;
-			dPosZ = z - pos.z;
-		} else {
-			var x:Float = this.x.accumulate(t0, t1);
-			var y:Float = this.y.accumulate(t0, t1);
-			var z:Float = this.z.accumulate(t0, t1);
-			var r:Float = this.r.accumulate(t0, t1);
-			var s:Float = this.s.accumulate(t0, t1);
-
-			dPosX = x + r * Math.cos(pos.dir.valueRadian) + s * Math.sin(pos.dir.valueRadian);
-			dPosY = y + r * Math.sin(pos.dir.valueRadian) - s * Math.cos(pos.dir.valueRadian);
-			dPosZ = z;
-		}
-		mortal.hitFrames.clear();
-		for (hitFrame in this.hitFrames) mortal.hitFrames.add(hitFrame);
-		mortal.moveDWithHit(field, dPosX, dPosY, dPosZ, dHitType);
 	}
 }

@@ -69,6 +69,15 @@ class MotionDriver extends Driver {
 		}
 	}
 
+	private static var _workPos:ArpPosition = new ArpPosition();
+	private function updateMortalPosition(motionTween:MotionTween, field:Field, mortal:Mortal, oldTime:Float, newTime:Float, nextTime:Float):Void {
+		_workPos.copyFrom(mortal.position);
+		motionTween.updateShadowPosition(_workPos, this.target, oldTime, newTime, nextTime);
+		mortal.hitFrames.clear();
+		for (hitFrame in motionTween.hitFrames) mortal.hitFrames.add(hitFrame);
+		mortal.moveWithHit(field, _workPos.x, _workPos.y, _workPos.z, this.dHitType);
+	}
+
 	override public function tick(field:Field, mortal:Mortal):Heartbeat {
 		this.flushReactQueue(field, mortal);
 
@@ -106,7 +115,7 @@ class MotionDriver extends Driver {
 				} else if (time < newTime) {
 					// last tween has just ended
 					if (motionTween != null) {
-						motionTween.updateMortalPosition(field, mortal, this.target, oldTime, time, time, this.dHitType);
+						updateMortalPosition(motionTween, field, mortal, oldTime, time, time);
 					}
 					oldTime = time;
 					motionTween = tween;
@@ -118,7 +127,7 @@ class MotionDriver extends Driver {
 			}
 			if (motionTween != null) {
 				// cleanup current motion frame
-				motionTween.updateMortalPosition(field, mortal, this.target, oldTime, newTime, nextTime, this.dHitType);
+				updateMortalPosition(motionTween, field, mortal, oldTime, newTime, nextTime);
 			} else {
 				// movement did not occur
 				mortal.stayWithHit(field, this.dHitType);
