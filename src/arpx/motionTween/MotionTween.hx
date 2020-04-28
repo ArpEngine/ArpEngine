@@ -1,8 +1,9 @@
 package arpx.motionTween;
 
-import arpx.structs.ArpRange;
 import arp.domain.IArpObject;
+import arpx.structs.ArpParams;
 import arpx.structs.ArpPosition;
+import arpx.structs.ArpRange;
 
 @:arpType("motionTween", "motionTween")
 class MotionTween implements IArpObject {
@@ -11,6 +12,6 @@ class MotionTween implements IArpObject {
 
 	public function new() return;
 
-	public function updatePosition(position:ArpPosition, target:ArpPosition, oldTime:Float, newTime:Float):Void {
+	public function update(position:ArpPosition, target:ArpPosition, params:ArpParams, oldTime:Float, newTime:Float):Void {
 	}
 }

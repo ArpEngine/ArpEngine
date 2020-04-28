@@ -1,6 +1,5 @@
 package arpx.driver;
 
-import arpx.structs.ArpRange;
 import arp.ds.IList;
 import arp.task.Heartbeat;
 import arpx.field.Field;
@@ -8,9 +7,9 @@ import arpx.mortal.Mortal;
 import arpx.motion.Motion;
 import arpx.motionFrame.MotionFrame;
 import arpx.motionSet.MotionSet;
-import arpx.motionTween.MotionTween;
 import arpx.reactFrame.ReactFrame;
 import arpx.structs.ArpPosition;
+import arpx.structs.ArpRange;
 
 @:arpType("driver", "motion")
 class MotionDriver extends Driver {
@@ -110,7 +109,7 @@ class MotionDriver extends Driver {
 				} else {
 					var tweenMin:Float = if (oldTime > timeRange.minValue) oldTime else timeRange.minValue;
 					var tweenMax:Float = if (newTime < timeRange.maxValue) newTime else timeRange.maxValue;
-					tween.updatePosition(_workPos, this.target, tweenMin, tweenMax);
+					tween.update(_workPos, this.target, mortal.params, tweenMin, tweenMax);
 					moved = true;
 				}
 			}
