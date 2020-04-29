@@ -96,9 +96,11 @@ class MotionDriver extends Driver {
 					break;
 				}
 			}
-			if (motionFrame != null) mortal.params.merge(motionFrame.params);
-			mortal.hitFrames.clear();
-			for (hitFrame in motionFrame.hitFrames) mortal.hitFrames.add(hitFrame);
+			if (motionFrame != null) {
+				mortal.params.merge(motionFrame.params);
+				mortal.hitFrames.clear();
+				for (hitFrame in motionFrame.hitFrames) mortal.hitFrames.add(hitFrame);
+			}
 
 			_workPos.copyFrom(mortal.position);
 			var moved:Bool = false;
