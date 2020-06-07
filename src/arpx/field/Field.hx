@@ -99,9 +99,19 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 		});
 	}
 
+	public function contactRaw(hit:HitGeneric, hitType:String, callback:HitMortal->Bool):Void {
+		this.hitField.contactRaw(hit, function(other:HitMortal):Bool {
+			if (other.hitType != hitType) return false;
+			if (other.isComplex) {
+				if (!other.mortal.complexHitTest(other.hit, hit)) return false;
+			}
+			return callback(other);
+		});
+	}
+
 	public function mortalAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Mortal {
 		var result:Mortal = null;
-		this.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), hitType, function(other:HitMortal):Bool {
+		this.contactRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), hitType, function(other:HitMortal):Bool {
 			if (self != other.mortal) {
 				result = other.mortal;
 				return true;
@@ -113,7 +123,7 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 
 	public function mortalsAt(self:Mortal, x:Float, y:Float, z:Float, hitType:String):Array<Mortal> {
 		var result:Array<Mortal> = [];
-		this.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), hitType, function(other:HitMortal):Bool {
+		this.contactRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), hitType, function(other:HitMortal):Bool {
 			if (self != other.mortal) {
 				result.push(other.mortal);
 			}
@@ -133,7 +143,7 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 
 	public function anchorAt(x:Float, y:Float, z:Float):Anchor {
 		var result:Anchor = null;
-		this.anchorField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:Anchor):Bool {
+		this.anchorField.contactRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:Anchor):Bool {
 			result = other;
 			return true;
 		});
@@ -142,7 +152,7 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 
 	public function anchorsAt(x:Float, y:Float, z:Float):Array<Anchor> {
 		var result:Array<Anchor> = [];
-		this.anchorField.hitRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:Anchor):Bool {
+		this.anchorField.contactRaw(new HitGeneric().setCuboid(x, y, z, 0, 0, 0), function(other:Anchor):Bool {
 			result.push(other);
 			return false;
 		});
