@@ -1,10 +1,9 @@
 ﻿package arpx.external;
 
-import haxe.io.Bytes;
 import arp.data.DataGroup;
 import arp.seed.ArpSeed;
-import arp.seed.ArpSeedEnv;
 import arpx.file.File;
+import haxe.io.Bytes;
 
 @:arpType("external", "file")
 class FileExternal extends External {
@@ -13,51 +12,19 @@ class FileExternal extends External {
 	@:arpField public var format:String;
 	@:arpField public var defaultType:String;
 
-	private var data:DataGroup;
-	private var env:ArpSeedEnv;
-
 	public function new() {
 		super();
 	}
 
-	@:arpLoadSeed
-	private function loadSeed(seed:ArpSeed):Void {
-		if (seed != null) this.env = seed.env;
-	}
-
-	@:arpHeatUp
-	private function heatUp():Bool {
-		this.load();
-		return true;
-	}
-
-	@:arpHeatDown
-	private function heatDown():Bool {
-		this.unload();
-		return true;
-	}
-
-	override public function load(force:Bool = false):Void {
-		if (this.data != null && !force) {
-			return;
-		}
+	override public function doLoad(data:DataGroup):Bool {
 		var bytes:Bytes = this.file.bytes();
-		if (bytes != null) {
-			this.data = this.arpDomain.allocObject(DataGroup);
-			var seed:ArpSeed = switch (this.format) {
-				case "csv": ArpSeed.fromCsvBytes(bytes, defaultType, env);
-				case "tsv": ArpSeed.fromTsvBytes(bytes, defaultType, env);
-				case _: ArpSeed.fromXmlBytes(bytes, env);
-			}
-			this.data.add(this.arpDomain.loadSeed(seed));
+		if (bytes == null) return false;
+		var seed:ArpSeed = switch (this.format) {
+			case "csv": ArpSeed.fromCsvBytes(bytes, defaultType, env);
+			case "tsv": ArpSeed.fromTsvBytes(bytes, defaultType, env);
+			case _: ArpSeed.fromXmlBytes(bytes, env);
 		}
+		data.add(this.arpDomain.loadSeed(seed));
+		return true;
 	}
-
-	override public function unload():Void {
-		if (this.data != null) {
-			this.data.arpSlot.delReference();
-			this.data = null;
-		}
-	}
-
 }
