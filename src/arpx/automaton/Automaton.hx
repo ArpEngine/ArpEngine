@@ -12,7 +12,8 @@ import arpx.state.AutomatonState;
 @:arpType("automaton", "automaton")
 class Automaton implements IArpObject {
 
-	@:arpField(true) public var stateStack:IList<AutomatonState>;
+	// XXX: What we really need is prioritized external heatups
+	@:arpField(true) @:arpBarrier public var stateStack:IList<AutomatonState>;
 
 	public var state(get, never):AutomatonState;
 	inline private function get_state():AutomatonState return stateStack.last();
