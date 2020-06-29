@@ -13,11 +13,11 @@ class TransformParamChip extends Chip {
 	@:arpField public var transform:ArpTransform;
 	@:arpField public var paramsOp:ParamsOp;
 
-	@:arpImpl private var flashImpl:TransformParamChipImpl;
+	@:arpImpl private var arpImpl:TransformParamChipImpl;
 
 	override public function layoutSize(params:IArpParamsRead, rect:RectImpl):RectImpl {
 		chip.layoutSize(params, rect);
-		rect.transform(transform.impl);
+		rect.transform(@:privateAccess TransformParamChipImpl.transform(params, paramsOp).impl);
 		return rect;
 	}
 

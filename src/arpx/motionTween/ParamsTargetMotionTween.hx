@@ -7,7 +7,7 @@ import arpx.structs.ArpPosition;
 @:arpType("motionTween", "paramsTarget")
 class ParamsTargetMotionTween extends MotionTween {
 
-	@:arpField public var key:String;
+	@:arpField public var paramsKey:String;
 	@:arpField public var target:Float;
 	@:arpField public var curve:ArpCurve;
 
@@ -17,6 +17,6 @@ class ParamsTargetMotionTween extends MotionTween {
 		var t0:Float = oldTime - time.minValue;
 		var t1:Float = newTime - time.minValue;
 		var factor:Float = this.curve.accumulateByRatio(t0, t1);
-		params.set(this.key, params.getFloatOrDefault(this.key) * (1 - factor) + this.target * factor);
+		params.set(this.paramsKey, params.getFloatOrDefault(this.paramsKey) * (1 - factor) + this.target * factor);
 	}
 }
