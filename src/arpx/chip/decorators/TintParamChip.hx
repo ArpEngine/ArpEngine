@@ -8,7 +8,7 @@ import arpx.structs.IArpParamsRead;
 class TintParamChip extends Chip {
 
 	@:arpField @:arpBarrier public var chip:Chip;
-	@:arpField public var key:String = "tint";
+	@:arpField public var paramsKey:String = "tint";
 
 	@:arpImpl private var arpImpl:TintParamChipImpl;
 

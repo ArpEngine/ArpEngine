@@ -6,7 +6,6 @@ import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.structs.ArpTransform;
-import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 class TransformParamChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -24,8 +23,8 @@ class TransformParamChipImpl extends ArpObjectImplBase implements IChipImpl {
 		context.popTransform();
 	}
 
-	private var _workTransform:ArpTransform = new ArpTransform();
-	inline private function transform(params:IArpParamsRead, paramsOp:ParamsOp):ArpTransform {
+	private static var _workTransform:ArpTransform = new ArpTransform();
+	private static function transform(params:IArpParamsRead, paramsOp:ParamsOp):ArpTransform {
 		var transform:ArpTransform = _workTransform;
 		if (paramsOp != null) params = paramsOp.filter(params);
 		transform.reset(
