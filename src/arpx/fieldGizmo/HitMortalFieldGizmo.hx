@@ -6,8 +6,8 @@ import arpx.mortal.Mortal.HitMortal;
 import arpx.structs.ArpColor;
 
 @:arpType("fieldGizmo", "hitMortal")
-class HitMortalFieldGizmo extends FieldGizmo
-{
+class HitMortalFieldGizmo extends FieldGizmo {
+
 	@:arpField @:arpDefault("#ff99ff") public var simpleHitColor:ArpColor;
 	@:arpField @:arpDefault("#99ffff") public var complexHitColor:ArpColor;
 
