@@ -5,7 +5,6 @@ import arpx.fieldGizmo.HitMortalFieldGizmo;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.fieldGizmo.IFieldGizmoImpl;
-import arpx.structs.ArpColor;
 
 class HitMortalFieldGizmoImpl extends ArpObjectImplBase implements IFieldGizmoImpl {
 
