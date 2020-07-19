@@ -6,6 +6,9 @@ import arpx.structs.ArpRange;
 @:arpType("tileInfo")
 class TileInfo implements IArpObject {
 
+	@:arpField public var tileWidth:Float = 32;
+	@:arpField public var tileHeight:Float = 32;
+
 	@:arpField public var enterableRange:ArpRange;
 
 	public function new() {

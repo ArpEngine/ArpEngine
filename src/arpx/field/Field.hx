@@ -15,6 +15,7 @@ import arpx.input.focus.IInteractable;
 import arpx.input.Input;
 import arpx.mortal.Mortal;
 import arpx.reactFrame.ReactFrame;
+import arpx.structs.ArpHitCuboid;
 
 @:arpType("field")
 class Field implements IArpObject implements ITickable implements IInteractable implements IFieldImpl {
@@ -24,6 +25,8 @@ class Field implements IArpObject implements ITickable implements IInteractable 
 
 	private var hitField:HitObjectField<HitGeneric, HitMortal>;
 	private var anchorField:HitField<HitGeneric, Anchor>;
+
+	@:arpField public var bounds:ArpHitCuboid;
 
 	@:arpImpl private var arpImpl:FieldImpl;
 
