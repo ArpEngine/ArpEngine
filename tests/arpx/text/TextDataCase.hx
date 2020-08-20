@@ -29,8 +29,12 @@ class TextDataCase {
 		assertEquals("{foo}{bar}", me.value);
 	}
 
-	public function testPublish() {
+	public function testPublishNull() {
 		assertEquals("{foo}{bar}", me.publish(null));
+	}
+
+	public function testPublishAnon() {
+		assertEquals("{foo}{bar}", me.publishAnon({foo: "hoge", bar: "fuga"}));
 	}
 
 	public function testComplexPublish() {

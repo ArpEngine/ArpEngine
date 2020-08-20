@@ -29,8 +29,13 @@ class ParametrizedTextDataCase {
 		assertEquals("{foo}{bar:3r}", me.value);
 	}
 
-	public function testPublish() {
+	public function testPublishNull() {
 		assertEquals("{foo}{bar:3r}", me.publish(null));
+	}
+
+	public function testPublishAnon() {
+		assertEquals("hogefuga", me.publishAnon({foo: "hoge", bar: "fuga"}));
+		assertEquals("/hoge/  /fuga/", me.publishAnon({foo: "/hoge/", bar: "/fuga/"}));
 	}
 
 	public function testComplexPublish() {
