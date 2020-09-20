@@ -1,7 +1,6 @@
 package arpx.text;
 
 import arp.domain.ArpDomain;
-import arpx.structs.ArpParams;
 
 @:arpType("text")
 class FixedTextData extends TextData {
@@ -12,7 +11,11 @@ class FixedTextData extends TextData {
 		super();
 	}
 
-	override public function publish(params:ArpParams = null):String {
+	override public function publish(params:ArpFormatParams = null):String {
+		return this.value;
+	}
+
+	override public function publishAnon(anon:Dynamic = null):String {
 		return this.value;
 	}
 

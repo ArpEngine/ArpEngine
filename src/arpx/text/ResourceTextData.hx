@@ -1,7 +1,6 @@
 package arpx.text;
 
 import haxe.Resource;
-import arpx.structs.ArpParams;
 
 @:arpType("text", "resource")
 class ResourceTextData extends TextData {
@@ -12,7 +11,11 @@ class ResourceTextData extends TextData {
 		super();
 	}
 
-	override public function publish(params:ArpParams = null):String {
+	override public function publish(params:ArpFormatParams = null):String {
+		return Resource.getString(this.src);
+	}
+
+	override public function publishAnon(anon:Dynamic = null):String {
 		return Resource.getString(this.src);
 	}
 }

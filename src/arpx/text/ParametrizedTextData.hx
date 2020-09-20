@@ -3,7 +3,6 @@ package arpx.text;
 import arp.utils.FormatOption;
 import arp.utils.FormatText;
 import arpx.chip.utils.StringChipUtil;
-import arpx.structs.ArpParams;
 
 @:arpType("text", "ptext")
 class ParametrizedTextData extends TextData {
@@ -21,8 +20,12 @@ class ParametrizedTextData extends TextData {
 
 	public function new() super();
 
-	override public function publish(params:ArpParams = null):String {
-		return if (params == null) this.value else this.impl.publish((name:String) -> params.get(name));
+	override public function publish(params:ArpFormatParams = null):String {
+		return if (params == null) this.value else this.impl.publish(params);
+	}
+
+	override public function publishAnon(anon:Dynamic = null):String {
+		return if (anon == null) this.value else this.impl.publish(ArpFormatParams.fromAnon(anon));
 	}
 
 	private function _customFormatter(param:Any, formatOption:FormatOption):String return customFormatter(param, formatOption);
