@@ -84,6 +84,13 @@ class ArpParamsCase {
 		assertEquals(params["d"].value, params2["d"].value);
 	}
 
+	public function testFromAnon():Void {
+		var params:ArpParamsProxy = ArpParams.fromAnon({a: "b", c: 10, d: ArpDirection.LEFT});
+		assertEquals("b", params["a"]);
+		assertEquals(10, params["c"]);
+		assertEquals(ArpDirection.LEFT.value, params["d"].value);
+	}
+
 	public function testGetSafe():Void {
 		var params:ArpParamsProxy = new ArpParams();
 		params["null"] = null;

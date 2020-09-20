@@ -1,12 +1,13 @@
 package arpx.structs;
 
-import arpx.structs.params.ArpParamsValue;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
 import arp.seed.ArpSeed;
 import arp.utils.ArpStringUtil;
 import arpx.structs.ArpDirection;
+import arpx.structs.macro.ArpParamsMacros;
+import arpx.structs.params.ArpParamsValue;
 import arpx.structs.params.EmptyArpParams;
 import arpx.structs.params.ReadOnlyArpParams;
 
@@ -84,5 +85,11 @@ class ArpParams extends ReadOnlyArpParams implements IArpStruct implements IArpP
 
 	public function writeSelf(output:IPersistOutput):Void {
 		output.writeUtf("params", toString());
+	}
+
+	public static function fromAnon(anon:Dynamic):ArpParams {
+		var params:ArpParams = new ArpParams();
+		for (field in Reflect.fields(anon)) params.set(field, Reflect.field(anon, field));
+		return params;
 	}
 }
