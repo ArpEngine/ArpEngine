@@ -43,9 +43,17 @@ class ArpParams extends ReadOnlyArpParams implements IArpStruct implements IArpP
 					this.set(key, new ArpDirection().initWithString(value));
 				case "idir":
 					this.set(key, new ArpDirection(ArpStringUtil.parseHex(value)));
+				case "color":
+					this.set(key, new ArpColor().initWithString(value).value32);
+				case "string":
+					this.set(key, value);
+				case "number":
+					this.set(key, ArpStringUtil.parseFloatDefault(value));
 				default:
 					if (ArpStringUtil.isNumeric(value)) {
 						this.set(key, ArpStringUtil.parseFloatDefault(value));
+					} else if (ArpStringUtil.isColorish(value)) {
+						this.set(key, new ArpColor().initWithString(value).value32);
 					} else {
 						this.set(key, value);
 					}
