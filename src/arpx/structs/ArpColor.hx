@@ -137,6 +137,10 @@ class ArpColor implements IArpStruct {
 		return "[ArpColor #" + Std.string(this.value32) + " ]";
 	}
 
+	inline public static function isColorLikeString(value:String):Bool {
+		return value.indexOf("#") == 0;
+	}
+
 	#if (flash || openfl)
 
 	public function toMultiplier():ColorTransform {

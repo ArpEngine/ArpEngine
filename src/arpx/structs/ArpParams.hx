@@ -52,7 +52,7 @@ class ArpParams extends ReadOnlyArpParams implements IArpStruct implements IArpP
 				default:
 					if (ArpStringUtil.isNumeric(value)) {
 						this.set(key, ArpStringUtil.parseFloatDefault(value));
-					} else if (ArpStringUtil.isColorish(value)) {
+					} else if (ArpColor.isColorLikeString(value)) {
 						this.set(key, new ArpColor().initWithString(value));
 					} else {
 						this.set(key, value);
