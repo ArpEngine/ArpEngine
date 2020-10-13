@@ -26,11 +26,9 @@ class ColorizeParamChipImpl extends ArpObjectImplBase implements IChipImpl {
 		}
 	}
 
-	private var _workColor:ArpColor = new ArpColor();
+	private var _white:ArpColor = ArpColor.WHITE;
 	inline private function color(params:IArpParamsRead, key:String):ArpColor {
-		var color:ArpColor = _workColor;
-		color.value32 = params.getIntOrDefault(key, 0xffffffff);
-		return color;
+		return params.getArpColorOrDefault(key, _white);
 	}
 }
 

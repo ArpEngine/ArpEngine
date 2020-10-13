@@ -6,7 +6,6 @@ import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.chip.IChipImpl;
 import arpx.impl.cross.display.RenderContext;
 import arpx.structs.ArpColor;
-import arpx.structs.ArpParams;
 import arpx.structs.IArpParamsRead;
 
 class TintParamChipImpl extends ArpObjectImplBase implements IChipImpl {
@@ -19,16 +18,14 @@ class TintParamChipImpl extends ArpObjectImplBase implements IChipImpl {
 	}
 
 	public function render(context:RenderContext, params:IArpParamsRead = null):Void {
-		context.tints.dup().applyMul(tint(params));
+		context.tints.dup().applyMul(color(params, chip.paramsKey));
 		this.chip.chip.render(context, params);
 		context.tints.pop();
 	}
 
-	private var _workColor:ArpColor = new ArpColor();
-	inline private function tint(params:IArpParamsRead):ArpColor {
-		var color:ArpColor = _workColor;
-		color.value32 = params.getIntOrDefault(chip.paramsKey, 0xffffffff);
-		return color;
+	private var _white:ArpColor = ArpColor.WHITE;
+	inline private function color(params:IArpParamsRead, key:String):ArpColor {
+		return params.getArpColorOrDefault(key, _white);
 	}
 }
 
