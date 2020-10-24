@@ -31,7 +31,9 @@ class ArpRange implements IArpStruct {
 
 	public function initWithSeed(seed:ArpSeed):ArpRange {
 		if (seed == null) return this;
-		if (seed.isSimple) return this.initWithString(seed.value);
+		var value:String = seed.value;
+		if (value != null) return this.initWithString(value, seed.env.getUnit);
+
 		for (child in seed) {
 			switch (child.seedName) {
 				case "min": this.minValue = ArpStringUtil.parseFloatDefault(child.value);

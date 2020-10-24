@@ -60,7 +60,9 @@ class ArpHitCuboid implements IArpStruct {
 
 	public function initWithSeed(seed:ArpSeed):ArpHitCuboid {
 		if (seed == null) return this;
-		if (seed.isSimple) return this.initWithString(seed.value);
+		var value:String = seed.value;
+		if (value != null) return this.initWithString(value, seed.env.getUnit);
+
 		for (element in seed) {
 			switch (element.seedName) {
 				case "dX", "x":
