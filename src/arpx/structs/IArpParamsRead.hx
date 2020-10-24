@@ -8,12 +8,14 @@ interface IArpParamsRead {
 	function getString(key:ArpParamsKey, defaultValue:String = null):Null<String>;
 	function getBool(key:ArpParamsKey, defaultValue:Bool = null):Null<Bool>;
 	function getArpDirection(key:ArpParamsKey, defaultValue:ArpDirection = null):Null<ArpDirection>;
+	function getArpColor(key:ArpParamsKey, defaultValue:ArpColor = null):Null<ArpColor>;
 
 	function getIntOrDefault(key:ArpParamsKey, defaultValue:Int = 0):Int;
 	function getFloatOrDefault(key:ArpParamsKey, defaultValue:Float = 0.0):Float;
 	function getStringOrDefault(key:ArpParamsKey, defaultValue:String = ""):String;
 	function getBoolOrDefault(key:ArpParamsKey, defaultValue:Bool = false):Bool;
 	function getArpDirectionOrDefault(key:ArpParamsKey, defaultValue:ArpDirection):ArpDirection;
+	function getArpColorOrDefault(key:ArpParamsKey, defaultValue:ArpColor):ArpColor;
 
 	function getAsString(key:ArpParamsKey, defaultValue:String = null):String;
 
