@@ -1,5 +1,6 @@
 package arpx.structs;
 
+import arp.utils.ArpSeedUtil;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
 import arp.persistable.IPersistOutput;
@@ -31,22 +32,24 @@ class ArpRange implements IArpStruct {
 
 	public function initWithSeed(seed:ArpSeed):ArpRange {
 		if (seed == null) return this;
-		if (seed.isSimple) return this.initWithString(seed.value);
+		var value:String = seed.value;
+		if (value != null) return this.initWithString(value, seed.env.getUnit);
+
 		for (child in seed) {
 			switch (child.seedName) {
-				case "min": this.minValue = ArpStringUtil.parseFloatDefault(child.value);
-				case "max": this.maxValue = ArpStringUtil.parseFloatDefault(child.value);
+				case "min": this.minValue = ArpSeedUtil.parseFloatDefault(child);
+				case "max": this.maxValue = ArpSeedUtil.parseFloatDefault(child);
 			}
 		}
 		return this;
 	}
 
-	public function initWithString(definition:String):ArpRange {
+	public function initWithString(definition:String, getUnit:String->Float):ArpRange {
 		if (definition == null) return this;
 		var ereg:EReg = ~/^\s*([^\s]*)\s*\.\.\s*([^\s]*)\s*$/;
 		if (ereg.match(definition)) {
-			this.minValue = ArpStringUtil.parseFloatDefault(ereg.matched(1));
-			this.maxValue = ArpStringUtil.parseFloatDefault(ereg.matched(2));
+			this.minValue = ArpStringUtil.parseRichFloat(ereg.matched(1), getUnit);
+			this.maxValue = ArpStringUtil.parseRichFloat(ereg.matched(2), getUnit);
 		}
 		return this;
 	}

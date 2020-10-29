@@ -26,7 +26,8 @@ class ArpTransform implements IArpStruct {
 
 	public function initWithSeed(seed:ArpSeed):ArpTransform {
 		if (seed == null) return this;
-		if (seed.isSimple) return this.initWithString(seed.value, seed.env.getUnit);
+		var value:String = seed.value;
+		if (value != null) return this.initWithString(value, seed.env.getUnit);
 
 		var xx:Float = 1.0;
 		var yx:Float = 0.0;

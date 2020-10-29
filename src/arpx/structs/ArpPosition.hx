@@ -37,7 +37,8 @@ class ArpPosition implements IArpStruct {
 
 	public function initWithSeed(seed:ArpSeed):ArpPosition {
 		if (seed == null) return this;
-		if (seed.isSimple) return this.initWithString(seed.value, seed.env.getUnit);
+		var value:String = seed.value;
+		if (value != null) return this.initWithString(value, seed.env.getUnit);
 
 		for (child in seed) {
 			switch (child.seedName) {

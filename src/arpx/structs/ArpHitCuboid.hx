@@ -1,5 +1,6 @@
 package arpx.structs;
 
+import arp.utils.ArpSeedUtil;
 import arp.utils.ArpStringUtil;
 import arp.domain.IArpStruct;
 import arp.persistable.IPersistInput;
@@ -60,36 +61,38 @@ class ArpHitCuboid implements IArpStruct {
 
 	public function initWithSeed(seed:ArpSeed):ArpHitCuboid {
 		if (seed == null) return this;
-		if (seed.isSimple) return this.initWithString(seed.value);
+		var value:String = seed.value;
+		if (value != null) return this.initWithString(value, seed.env.getUnit);
+
 		for (element in seed) {
 			switch (element.seedName) {
 				case "dX", "x":
-					this.dX = ArpStringUtil.parseFloatDefault(element.value);
+					this.dX = ArpSeedUtil.parseFloatDefault(element);
 				case "dY", "y":
-					this.dY = ArpStringUtil.parseFloatDefault(element.value);
+					this.dY = ArpSeedUtil.parseFloatDefault(element);
 				case "dZ", "z":
-					this.dZ = ArpStringUtil.parseFloatDefault(element.value);
+					this.dZ = ArpSeedUtil.parseFloatDefault(element);
 				case "sizeX", "width":
-					this.sizeX = ArpStringUtil.parseFloatDefault(element.value);
+					this.sizeX = ArpSeedUtil.parseFloatDefault(element);
 				case "sizeY", "height":
-					this.sizeY = ArpStringUtil.parseFloatDefault(element.value);
+					this.sizeY = ArpSeedUtil.parseFloatDefault(element);
 				case "sizeZ", "depth":
-					this.sizeZ = ArpStringUtil.parseFloatDefault(element.value);
+					this.sizeZ = ArpSeedUtil.parseFloatDefault(element);
 			}
 		}
 		return this;
 	}
 
-	public function initWithString(definition:String):ArpHitCuboid {
+	public function initWithString(definition:String, getUnit:String->Float):ArpHitCuboid {
 		if (definition == null) return this;
 		var ereg:EReg = ~/^\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*,\s*(\S*)\s*$/;
 		if (ereg.match(definition)) {
-			this.dX = ArpStringUtil.parseFloatDefault(ereg.matched(1));
-			this.dY = ArpStringUtil.parseFloatDefault(ereg.matched(2));
-			this.dZ = ArpStringUtil.parseFloatDefault(ereg.matched(3));
-			this.sizeX = ArpStringUtil.parseFloatDefault(ereg.matched(4));
-			this.sizeY = ArpStringUtil.parseFloatDefault(ereg.matched(5));
-			this.sizeZ = ArpStringUtil.parseFloatDefault(ereg.matched(6));
+			this.dX = ArpStringUtil.parseRichFloat(ereg.matched(1), getUnit);
+			this.dY = ArpStringUtil.parseRichFloat(ereg.matched(2), getUnit);
+			this.dZ = ArpStringUtil.parseRichFloat(ereg.matched(3), getUnit);
+			this.sizeX = ArpStringUtil.parseRichFloat(ereg.matched(4), getUnit);
+			this.sizeY = ArpStringUtil.parseRichFloat(ereg.matched(5), getUnit);
+			this.sizeZ = ArpStringUtil.parseRichFloat(ereg.matched(6), getUnit);
 		}
 		return this;
 	}
