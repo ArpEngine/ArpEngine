@@ -1,12 +1,12 @@
 package arpx.impl.cross.fieldGizmo;
 
-import arpx.structs.ArpParams;
 import arpx.driver.MotionDriver;
 import arpx.field.Field;
 import arpx.fieldGizmo.MotionDriverFieldGizmo;
 import arpx.impl.ArpObjectImplBase;
 import arpx.impl.cross.display.RenderContext;
 import arpx.impl.cross.fieldGizmo.IFieldGizmoImpl;
+import arpx.structs.ArpParams;
 import arpx.structs.ArpPosition;
 
 class MotionDriverFieldGizmoImpl extends ArpObjectImplBase implements IFieldGizmoImpl {
@@ -29,9 +29,10 @@ class MotionDriverFieldGizmoImpl extends ArpObjectImplBase implements IFieldGizm
 			var motionTime:String = Std.string(Math.round(driver.nowTime));
 			_workParams.set("face", '$motionKey\n$motionTime');
 			var pos:ArpPosition = mortal.position;
-			context.dupTransform().prependXY(pos.x, pos.y);
+			var shift:ArpPosition = this.fieldGizmo.shift;
+			context.dupTransform().prependXY(pos.x, pos.y).prependXY(shift.x, shift.y);
 			context.tints.dup().applyMul(fieldGizmo.color);
-			fieldGizmo.font.render(context, _workParams);
+			this.fieldGizmo.font.render(context, _workParams);
 			context.tints.pop();
 			context.popTransform();
 		}
